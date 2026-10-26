@@ -2,7 +2,7 @@
 
 [**Explore the interactive project hub →**](https://lix-works.github.io/)
 
-AI-agent tools for scientific research, live physics demonstrations, and an interactive periodic table of the techniques behind them. A researcher remains in charge of the work.
+AI-agent tools for scientific research, a live physics demonstration, a looping film preview, and an interactive periodic table of the techniques behind them. A researcher remains in charge of the work.
 
 This is the first public preview. The site is still being refined.
 
@@ -20,11 +20,13 @@ Open `http://localhost:8800/`. The ProxiTouch embed uses the existing same-origi
 
 - `site/index.html`: layout, periodic table, interactions, and responsive styles.
 - `site/shared/content.js`: project copy and technique descriptions.
-- `site/shared/live/embed.js`: live embeds and video fallbacks.
-- `site/shared/live/edl/`: the live EDL excerpt, with its original source license and vendored three.js license.
+- `site/shared/live/embed.js`: the live ProxiTouch embed and video preview playback, with explicit play/pause controls.
+- `site/shared/live/edl/`: the optional live EDL excerpt, with its original source license and vendored three.js license. The homepage uses the existing short MP4 instead of rendering this scene continuously.
 - `site/shared/fig/` and `site/shared/media/`: illustrations, posters, and fallback clips.
 
 Push to `main` to publish through GitHub Actions. The workflow uploads only `site/` to GitHub Pages. It does not publish repository documentation as site content. Google Fonts is optional; system fonts are used when it is unavailable.
+
+The table preview resumes its automatic sequence after a stationary pointer and has a pause control. Small table lifts remain animated when the system requests reduced motion; decorative animations and pointer tilt stay reduced. The EDL preview is a muted, inline looping video with visible play/pause controls and resumes when it returns to view unless the visitor paused it.
 
 The hub links to the existing [Capacitance Demos](https://lix-works.github.io/Capacitance-Demos/) and [Scientific Animation Workflow](https://lix-works.github.io/Scientific-Animation-Workflow/gallery/index.html#film). Each project retains its own repository and deployment.
 

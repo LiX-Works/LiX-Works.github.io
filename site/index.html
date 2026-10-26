@@ -132,6 +132,7 @@ a.t:hover .arrow{background:var(--ink);color:#fff}
 .toy-head h2{margin:0;font-size:clamp(24px,2.3vw,32px);line-height:1.08;letter-spacing:-.025em;font-weight:700}
 .toy-head h2 em{font-family:var(--serif);font-weight:400;font-style:italic;color:var(--accent);letter-spacing:-.005em}
 .toy-head p{margin:6px 0 0;font-size:16px;line-height:1.45;color:var(--ink2)}
+.toy-motion{position:absolute;right:14px;bottom:12px;z-index:4;border:1px solid var(--line);border-radius:99px;padding:6px 10px;background:rgba(255,255,255,.92);font-size:12px;font-weight:650;cursor:pointer}
 .toy .pt-stage{flex:1;overflow:hidden;-webkit-mask-image:linear-gradient(#000 70%,transparent);mask-image:linear-gradient(#000 70%,transparent)}
 .toy .pt{position:absolute;left:9%;top:2px;width:78%;--rx:27deg;--rz:8deg;--gap:8px;transform-origin:50% 30%}
 .toy .el .nm{display:none}
@@ -190,6 +191,9 @@ a.t:hover .arrow{background:var(--ink);color:#fff}
   .lab-in{padding:20px 14px}.lab .pt-stage{height:380px}.lab .pt{left:0;top:70px;width:100%;--gap:6px}.lab .el .nm,.lab .el .no,.lab .pt-gaptxt{display:none}.blk{font-size:11px}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.t{opacity:1;transform:none}}
+/* The table is the demonstration itself; keep its small lifts legible instead of
+   jumping between stills. Ambient motion and pointer tilt stay reduced. */
+@media (prefers-reduced-motion:reduce){.el .slab{transition:transform .5s ease,border-color .35s,box-shadow .35s!important}.el .veil,.el .ring{transition:opacity .35s!important}}
 </style>
 </head>
 <body>
@@ -227,7 +231,7 @@ a.t:hover .arrow{background:var(--ink);color:#fff}
 </div>
 
 <script src="shared/content.js"></script>
-<script src="shared/live/embed.js"></script>
+<script src="shared/live/embed.js?v=20261026-motion1"></script>
 <script>
 const H = window.HUB, P = H.byId, T = H.terms, FIG = 'shared/fig/';
 document.getElementById('intro').textContent = H.intro;
@@ -248,7 +252,7 @@ const tile = (id, cls, extra = {}) => {
 document.getElementById('bento').insertAdjacentHTML('beforeend', `
   <section class="t live-t s7" id="demos"><div class="live" data-live="proxitouch" data-chart="off" data-badge-pos="bl"></div>
     <div class="cap"><div><b>ProxiTouch · interactive 3D lesson</b><span>One electrode senses approach, touch and press, on two channels. Part of two lessons on capacitive sensing.</span></div><a href="${P.capacitance.site}">Open the lessons ↗</a></div></section>
-  <section class="t live-t s5"><div class="live" data-live="edl" data-fx="0.08"></div>
+  <section class="t live-t s5"><div class="live" data-live="edl" data-mode="video" data-fx="0.08"></div>
     <div class="cap"><div><b>EDL gating · rendered from code</b><span>A thin dielectric under high field breaks down.</span></div><a href="${P.animation.site}">Full film ↗</a></div></section>
   ${tile('comsol', 'c5 r4', { hum: true })}
   ${tile('scholarfetch', 'c4 r4', { hum: true })}
@@ -348,12 +352,23 @@ function pressTilt(box, table, amp) {
 const mini = document.getElementById('mini'), toy = document.getElementById('toy');
 buildTable(mini, false);
 const DEMO = ['Sf', 'Sk', 'Za', 'Hl', 'Sb', 'Pe', 'Lp', 'Ag', 'Cm'];
-let di = 0, demoTimer;
+let di = 0, demoTimer, hoverTimer, demoPaused = false;
 function demo() { setState(mini, null, DEMO[di++ % DEMO.length]); }
-function startDemo() { clearInterval(demoTimer); demo(); demoTimer = setInterval(demo, 2400); }
+function startDemo() { clearInterval(demoTimer); clearTimeout(hoverTimer); if (demoPaused || document.hidden || document.body.classList.contains('locked')) return; demo(); demoTimer = setInterval(demo, 2400); }
 startDemo();
-mini.querySelectorAll('.el').forEach(n => n.addEventListener('pointerenter', () => { clearInterval(demoTimer); setState(mini, null, n.dataset.s); }));
+const motionButton = document.createElement('button');
+motionButton.type = 'button'; motionButton.className = 'toy-motion'; motionButton.textContent = 'Pause preview'; motionButton.setAttribute('aria-label', 'Pause table preview');
+toy.appendChild(motionButton);
+motionButton.addEventListener('click', e => { e.stopPropagation(); demoPaused = !demoPaused; clearInterval(demoTimer); clearTimeout(hoverTimer); motionButton.textContent = demoPaused ? 'Play preview' : 'Pause preview'; motionButton.setAttribute('aria-label', demoPaused ? 'Play table preview' : 'Pause table preview'); if (!demoPaused) startDemo(); });
+motionButton.addEventListener('keydown', e => e.stopPropagation());
+mini.addEventListener('pointermove', e => {
+  const n = e.target.closest('.el'); if (!n) return;
+  clearInterval(demoTimer); clearTimeout(hoverTimer); setState(mini, null, n.dataset.s);
+  // Resting the pointer on the table must not freeze the demo indefinitely.
+  if (!demoPaused) hoverTimer = setTimeout(startDemo, 1400);
+});
 toy.addEventListener('pointerleave', () => { if (!lab.classList.contains('open')) startDemo(); });
+document.addEventListener('visibilitychange', () => { if (document.hidden) { clearInterval(demoTimer); clearTimeout(hoverTimer); } else startDemo(); });
 pressTilt(toy, mini, 7);
 
 /* Full view */
@@ -384,7 +399,7 @@ function showCard(s) {
 }
 pressTilt(labStage, full, 4);
 
-function openLab() { lab.classList.add('open'); lab.setAttribute('aria-hidden', 'false'); document.body.classList.add('locked'); clearInterval(demoTimer); setState(full, selected, null); showCard(selected); }
+function openLab() { lab.classList.add('open'); lab.setAttribute('aria-hidden', 'false'); document.body.classList.add('locked'); clearInterval(demoTimer); clearTimeout(hoverTimer); setState(full, selected, null); showCard(selected); }
 function closeLab() { lab.classList.remove('open'); lab.setAttribute('aria-hidden', 'true'); document.body.classList.remove('locked'); startDemo(); }
 toy.addEventListener('click', openLab);
 toy.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLab(); } });

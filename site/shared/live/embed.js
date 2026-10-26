@@ -1,7 +1,8 @@
 /* Live embeds for the hub drafts.
    <div class="live" data-live="proxitouch|edl" [data-chart="off"] [data-fit="cover"] [data-badge="off"]></div>
-   The real WebGL pages load only when the box comes near the viewport. A still poster shows until the
-   first live frame is ready; without WebGL2 the box falls back to a short looping video. */
+   Embeds load near the viewport. ProxiTouch uses the live page; the EDL homepage
+   preview uses data-mode="video" to avoid another continuous 3-D render workload.
+   Video fallback has visible playback controls. */
 (function () {
   const ROOT = document.currentScript.src.replace(/shared\/live\/embed\.js.*$/, '');
   const MEDIA = ROOT + 'shared/media/';
@@ -39,7 +40,23 @@
     } catch (e) { return false; }   // cross-origin: leave the page as it is
   }
 
-  const hasGL2 = (() => { try { return !!document.createElement('canvas').getContext('webgl2'); } catch (e) { return false; } })();
+  const hasGL2 = (() => { try { const gl = document.createElement('canvas').getContext('webgl2'); if (!gl) return false; gl.getExtension('WEBGL_lose_context')?.loseContext(); return true; } catch (e) { return false; } })();
+
+  function mountVideo(box, spec, opts) {
+    const v = document.createElement('video');
+    Object.assign(v, { muted: true, defaultMuted: true, loop: true, autoplay: true, playsInline: true, preload: 'auto', src: spec.video(opts) });
+    v.className = 'live-frame'; v.setAttribute('muted', ''); v.setAttribute('playsinline', '');
+    v.setAttribute('aria-label', opts.live === 'edl' ? 'Looping EDL film preview' : 'Looping ProxiTouch preview');
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'live-badge video-control';
+    const label = () => { b.textContent = v.paused ? '▶ Play preview' : 'Ⅱ Pause preview'; b.setAttribute('aria-label', v.paused ? 'Play video preview' : 'Pause video preview'); };
+    const play = () => { if (box._visible === false || document.hidden || box._userPaused) return; v.play().then(label).catch(label); };
+    b.addEventListener('click', () => { if (v.paused) { box._userPaused = false; play(); } else { box._userPaused = true; v.pause(); } });
+    v.addEventListener('playing', () => { box.classList.add('is-ready'); label(); });
+    v.addEventListener('pause', label);
+    v.addEventListener('loadeddata', () => { box.classList.add('is-ready'); if (box._visible === false || document.hidden || box._userPaused) v.pause(); else play(); });
+    v.addEventListener('error', () => { b.textContent = 'Retry preview'; b.setAttribute('aria-label', 'Retry video preview'); b.onclick = () => { v.load(); play(); }; });
+    box.append(v, b); box._video = v; box._play = play; box.dataset.playback = 'video'; label(); play();
+  }
 
   function mount(box) {
     if (box.dataset.mounted) return; box.dataset.mounted = '1';
@@ -50,11 +67,7 @@
     const poster = new Image(); poster.className = 'live-poster'; poster.alt = ''; poster.src = spec.poster(opts);
     box.appendChild(poster);
     if (!hasGL2 || box.dataset.mode === 'video') {
-      const v = document.createElement('video');
-      Object.assign(v, { muted: true, loop: true, autoplay: true, playsInline: true, src: spec.video(opts) });
-      v.className = 'live-frame'; v.setAttribute('muted', ''); v.setAttribute('playsinline', '');
-      v.addEventListener('playing', () => box.classList.add('is-ready'), { once: true });
-      box.appendChild(v); box._video = v;
+      mountVideo(box, spec, opts);
       return;
     }
     const f = document.createElement('iframe');
@@ -80,10 +93,12 @@
   });
 
   function setPlaying(box, on) {
-    if (box._video) { on ? box._video.play().catch(() => {}) : box._video.pause(); return; }
+    box._visible = on;
+    if (box._video) { on && !document.hidden ? box._play() : box._video.pause(); return; }
     if (!box._frame) return;
     if (box.dataset.live === 'edl') box._frame.contentWindow && box._frame.contentWindow.postMessage(on ? 'play' : 'pause', '*');
   }
+  document.addEventListener('visibilitychange', () => document.querySelectorAll('[data-live]').forEach(b => setPlaying(b, b._visible !== false)));
 
   const near = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) mount(e.target); }), { rootMargin: '600px 0px' });
   const seen = new IntersectionObserver(es => es.forEach(e => setPlaying(e.target, e.isIntersecting)), { threshold: 0.05 });
