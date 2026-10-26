@@ -128,7 +128,7 @@ a.t:hover .arrow{background:var(--ink);color:#fff}
 .el.sel{--z:42px;--gc:var(--sel)}.el.sel .ring{opacity:1}.el.sel .slab{border-color:var(--sel);box-shadow:0 0 0 1.5px var(--sel),0 0 30px -2px var(--sel)}
 .el.press .slab{animation:press .55s cubic-bezier(.3,1.4,.4,1)}
 .el.press .wave{animation:wave .8s ease-out}
-@keyframes press{0%{transform:translateZ(calc(var(--th) + 30px))}25%{transform:translateZ(calc(var(--th) - 3px))}100%{transform:translateZ(calc(var(--th) + var(--z)))}}
+@keyframes press{0%{transform:translateZ(calc(var(--th) - 3px))}60%{transform:translateZ(calc(var(--th) + var(--z) + 8px))}100%{transform:translateZ(calc(var(--th) + var(--z)))}}
 @keyframes wave{0%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.9)}}
 @keyframes hum{50%{opacity:.55}}
 .el.hi .ring::before,.el.sel .ring::before{animation:hum 1.8s ease-in-out infinite}
@@ -152,7 +152,7 @@ a.t:hover .arrow{background:var(--ink);color:#fff}
 .toy:hover .play-hint i{animation:none;transform:scale(1.1)}
 
 /* ---------- the full table (overlay) ---------- */
-.lab{position:fixed;inset:0;z-index:50;display:none;overflow:auto;color:#e7eefb;
+.lab{position:fixed;inset:0;z-index:50;display:none;overflow:auto;overflow-x:hidden;color:#e7eefb;
   background:radial-gradient(90% 70% at 35% 45%,#16284a 0%,#0b1528 55%,#060b16 100%);--veil:rgba(8,16,32,.45);--sel:#ffd166}
 .lab.open{display:block;animation:fade .35s ease}
 @keyframes fade{from{opacity:0}}
@@ -164,13 +164,19 @@ a.t:hover .arrow{background:var(--ink);color:#fff}
 .lab .guide{font-size:19px;line-height:1.45;color:#b9c7e2;margin:0}
 .lab .guide b{color:#fff}
 .lab-grid{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:34px;align-items:start;margin-top:8px}
-.lab .pt-stage{height:660px;perspective:2400px;perspective-origin:50% 20%}
-.lab .pt{position:absolute;left:6%;top:16px;width:78%;--rx:36deg;--rz:0deg;--gap:14px;transform-origin:50% 45%}
+.lab .pt-stage{height:800px;perspective:2400px;perspective-origin:50% 20%}
+.lab .pt{position:absolute;left:0;right:0;margin-inline:auto;top:16px;width:min(94%,760px);--rx:36deg;--rz:0deg;--gap:14px;transform-origin:50% 45%}
 /* Floor grid: fine blue lines lying under the table, in perspective. */
 .lab .pt::before{content:"";position:absolute;inset:-260px -420px -320px;transform:translateZ(-1px);pointer-events:none;
   background-image:linear-gradient(rgba(110,160,255,.13) 1px,transparent 1px),linear-gradient(90deg,rgba(110,160,255,.13) 1px,transparent 1px);background-size:24px 24px;
   -webkit-mask-image:radial-gradient(closest-side,#000 45%,transparent);mask-image:radial-gradient(closest-side,#000 45%,transparent)}
-.lab .el .slab{box-shadow:0 18px 30px -18px rgba(0,0,0,.7)}
+.lab .el{aspect-ratio:1/1.03;touch-action:manipulation}
+.lab .el .slab{display:grid;grid-template-rows:auto 1fr auto;gap:2px;padding:7% 8%;box-shadow:0 18px 30px -18px rgba(0,0,0,.7)}
+.lab .el .sym{align-self:center;font-size:clamp(24px,2.5vw,36px)}
+.lab .el .nm{min-width:0;min-height:2.3em;font-size:clamp(11px,.94vw,13px);line-height:1.15;overflow-wrap:break-word}
+.lab .el.down .slab{transform:translateZ(calc(var(--th) - 3px));transition:transform .09s ease}
+.lab .el.press .slab{animation:press .55s ease-out}
+.lab .el.press .wave{animation:wave .8s ease-out}
 .blk{grid-row:1;align-self:end;padding-bottom:8px;font:700 19px var(--mono);letter-spacing:.12em;text-transform:uppercase;transform:translateZ(1px)}
 .blk.l{grid-column:1/3;color:#6ee7b7}.blk.r{grid-column:4/7;color:#9db8ff;text-align:right}
 .lab .pt-gaptxt{grid-row:2;align-self:start;font:600 18px/1.35 var(--sans);color:#c7d5f0;opacity:.9}
@@ -178,30 +184,34 @@ a.t:hover .arrow{background:var(--ink);color:#fff}
 .lab .side-row .lb{grid-column:1/4;align-self:center;text-align:right;padding-right:6px;font:600 14px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#7f91b3;transform:translateZ(1px)}
 .card{position:sticky;top:24px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);border-radius:22px;overflow:hidden;backdrop-filter:blur(10px);box-shadow:0 40px 80px -40px rgba(0,0,0,.8)}
 .card .hd{display:flex;gap:16px;align-items:center;padding:22px 22px 18px}
+.card .hd>div:last-child{min-width:0;flex:1}
 .card .sq{flex:none;width:78px;height:72px;border-radius:12px;background:var(--f);border:2px solid var(--b);display:grid;place-items:center;font:800 32px var(--sans);color:var(--t);box-shadow:0 0 24px -6px var(--g)}
 .card small{display:block;font:600 13px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#8ea4cc;margin-bottom:4px}
-.card h3{margin:0;font-size:26px;line-height:1.1;letter-spacing:-.02em;color:#fff}
+.card h3{margin:0;font-size:26px;line-height:1.1;letter-spacing:-.02em;color:#fff;overflow-wrap:anywhere}
 .card .ln{padding:0 22px 18px;font-size:18.5px;line-height:1.45;color:#d3def3}
 .card .im{margin:0 22px 18px;aspect-ratio:16/9;border-radius:14px;background:#fff;position:relative;overflow:hidden}
 .card .im img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:8px}
 .card .bl{padding:0 22px 20px}
 .card .bl b{display:block;font:600 13px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#8ea4cc;margin-bottom:10px}
 .card .tags{display:flex;flex-wrap:wrap;gap:8px}
-.card .tags span{cursor:pointer;padding:8px 12px;border-radius:10px;background:color-mix(in srgb,var(--f) 18%,transparent);border:1px solid color-mix(in srgb,var(--b) 70%,transparent);color:#fff;font-size:15px;font-weight:600}
+.card .tags span{cursor:pointer;max-width:100%;overflow-wrap:anywhere;padding:8px 12px;border-radius:10px;background:color-mix(in srgb,var(--f) 18%,transparent);border:1px solid color-mix(in srgb,var(--b) 70%,transparent);color:#fff;font-size:15px;font-weight:600}
 .card .tags span:hover{background:color-mix(in srgb,var(--f) 32%,transparent)}
 .card a.go{display:inline-block;margin:0 22px 22px;padding:12px 18px;border-radius:12px;background:#fff;color:#0b1528;font-weight:700;font-size:15px}
 
 @media (max-width:1100px){.toy,.hero,.s7,.s5{grid-column:span 12}.c3,.c4,.c5{grid-column:span 6}.bento{grid-auto-rows:auto}.t{min-height:0}.toy,.hero{min-height:330px}.live-t{min-height:300px}.r4{min-height:400px}
-  .lab-grid{grid-template-columns:1fr}.card{position:relative;top:0}.lab .pt-stage{height:520px}}
+  .lab-grid{grid-template-columns:1fr}.card{position:relative;top:0}.lab .pt-stage{height:clamp(620px,calc(100vw - 80px),800px)}}
 @media (max-width:680px){
   .page{padding:14px 12px 30px}.bento{gap:10px}.c3,.c4,.c5{grid-column:span 12}.hero{padding:24px 0 18px}.hero h1,.hero p{padding:0 20px}
   .toy .pt{width:118%;top:26px}.toy .el .no{display:none}
-  .lab-in{padding:20px 14px}.lab .pt-stage{height:380px}.lab .pt{left:0;top:70px;width:100%;--gap:6px}.lab .el .nm,.lab .el .no,.lab .pt-gaptxt{display:none}.blk{font-size:11px}
+  .lab-in{padding:20px 14px}.lab .pt-stage{height:clamp(400px,calc(100vw + 50px),730px)}.lab .pt{left:0;top:70px;width:100%;--gap:6px}.lab .el .nm,.lab .el .no,.lab .pt-gaptxt{display:none}.blk{font-size:11px}
+  .lab .el .slab{grid-template-rows:1fr;gap:0}
 }
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.t{opacity:1;transform:none}}
-/* The table is the demonstration itself; keep its small lifts legible instead of
-   jumping between stills. Ambient motion and pointer tilt stay reduced. */
-@media (prefers-reduced-motion:reduce){.el .slab{transition:transform .5s ease,border-color .35s,box-shadow .35s!important}.el .veil,.el .ring{transition:opacity .35s!important}}
+/* Preserve content motion and deliberate press feedback in either preference.
+   Reduce decorative entrances and pulses; pointer tilt is reduced in the script. */
+@media (prefers-reduced-motion:reduce){
+  .t{opacity:1;transform:none;transition:none}
+  .lab.open,.play-hint i,.el .ring::before{animation:none!important}
+}
 </style>
 </head>
 <body>
@@ -280,24 +290,24 @@ document.querySelectorAll('.t').forEach(t => io.observe(t));
 /* ---------- elements: techniques on the left, projects on the right ---------- */
 const E = [
   { s: 'Hl', t: 'hitl',    k: 'human', r: 1, c: 1 },
-  { s: 'Lp', p: 'loop',    k: 'loop',  r: 1, c: 6, cfg: ['Sa', 'Ce', 'Pe', 'Hl'] },
+  { s: 'Lp', p: 'loop',    k: 'loop',  r: 1, c: 6, cfg: ['Sa', 'Ce', 'Pe', 'Hl'], tileLabel: 'Research loop' },
   { s: 'Ag', t: 'agent',   k: 'tech',  r: 2, c: 1 },
   { s: 'Pe', t: 'prompt',  k: 'tech',  r: 2, c: 2 },
   { s: 'Sf', p: 'scholarfetch', k: 'tool', r: 2, c: 4, cfg: ['Ag', 'Sk', 'Cl', 'Hl'] },
-  { s: 'Za', p: 'autocite',     k: 'tool', r: 2, c: 5, cfg: ['Ag', 'Sk', 'Hl'] },
+  { s: 'Za', p: 'autocite',     k: 'tool', r: 2, c: 5, cfg: ['Ag', 'Sk', 'Hl'], tileLabel: 'Zotero AutoCite' },
   { s: 'Sb', p: 'search',       k: 'kit',  r: 2, c: 6, cfg: ['Ag', 'Sk', 'Mc', 'Cl'] },
   { s: 'Ce', t: 'context', k: 'tech',  r: 3, c: 1 },
   { s: 'Sk', t: 'skill',   k: 'tech',  r: 3, c: 2 },
-  { s: 'Cm', p: 'comsol',       k: 'tool', r: 3, c: 4, cfg: ['Ag', 'Sk', 'Cl', 'Hl'], name: 'COMSOL agent workflow' },
+  { s: 'Cm', p: 'comsol',       k: 'tool', r: 3, c: 4, cfg: ['Ag', 'Sk', 'Cl', 'Hl'], name: 'COMSOL agent workflow', tileLabel: 'COMSOL workflow' },
   { s: 'Or', p: 'origin',       k: 'tool', r: 3, c: 5, cfg: ['Ag', 'Mc', 'Sk', 'Hl'] },
   { s: 'Sa', p: 'subagent',     k: 'kit',  r: 3, c: 6, cfg: ['Ag', 'Sk', 'Ce'] },
   { s: 'Mc', t: 'mcp',     k: 'tech',  r: 4, c: 1 },
   { s: 'Cl', t: 'cli',     k: 'tech',  r: 4, c: 2 },
   { s: 'Pt', p: 'capacitance',  k: 'vis', r: 4, c: 4, cfg: ['Ag', 'Pe', 'Ce', 'Hl'], name: 'ProxiTouch', img: 'proxitouch' },
-  { s: 'Mu', p: 'capacitance',  k: 'vis', r: 4, c: 5, cfg: ['Ag', 'Pe', 'Ce', 'Hl'], name: 'Mutual-capacitance lab', img: 'mutual' },
+  { s: 'Mu', p: 'capacitance',  k: 'vis', r: 4, c: 5, cfg: ['Ag', 'Pe', 'Ce', 'Hl'], name: 'Mutual-capacitance lab', img: 'mutual', tileLabel: 'Mutual capacitance' },
   { s: 'Ed', p: 'animation',    k: 'vis', r: 4, c: 6, cfg: ['Ag', 'Pe', 'Ce', 'Hl'], name: 'EDL gating film', img: 'edl' },
   { s: 'Ks', p: 'ksa',          k: 'side', cfg: ['Ag', 'Pe', 'Cl'] },
-  { s: 'Tr', p: 'translate',    k: 'side', cfg: ['Cl'] }
+  { s: 'Tr', p: 'translate',    k: 'side', cfg: ['Cl'], tileLabel: 'Codex Translate' }
 ];
 E.forEach((e, i) => { e.n = i + 1; e.kind = e.t ? 'tech' : 'proj'; });
 const bySym = Object.fromEntries(E.map(e => [e.s, e]));
@@ -308,7 +318,7 @@ const cap1 = s => s[0].toUpperCase() + s.slice(1);
 function elHTML(e) {
   return `<div class="el k-${e.k}${e.p === 'loop' ? ' building' : ''}" data-s="${e.s}" style="${e.r ? `grid-row:${e.r + 1};grid-column:${e.c}` : ''}">
     <div class="ring"></div><div class="wave"></div>
-    <div class="slab"><span class="no">${e.n}</span><span class="sym">${e.s}</span><span class="nm">${label(e)}</span><i class="veil"></i></div></div>`;
+    <div class="slab"><span class="no">${e.n}</span><span class="sym">${e.s}</span><span class="nm">${e.tileLabel || label(e)}</span><i class="veil"></i></div></div>`;
 }
 function buildTable(root, full) {
   const main = E.filter(e => e.r), side = E.filter(e => !e.r);
@@ -331,7 +341,7 @@ function setState(root, sel, hover) {
     n.classList.toggle('lo', partners.has(s) && s !== sel && s !== hover);
   });
 }
-function press(n) { n.classList.remove('press'); void n.offsetWidth; n.classList.add('press'); }
+function press(n) { n.classList.remove('down', 'press'); void n.offsetWidth; n.classList.add('press'); }
 
 /* Pressing on the table: the box centre is the pivot. The pointer's offset from it is the torque
    (further out, stronger), and a damped spring carries the table there and back. */
@@ -384,6 +394,8 @@ const lab = document.getElementById('lab'), full = document.getElementById('full
 buildTable(full, true);
 let selected = 'Sf';
 full.querySelectorAll('.el').forEach(n => {
+  n.addEventListener('pointerdown', e => { if (e.button === 0) { n.classList.remove('press'); n.classList.add('down'); } });
+  ['pointerup', 'pointercancel', 'pointerleave'].forEach(event => n.addEventListener(event, () => n.classList.remove('down')));
   n.addEventListener('mouseenter', () => setState(full, selected, n.dataset.s));
   n.addEventListener('mouseleave', () => setState(full, selected, null));
   n.addEventListener('click', () => { selected = n.dataset.s; setState(full, selected, null); press(n); showCard(selected); });
