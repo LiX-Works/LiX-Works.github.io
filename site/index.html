@@ -31,6 +31,14 @@ button{font:inherit;color:inherit}
 .t.in{opacity:1;transform:none}
 a.t:hover{transform:translateY(-4px);box-shadow:0 30px 60px -40px rgba(17,19,22,.55)}
 a.t:hover .fig img{transform:scale(1.025)}
+.stretched-link::after{content:"";position:absolute;inset:0;z-index:2;cursor:pointer;border-radius:inherit}
+.stretched-link:focus-visible{outline:none}
+.stretched-link:focus-visible::after{outline:3px solid var(--accent);outline-offset:-4px}
+.live-t:has(.stretched-link):hover{box-shadow:0 30px 60px -40px rgba(17,19,22,.55)}
+/* Keep independent playback buttons above the card link. Activating the live
+   interaction deliberately hands the preview area back to its iframe. */
+.live-t .live{isolation:auto}
+.live-t .live.is-active{z-index:3}
 .t .pad{padding:24px 26px}
 .t small{font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .t h3{margin:8px 0 6px;font-size:23px;letter-spacing:-.02em;line-height:1.15}
@@ -204,7 +212,7 @@ a.t:hover .arrow{background:var(--ink);color:#fff}
       <div class="toy-head"><div><h2>A <em>periodic table</em> of my AI toolkit</h2><p>My open-source projects and the techniques they are built from.</p></div></div>
       <div class="pt-stage"><div class="pt" id="mini"></div></div>
     </section>
-    <section class="t hero">
+    <a class="t hero" href="https://github.com/LiX-Works" aria-label="Explore LiX's open-source projects on GitHub">
       <div>
         <h1>Agents do the legwork.<br><em>The researcher decides.</em></h1>
         <p id="intro"></p>
@@ -213,7 +221,7 @@ a.t:hover .arrow{background:var(--ink);color:#fff}
         <div class="marquee"><div class="row" id="mq1"></div></div>
         <div class="marquee rev"><div class="row" id="mq2"></div></div>
       </div>
-    </section>
+    </a>
   </div>
   <div class="foot" id="foot"></div>
 </div>
@@ -251,13 +259,13 @@ const tile = (id, cls, extra = {}) => {
 };
 document.getElementById('bento').insertAdjacentHTML('beforeend', `
   <section class="t live-t s7" id="demos"><div class="live" data-live="proxitouch" data-chart="off" data-badge-pos="bl"></div>
-    <div class="cap"><div><b>ProxiTouch · interactive 3D lesson</b><span>One electrode senses approach, touch and press, on two channels. Part of two lessons on capacitive sensing.</span></div><a href="${P.capacitance.site}">Open the lessons ↗</a></div></section>
+    <div class="cap"><div><b>ProxiTouch · interactive 3D lesson</b><span>One electrode senses approach, touch and press, on two channels. Part of two lessons on capacitive sensing.</span></div><a class="stretched-link" href="${P.capacitance.site}">Open the lessons ↗</a></div></section>
   <section class="t live-t s5"><div class="live" data-live="edl" data-mode="video" data-fx="0.08"></div>
-    <div class="cap"><div><b>EDL gating · rendered from code</b><span>A thin dielectric under high field breaks down.</span></div><a href="${P.animation.site}">Full film ↗</a></div></section>
+    <div class="cap"><div><b>EDL gating · rendered from code</b><span>A thin dielectric under high field breaks down.</span></div><a class="stretched-link" href="${P.animation.site}">Full film ↗</a></div></section>
   ${tile('comsol', 'c5 r4', { hum: true })}
   ${tile('scholarfetch', 'c4 r4', { hum: true })}
-  <section class="t c3 r4 hum"><div class="pad"><small>Human-in-the-Loop</small><blockquote>Agents draft.<br><em>A researcher decides.</em></blockquote><div class="figp"><i></i><i></i><i class="o"></i></div></div>
-    <div class="pad" style="padding-top:0"><p>Every tool stops at checkpoints, solid for required reviews and dashed for optional ones, where a person checks the evidence.</p></div></section>
+  <a class="t c3 r4 hum" href="#elements" id="humanCard" aria-label="Explore Human-in-the-Loop and its connected projects"><div class="pad"><small>Human-in-the-Loop</small><blockquote>Agents draft.<br><em>A researcher decides.</em></blockquote><div class="figp"><i></i><i></i><i class="o"></i></div></div>
+    <div class="pad" style="padding-top:0"><p>Every tool stops at checkpoints, solid for required reviews and dashed for optional ones, where a person checks the evidence.</p></div></a>
   ${tile('origin', 'c4 r4', { gallery: P.origin.gallery, hum: true })}
   ${tile('autocite', 'c4 r4', { hum: true })}
   ${tile('loop', 'c4 r4', { hum: true })}
@@ -402,6 +410,7 @@ pressTilt(labStage, full, 4);
 function openLab() { lab.classList.add('open'); lab.setAttribute('aria-hidden', 'false'); document.body.classList.add('locked'); clearInterval(demoTimer); clearTimeout(hoverTimer); setState(full, selected, null); showCard(selected); }
 function closeLab() { lab.classList.remove('open'); lab.setAttribute('aria-hidden', 'true'); document.body.classList.remove('locked'); startDemo(); }
 toy.addEventListener('click', openLab);
+document.getElementById('humanCard').addEventListener('click', e => { e.preventDefault(); selected = 'Hl'; openLab(); });
 toy.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLab(); } });
 document.getElementById('close').addEventListener('click', closeLab);
 addEventListener('keydown', e => { if (e.key === 'Escape' && lab.classList.contains('open')) closeLab(); });
