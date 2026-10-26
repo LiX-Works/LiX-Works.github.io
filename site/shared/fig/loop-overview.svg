@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="750" viewBox="0 0 1280 750" role="img" aria-labelledby="title desc">
+<title id="title">Loop for Scientific Research proposed architecture</title>
+<desc id="desc">A research brief is shared with independent model advisors. Their perspectives are synthesized into a plan, followed by execution and evidence collection. Independent review can request a specific check, revisit the plan, or return findings to the researcher. Model panels and other modules are replaceable. This is a concept preview, not a working integration.</desc>
+<rect width="1280" height="750" fill="#ffffff"/>
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#243342} .label{font-size:30px;font-weight:700} .body{font-size:26px} .small{font-size:25px} .ink{fill:none;stroke:#526576;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}</style>
+<text x="40" y="43" class="label" text-anchor="start">A proposed research loop</text>
+<text x="1230" y="43" class="small" text-anchor="end" style="fill:#526576">v0.01 · Concept preview</text>
+<rect x="40" y="95" width="230" height="225" rx="20" fill="#fff6e5" stroke="#dcc9a7" stroke-width="2"/>
+<rect x="330" y="80" width="500" height="255" rx="20" fill="#f4f0fa" stroke="#c8badf" stroke-width="2"/>
+<rect x="900" y="95" width="330" height="225" rx="20" fill="#eaf4f3" stroke="#aecac6" stroke-width="2"/>
+<rect x="840" y="410" width="390" height="215" rx="20" fill="#eaf4f3" stroke="#aecac6" stroke-width="2"/>
+<rect x="330" y="410" width="420" height="215" rx="20" fill="#edf3fb" stroke="#b8c9df" stroke-width="2"/>
+<rect x="40" y="410" width="230" height="215" rx="20" fill="#fff6e5" stroke="#dcc9a7" stroke-width="2"/>
+<text x="62" y="135" class="label" text-anchor="start">Frame the</text>
+<text x="62" y="171" class="label" text-anchor="start">question</text>
+<g transform="translate(72 195) scale(0.93)" fill="none" stroke="#8a734c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<path d="M0 0 H39 L55 16 V65 H0 Z M39 0 V16 H55"/>
+<path d="M12 29 H41 M12 41 H41 M12 53 H31"/>
+</g>
+<circle cx="194" cy="225" r="25" fill="#f7e4bc"/>
+<text x="194" y="235" class="label" text-anchor="middle" style="fill:#79613c">?</text>
+<text x="62" y="294" class="small" text-anchor="start">Goals &amp; context</text>
+<text x="355" y="123" class="label" text-anchor="start">Independent perspectives</text>
+<rect x="355" y="148" width="140" height="125" rx="13" fill="#ffffff" stroke="#d9cee9" stroke-width="2"/>
+<circle cx="380" cy="172" r="7" fill="#d9cee9"/>
+<polyline points="399,172 468,172" fill="none" stroke="#d9cee9" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="375,193 464,193" fill="none" stroke="#a4adba" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="375,210 449,210" fill="none" stroke="#a4adba" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="425" y="250" class="small" text-anchor="middle">Model A</text>
+<rect x="510" y="148" width="140" height="125" rx="13" fill="#ffffff" stroke="#d5e4ed" stroke-width="2"/>
+<circle cx="535" cy="172" r="7" fill="#d5e4ed"/>
+<polyline points="554,172 623,172" fill="none" stroke="#d5e4ed" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="530,193 619,193" fill="none" stroke="#a4adba" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="530,210 604,210" fill="none" stroke="#a4adba" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="580" y="250" class="small" text-anchor="middle">Model B</text>
+<rect x="665" y="148" width="140" height="125" rx="13" fill="#ffffff" stroke="#e8d9cb" stroke-width="2"/>
+<circle cx="690" cy="172" r="7" fill="#e8d9cb"/>
+<polyline points="709,172 778,172" fill="none" stroke="#e8d9cb" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="685,193 774,193" fill="none" stroke="#a4adba" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="685,210 759,210" fill="none" stroke="#a4adba" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="735" y="250" class="small" text-anchor="middle">Model C</text>
+<text x="580" y="310" class="body" text-anchor="middle" style="fill:#655277">Different views on one question</text>
+<text x="925" y="138" class="label" text-anchor="start">Synthesize a plan</text>
+<circle cx="942" cy="180" r="7" fill="#6b9992"/>
+<polyline points="956,180 988,180 1021,210" fill="none" stroke="#7b9e98" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="942" cy="210" r="7" fill="#6b9992"/>
+<polyline points="956,210 988,210 1021,210" fill="none" stroke="#7b9e98" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="942" cy="240" r="7" fill="#6b9992"/>
+<polyline points="956,240 988,240 1021,210" fill="none" stroke="#7b9e98" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1021,210 1072.0,210.0" fill="none" stroke="#527d76" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<polygon points="1083,210 1071.0,215.52 1071.0,204.48" fill="#527d76"/>
+<g transform="translate(1103 177) scale(0.96)" fill="none" stroke="#527d76" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<path d="M0 0 H39 L55 16 V65 H0 Z M39 0 V16 H55"/>
+<path d="M12 29 H41 M12 41 H41 M12 53 H31"/>
+</g>
+<text x="1065" y="294" class="body" text-anchor="middle">Choose the next test</text>
+<text x="867" y="454" class="label" text-anchor="start">Execute &amp; collect</text>
+<g transform="translate(875 484) scale(0.9)" fill="none" stroke="#527d76" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<path d="M0 0 H39 L55 16 V65 H0 Z M39 0 V16 H55"/>
+<path d="M12 29 H41 M12 41 H41 M12 53 H31"/>
+</g>
+<rect x="962" y="484" width="83" height="64" rx="6" fill="#ffffff" stroke="#90b6b0" stroke-width="2"/>
+<polyline points="978,487 978,545" fill="none" stroke="#a5c2bd" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="994,487 994,545" fill="none" stroke="#a5c2bd" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1010,487 1010,545" fill="none" stroke="#a5c2bd" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1026,487 1026,545" fill="none" stroke="#a5c2bd" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="965,500 1042,500" fill="none" stroke="#a5c2bd" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="965,516 1042,516" fill="none" stroke="#a5c2bd" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="965,532 1042,532" fill="none" stroke="#a5c2bd" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1080,487 1080,546 1187,546" fill="none" stroke="#527d76" stroke-width="2.8" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="1089,533 1110,520 1133,524 1154,498 1181,488" fill="none" stroke="#648b85" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="1035" y="595" class="body" text-anchor="middle">Sources · data · plots</text>
+<text x="357" y="454" class="label" text-anchor="start">Independent review</text>
+<g transform="translate(390 482) scale(0.92)" fill="none" stroke="#647f9f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<path d="M0 0 H39 L55 16 V65 H0 Z M39 0 V16 H55"/>
+<path d="M12 29 H41 M12 41 H41 M12 53 H31"/>
+</g>
+<g transform="translate(485 482) scale(0.92)" fill="none" stroke="#647f9f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<path d="M0 0 H39 L55 16 V65 H0 Z M39 0 V16 H55"/>
+<path d="M12 29 H41 M12 41 H41 M12 53 H31"/>
+</g>
+<circle cx="637" cy="509" r="29" fill="#ffffff" stroke="#647f9f" stroke-width="3"/>
+<polyline points="658,530 681,552" fill="none" stroke="#647f9f" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="625,510 635,520 651,498" fill="none" stroke="#647f9f" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="540" y="595" class="body" text-anchor="middle">Check the evidence</text>
+<text x="62" y="453" class="label" text-anchor="start">Researcher</text>
+<g transform="translate(88 482) scale(1.05)" fill="none" stroke="#8a734c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<path d="M0 0 H39 L55 16 V65 H0 Z M39 0 V16 H55"/>
+<path d="M12 29 H41 M12 41 H41 M12 53 H31"/>
+</g>
+<polyline points="111,542 126,527 144,531" fill="none" stroke="#9a8054" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="62" y="584" class="body" text-anchor="start">Findings &amp;</text>
+<text x="62" y="613" class="body" text-anchor="start">decisions</text>
+<polyline points="280,207 307.0,207.0" fill="none" stroke="#697e8c" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<polygon points="318,207 306.0,212.52 306.0,201.48" fill="#697e8c"/>
+<polyline points="842,207 877.0,207.0" fill="none" stroke="#697e8c" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<polygon points="888,207 876.0,212.52 876.0,201.48" fill="#697e8c"/>
+<polyline points="1065,332 1065.0,387.0" fill="none" stroke="#527d76" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<polygon points="1065,398 1059.48,386.0 1070.52,386.0" fill="#527d76"/>
+<polyline points="828,520 773.0,520.0" fill="none" stroke="#697e8c" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<polygon points="762,520 774.0,514.48 774.0,525.52" fill="#697e8c"/>
+<polyline points="318,520 293.0,520.0" fill="none" stroke="#9a8054" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<polygon points="282,520 294.0,514.48 294.0,525.52" fill="#9a8054"/>
+<polyline points="540,398 540.0,358.0" fill="none" stroke="#8c79a7" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<polygon points="540,347 545.52,359.0 534.48,359.0" fill="#8c79a7"/>
+<text x="557" y="380" class="small" text-anchor="start" style="fill:#6f588b">Revisit the plan</text>
+<polyline points="540,637 540,670 1035,670 1035.0,647.88" fill="none" stroke="#648b85" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<polygon points="1035,637 1040.4648,648.88 1029.5352,648.88" fill="#648b85"/>
+<text x="788" y="707" class="body" text-anchor="middle" style="fill:#466d66">Request a specific check</text>
+<rect x="56" y="62" width="214" height="40" rx="20" fill="#b45309" stroke="#ffffff" stroke-width="3"/>
+<circle cx="82" cy="77" r="6" fill="#ffffff"/>
+<rect x="72" y="84" width="20" height="11" rx="5" fill="#ffffff"/>
+<text x="102" y="90" font-size="24" font-weight="700" style="fill:#ffffff">Human check</text>
+<rect x="56" y="377" width="214" height="40" rx="20" fill="#b45309" stroke="#ffffff" stroke-width="3"/>
+<circle cx="82" cy="392" r="6" fill="#ffffff"/>
+<rect x="72" y="399" width="20" height="11" rx="5" fill="#ffffff"/>
+<text x="102" y="405" font-size="24" font-weight="700" style="fill:#ffffff">Human check</text>
+<text x="40" y="704" class="small" text-anchor="start" style="fill:#526576">Decide from evidence</text>
+<text x="40" y="735" class="small" text-anchor="start" style="fill:#526576">Shared brief · evidence · decisions</text>
+</svg>

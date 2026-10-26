@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EDL gating — live excerpt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+/* Live excerpt of the code-rendered film (Scientific-Animation-Workflow, EDL gating v5, English labels).
+   The 1920×1080 stage is drawn by film.js and scaled to whatever box the parent page gives it. */
+html{margin:0;height:100%;overflow:hidden;background:#e9f0f6}
+body{margin:0;position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:hidden;transform-origin:0 0;
+  background:radial-gradient(120% 95% at 28% 18%,#f6f9fc 0%,#e6eff6 52%,#d2e0eb 100%)}
+canvas{position:absolute;left:0;top:0}
+#ov{position:absolute;left:0;top:0;width:1920px;height:1080px;pointer-events:none;font-family:Inter,"Noto Sans CJK SC",sans-serif;color:#14202e;font-weight:700}
+.tx{position:absolute;white-space:nowrap;z-index:2;background:rgba(255,255,255,.84);backdrop-filter:blur(8px);border-radius:8px;padding:6px 16px 8px;box-shadow:0 2px 14px rgba(30,50,80,.10);border-left:5px solid #33465c}
+.tx span.c{display:inline-block}
+.h,.sub{background:none;box-shadow:none;border:none;backdrop-filter:none;text-shadow:0 0 18px #fff,0 0 6px #fff}.f{border-left:none;padding:2px 22px 8px}
+.h{font-size:88px;letter-spacing:.06em;color:#0f1a26}
+.sub{font-size:38px;color:#2b3a4c}
+.m{font-size:50px;letter-spacing:.03em}
+.l{font-size:40px;letter-spacing:.03em}
+.s{font-size:35px;letter-spacing:.02em;color:#1f2d3d}
+.cap{font-size:42px;letter-spacing:.02em;padding:12px 26px 14px;border-left:8px solid #1f3b5c;background:rgba(255,255,255,.9)}
+.f{font-family:"Instrument Serif","DejaVu Serif",serif;font-style:italic;font-weight:400;font-size:62px;color:#0f1a26}
+sub{font-size:.6em;font-style:normal}
+.k{font-family:"IBM Plex Mono","DejaVu Sans Mono",monospace;font-size:32px;font-weight:700}
+.leg{font-size:28px;padding:6px 18px;border-left:none}
+.leg i{display:inline-block;width:22px;height:22px;border-radius:50%;margin:0 8px -3px 0}
+.leg i.ring{border:4px solid #d1495b;width:14px;height:14px;background:none}
+.warm{border-left-color:#d9480f}.cool{border-left-color:#2456c8}.cat{border-left-color:#c98a2b}.an{border-left-color:#3f8a62}
+.ld{position:absolute;left:0;top:0;height:2px;background:#24364a;transform-origin:0 50%;z-index:1}
+.ld::before{content:"";position:absolute;left:-6px;top:-5px;width:12px;height:12px;border-radius:50%;background:#24364a;border:2px solid #fff}
+body.nocap .cap, body.nocap .leg{display:none}
+</style>
+</head>
+<body>
+<div id="ov"></div>
+<script type="importmap">{"imports":{"three":"./vendor/three.module.min.js"}}</script>
+<script type="module" src="film.js"></script>
+<script>
+// Fit the fixed 1920×1080 stage into the iframe. ?fit=cover fills the box (cropping edges), default contains it.
+(function(){
+  const q = new URLSearchParams(window.__Q || location.search);
+  const fit = q.get('fit') || 'contain';
+  const fx = +(q.get('fx') ?? .5), fy = +(q.get('fy') ?? .5);   // focus point used when covering
+  const zoom = +(q.get('zoom') || 1);
+  if (q.has('nocap')) document.body.classList.add('nocap');
+  function size(){
+    const w = innerWidth, h = innerHeight;
+    let s = (fit === 'cover' ? Math.max(w/1920, h/1080) : Math.min(w/1920, h/1080)) * zoom;
+    const x = (w - 1920*s) * fx, y = (h - 1080*s) * fy;
+    document.body.style.transform = `translate(${x}px,${y}px) scale(${s})`;
+  }
+  addEventListener('resize', size); size();
+
+  // Real-time playback of film seconds [from, to], looping. The parent page may post 'play' / 'pause'.
+  const from = +(q.get('from') || 121), to = +(q.get('to') || 132.6);
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let playing = !q.has('paused') && !reduce, t0 = null, offset = 0, last = from;
+  function frame(now){
+    if (window.READY && window.render) {
+      if (playing) {
+        if (t0 === null) t0 = now - offset * 1000;
+        const T = from + ((now - t0) / 1000) % (to - from);
+        last = T; window.render(T);
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+  addEventListener('message', e => {
+    if (e.data === 'pause' && playing) { playing = false; offset = last - from; t0 = null; }
+    if (e.data === 'play' && !reduce) playing = true;
+  });
+  document.addEventListener('visibilitychange', () => { if (document.hidden) { playing = false; offset = last - from; t0 = null; } else if (!reduce) playing = true; });
+  // Tell the parent when the first frame is on screen, so it can fade the poster away.
+  const ready = setInterval(() => { if (window.READY) { clearInterval(ready); if (reduce) window.render((from+to)/2 + 2); parent.postMessage({live:'edl', ready:true}, '*'); } }, 100);
+})();
+</script>
+</body>
+</html>

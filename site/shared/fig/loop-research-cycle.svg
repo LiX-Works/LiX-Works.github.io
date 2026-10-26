@@ -1,0 +1,182 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="980" viewBox="0 0 1320 980" role="img" aria-labelledby="title desc">
+<title id="title">Inside the proposed scientific research loop</title>
+<desc id="desc">The researcher and existing materials feed a shared research brief. Several models assess it independently; a synthesizer turns their views into a plan. A coordinator delegates literature, computation, and data or figure tasks. An evidence package is checked before independent reviewers and review synthesis. Local execution repair, requests for new evidence, and reconsideration of the plan follow distinct return paths. Optional writing and researcher review complete a round. This is a proposed process, not a working system.</desc>
+<rect width="1320" height="980" fill="#ffffff"/>
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#243342}.heading{font-size:36px;font-weight:700}.title{font-size:30px;font-weight:700}.section{font-size:28px;font-weight:700}.body{font-size:26px}</style>
+<text x="60" y="46" class="heading" text-anchor="start">Inside the research loop</text>
+<rect x="60" y="110" width="350" height="100" rx="16" fill="#fff6e5" stroke="#dcc9a7" stroke-width="2"/>
+<text x="235.0" y="146" class="title" text-anchor="middle">Researcher</text>
+<text x="235.0" y="195" class="body" text-anchor="middle">Question + context</text>
+<rect x="465" y="110" width="350" height="100" rx="16" fill="#fff6e5" stroke="#dcc9a7" stroke-width="2"/>
+<text x="640.0" y="146" class="title" text-anchor="middle">Clarify &amp; frame</text>
+<text x="640.0" y="195" class="body" text-anchor="middle">Shared brief + evidence</text>
+<rect x="870" y="110" width="350" height="100" rx="16" fill="#f5f7f9" stroke="#c6d0d9" stroke-width="2"/>
+<text x="1045.0" y="146" class="title" text-anchor="middle">Existing materials</text>
+<text x="1045.0" y="195" class="body" text-anchor="middle">Sources + prior results</text>
+<polyline points="422,139 442.84,139.0" fill="none" stroke="#ac8950" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="453,139 441.84,144.1336 441.84,133.8664" fill="#ac8950"/>
+<polyline points="453,183 432.16,183.0" fill="none" stroke="#ac8950" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 7"/>
+<polygon points="422,183 433.16,177.8664 433.16,188.1336" fill="#ac8950"/>
+<polyline points="858,160 837.16,160.0" fill="none" stroke="#69808f" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="827,160 838.16,154.8664 838.16,165.1336" fill="#69808f"/>
+<rect x="60" y="260" width="350" height="530" rx="22" fill="#faf8fd" stroke="#d4c9e4" stroke-width="2"/>
+<rect x="465" y="260" width="350" height="530" rx="22" fill="#f6faf9" stroke="#bfd6d1" stroke-width="2"/>
+<rect x="870" y="260" width="350" height="530" rx="22" fill="#f6f8fc" stroke="#c5d0e0" stroke-width="2"/>
+<text x="235" y="307" class="section" text-anchor="middle" style="fill:#6c5588">1  PLAN</text>
+<text x="640" y="307" class="section" text-anchor="middle" style="fill:#466f67">2  EXECUTE</text>
+<text x="1045" y="307" class="section" text-anchor="middle" style="fill:#506c8d">3  REVIEW</text>
+<text x="235" y="345" class="body" text-anchor="middle">Independent model views</text>
+<polyline points="640,222 640,235 395,235 395,365 130,365" fill="none" stroke="#8b76a6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="130,365 130.0,380.72" fill="none" stroke="#8b76a6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="130,388 126.1912,379.72 133.8088,379.72" fill="#8b76a6"/>
+<polyline points="240,365 240.0,380.72" fill="none" stroke="#8b76a6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="240,388 236.1912,379.72 243.8088,379.72" fill="#8b76a6"/>
+<polyline points="350,365 350.0,380.72" fill="none" stroke="#8b76a6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="350,388 346.1912,379.72 353.8088,379.72" fill="#8b76a6"/>
+<rect x="85" y="400" width="90" height="100" rx="13" fill="#ffffff" stroke="#b4a2cc" stroke-width="2"/>
+<text x="130.0" y="437" class="title" text-anchor="middle">A</text>
+<polyline points="103,458 147,458" fill="none" stroke="#b4a2cc" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="103,471 129,471" fill="none" stroke="#b4a2cc" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="103,484 140,484" fill="none" stroke="#b4a2cc" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="195" y="400" width="90" height="100" rx="13" fill="#ffffff" stroke="#b4a2cc" stroke-width="2"/>
+<text x="240.0" y="437" class="title" text-anchor="middle">B</text>
+<polyline points="213,458 257,458" fill="none" stroke="#b4a2cc" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="213,471 239,471" fill="none" stroke="#b4a2cc" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="213,484 250,484" fill="none" stroke="#b4a2cc" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="305" y="400" width="90" height="100" rx="13" fill="#ffffff" stroke="#b4a2cc" stroke-width="2"/>
+<text x="350.0" y="437" class="title" text-anchor="middle">C</text>
+<polyline points="323,458 367,458" fill="none" stroke="#b4a2cc" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="323,471 349,471" fill="none" stroke="#b4a2cc" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="323,484 360,484" fill="none" stroke="#b4a2cc" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="130,512 130,530" fill="none" stroke="#8b76a6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="240,512 240,530" fill="none" stroke="#8b76a6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="350,512 350,530" fill="none" stroke="#8b76a6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="130,530 350,530" fill="none" stroke="#8b76a6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="235" y="574" class="body" text-anchor="middle" style="fill:#6c5588">Options · assumptions</text>
+<text x="235" y="610" class="body" text-anchor="middle" style="fill:#6c5588">Tests · uncertainties</text>
+<polyline points="240,622 240.0,657.0" fill="none" stroke="#8b76a6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="240,668 234.48,656.0 245.52,656.0" fill="#8b76a6"/>
+<rect x="85" y="680" width="300" height="80" rx="16" fill="#f0eaf8" stroke="#bca9d3" stroke-width="2"/>
+<text x="235.0" y="710" class="title" text-anchor="middle">Compare &amp; choose</text>
+<text x="235.0" y="745" class="body" text-anchor="middle">Plan + open questions</text>
+<rect x="510" y="350" width="280" height="65" rx="16" fill="#e8f3f0" stroke="#aac9c1" stroke-width="2"/>
+<text x="650.0" y="392.5" class="title" text-anchor="middle">Task coordinator</text>
+<polyline points="397,720 438,720 438,328 560,328 560.0,335.4" fill="none" stroke="#5f9188" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="560,338 558.344,334.4 561.656,334.4" fill="#5f9188"/>
+<polyline points="610,425 610,440 500,440 500,606" fill="none" stroke="#5f9188" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="540" y="475" width="230" height="46" rx="16" fill="#ffffff" stroke="#b4d0c9" stroke-width="2"/>
+<text x="655.0" y="508.0" class="title" text-anchor="middle">Literature</text>
+<polyline points="500,498 518.92,498.0" fill="none" stroke="#5f9188" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="528,498 517.92,502.6368 517.92,493.3632" fill="#5f9188"/>
+<polyline points="782,498 800,498" fill="none" stroke="#5f9188" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="540" y="529" width="230" height="46" rx="16" fill="#ffffff" stroke="#b4d0c9" stroke-width="2"/>
+<text x="655.0" y="562.0" class="title" text-anchor="middle">Computation</text>
+<polyline points="500,552 518.92,552.0" fill="none" stroke="#5f9188" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="528,552 517.92,556.6368 517.92,547.3632" fill="#5f9188"/>
+<polyline points="782,552 800,552" fill="none" stroke="#5f9188" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="540" y="583" width="230" height="46" rx="16" fill="#ffffff" stroke="#b4d0c9" stroke-width="2"/>
+<text x="655.0" y="616.0" class="title" text-anchor="middle">Data &amp; figures</text>
+<polyline points="500,606 518.92,606.0" fill="none" stroke="#5f9188" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="528,606 517.92,610.6368 517.92,601.3632" fill="#5f9188"/>
+<polyline points="782,606 800,606" fill="none" stroke="#5f9188" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="800,498 800,642 640,642" fill="none" stroke="#5f9188" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="640,642 640.0,659.64" fill="none" stroke="#5f9188" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="640,668 635.6944,658.64 644.3056,658.64" fill="#5f9188"/>
+<rect x="490" y="680" width="300" height="80" rx="16" fill="#e8f3f0" stroke="#aac9c1" stroke-width="2"/>
+<text x="640.0" y="710" class="title" text-anchor="middle">Evidence package</text>
+<text x="640.0" y="745" class="body" text-anchor="middle">Check sources &amp; outputs</text>
+<polyline points="488,720 476,720 476,382 491.08,382.0" fill="none" stroke="#ac8950" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="498,382 490.08,385.6432 490.08,378.3568" fill="#ac8950"/>
+<text x="1045" y="345" class="body" text-anchor="middle">Independent reviewers</text>
+<polyline points="802,720 843,720 843,365 1160,365" fill="none" stroke="#5d7c98" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="940,365 940.0,380.72" fill="none" stroke="#5d7c98" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="940,388 936.1912,379.72 943.8088,379.72" fill="#5d7c98"/>
+<polyline points="1050,365 1050.0,380.72" fill="none" stroke="#5d7c98" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="1050,388 1046.1912,379.72 1053.8088,379.72" fill="#5d7c98"/>
+<polyline points="1160,365 1160.0,380.72" fill="none" stroke="#5d7c98" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="1160,388 1156.1912,379.72 1163.8088,379.72" fill="#5d7c98"/>
+<rect x="895" y="400" width="90" height="100" rx="13" fill="#ffffff" stroke="#a5b8d0" stroke-width="2"/>
+<text x="940.0" y="437" class="title" text-anchor="middle">A</text>
+<polyline points="913,458 957,458" fill="none" stroke="#a5b8d0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="913,471 939,471" fill="none" stroke="#a5b8d0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="913,484 950,484" fill="none" stroke="#a5b8d0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="1005" y="400" width="90" height="100" rx="13" fill="#ffffff" stroke="#a5b8d0" stroke-width="2"/>
+<text x="1050.0" y="437" class="title" text-anchor="middle">B</text>
+<polyline points="1023,458 1067,458" fill="none" stroke="#a5b8d0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="1023,471 1049,471" fill="none" stroke="#a5b8d0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="1023,484 1060,484" fill="none" stroke="#a5b8d0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="1115" y="400" width="90" height="100" rx="13" fill="#ffffff" stroke="#a5b8d0" stroke-width="2"/>
+<text x="1160.0" y="437" class="title" text-anchor="middle">C</text>
+<polyline points="1133,458 1177,458" fill="none" stroke="#a5b8d0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="1133,471 1159,471" fill="none" stroke="#a5b8d0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="1133,484 1170,484" fill="none" stroke="#a5b8d0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="940,512 940,530" fill="none" stroke="#5d7c98" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="1050,512 1050,530" fill="none" stroke="#5d7c98" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="1160,512 1160,530" fill="none" stroke="#5d7c98" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="940,530 1160,530" fill="none" stroke="#5d7c98" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="1045" y="574" class="body" text-anchor="middle" style="fill:#506c8d">Evidence · alternatives</text>
+<text x="1045" y="610" class="body" text-anchor="middle" style="fill:#506c8d">Targeted follow-up</text>
+<polyline points="1050,622 1050.0,657.0" fill="none" stroke="#5d7c98" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="1050,668 1044.48,656.0 1055.52,656.0" fill="#5d7c98"/>
+<rect x="895" y="680" width="300" height="80" rx="16" fill="#e9f0fa" stroke="#acbfd9" stroke-width="2"/>
+<text x="1045.0" y="710" class="title" text-anchor="middle">Review synthesis</text>
+<text x="1045.0" y="745" class="body" text-anchor="middle">Resolve or retain doubts</text>
+<polyline points="1005,772 1005,808 438,808 438,720" fill="none" stroke="#5f9188" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="438" cy="720" r="5.5" fill="#5f9188"/>
+<polyline points="1080,772 1080,832 235,832 235.0,783.0" fill="none" stroke="#8b76a6" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="235,772 240.52,784.0 229.48,784.0" fill="#8b76a6"/>
+<rect x="870" y="865" width="350" height="90" rx="16" fill="#f3f1f8" stroke="#cfc5df" stroke-width="2"/>
+<text x="1045.0" y="901" class="title" text-anchor="middle">Optional writing</text>
+<text x="1045.0" y="940" class="body" text-anchor="middle">Report &amp; explain</text>
+<rect x="465" y="865" width="350" height="90" rx="16" fill="#fff6e5" stroke="#dcc9a7" stroke-width="2"/>
+<text x="640.0" y="901" class="title" text-anchor="middle">Researcher review</text>
+<text x="640.0" y="940" class="body" text-anchor="middle">Findings + next choices</text>
+<polyline points="1207,720 1260,720 1260,910 1241.08,910.0" fill="none" stroke="#5d7c98" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="1232,910 1242.08,905.3632 1242.08,914.6368" fill="#5d7c98"/>
+<text x="1293" y="817" class="body" text-anchor="middle" transform="rotate(90 1293 817)" style="fill:#506c8d">Ready</text>
+<polyline points="858,910 837.16,910.0" fill="none" stroke="#ac8950" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="827,910 838.16,904.8664 838.16,915.1336" fill="#ac8950"/>
+<polyline points="60,871 86,871" fill="none" stroke="#ac8950" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="100" y="879" class="body" text-anchor="start" style="fill:#ac8950">Repair execution</text>
+<polyline points="60,907 86,907" fill="none" stroke="#5f9188" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="100" y="915" class="body" text-anchor="start" style="fill:#5f9188">Add evidence</text>
+<polyline points="60,943 86,943" fill="none" stroke="#8b76a6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="100" y="951" class="body" text-anchor="start" style="fill:#8b76a6">Reconsider the plan</text>
+<circle cx="800" cy="112" r="19" fill="#b45309" stroke="#ffffff" stroke-width="3"/>
+<circle cx="800" cy="107.0" r="5.2" fill="#ffffff"/>
+<rect x="791.5" y="113.5" width="17.0" height="9.5" rx="4.5" fill="#ffffff"/>
+<circle cx="394" cy="676" r="19" fill="#b45309" stroke="#ffffff" stroke-width="3"/>
+<circle cx="394" cy="671.0" r="5.2" fill="#ffffff"/>
+<rect x="385.5" y="677.5" width="17.0" height="9.5" rx="4.5" fill="#ffffff"/>
+<circle cx="800" cy="867" r="19" fill="#b45309" stroke="#ffffff" stroke-width="3"/>
+<circle cx="800" cy="862.0" r="5.2" fill="#ffffff"/>
+<rect x="791.5" y="868.5" width="17.0" height="9.5" rx="4.5" fill="#ffffff"/>
+<circle cx="800" cy="676" r="19" fill="#ffffff" stroke="#b45309" stroke-width="2.6" stroke-dasharray="5 4"/>
+<circle cx="800" cy="671.0" r="5.2" fill="#b45309"/>
+<rect x="791.5" y="677.5" width="17.0" height="9.5" rx="4.5" fill="#b45309"/>
+<circle cx="1205" cy="676" r="19" fill="#ffffff" stroke="#b45309" stroke-width="2.6" stroke-dasharray="5 4"/>
+<circle cx="1205" cy="671.0" r="5.2" fill="#b45309"/>
+<rect x="1196.5" y="677.5" width="17.0" height="9.5" rx="4.5" fill="#b45309"/>
+<g font-size="28">
+<circle cx="560" cy="34" r="20" fill="#b45309" stroke="#ffffff" stroke-width="3"/>
+<circle cx="560" cy="28.7" r="5.5" fill="#ffffff"/>
+<rect x="551.1" y="35.6" width="17.9" height="10.0" rx="4.7" fill="#ffffff"/>
+<text x="590" y="47" font-family="Arial,Helvetica,sans-serif" font-size="36" style="fill:#b45309">Human check</text>
+<circle cx="866" cy="34" r="20" fill="#ffffff" stroke="#b45309" stroke-width="2.6" stroke-dasharray="5 4"/>
+<circle cx="866" cy="28.7" r="5.5" fill="#b45309"/>
+<rect x="857.1" y="35.6" width="17.9" height="10.0" rx="4.7" fill="#b45309"/>
+<text x="896" y="47" font-family="Arial,Helvetica,sans-serif" font-size="36" style="fill:#b45309">Optional human check</text>
+<circle cx="395" cy="112" r="19" fill="#b45309" stroke="#ffffff" stroke-width="3"/>
+<circle cx="395" cy="107.0" r="5.2" fill="#ffffff"/>
+<rect x="386.5" y="113.5" width="17.0" height="9.5" rx="4.5" fill="#ffffff"/>
+<circle cx="1215" cy="112" r="19" fill="#b45309" stroke="#ffffff" stroke-width="3"/>
+<circle cx="1215" cy="107.0" r="5.2" fill="#ffffff"/>
+<rect x="1206.5" y="113.5" width="17.0" height="9.5" rx="4.5" fill="#ffffff"/>
+<circle cx="792" cy="352" r="19" fill="#ffffff" stroke="#b45309" stroke-width="2.6" stroke-dasharray="5 4"/>
+<circle cx="792" cy="347.0" r="5.2" fill="#b45309"/>
+<rect x="783.5" y="353.5" width="17.0" height="9.5" rx="4.5" fill="#b45309"/>
+<circle cx="1205" cy="867" r="19" fill="#ffffff" stroke="#b45309" stroke-width="2.6" stroke-dasharray="5 4"/>
+<circle cx="1205" cy="862.0" r="5.2" fill="#b45309"/>
+<rect x="1196.5" y="868.5" width="17.0" height="9.5" rx="4.5" fill="#b45309"/>
+</g>
+</svg>

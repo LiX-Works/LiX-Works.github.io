@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LiX · Agents for research, researcher in charge</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="description" content="Open-source AI-agent tools for scientific research, live physics demos, and an interactive periodic table of the techniques behind them.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#edf1f6;--tile:#fff;--line:rgba(17,19,22,.08);--ink:#0d1626;--ink2:#3c4757;--muted:#7a8698;--accent:#1f4fd1;--accent-soft:#dfe8fb;
+  --human:#b45309;--human-soft:#fff1de;--hum-bg:#0e1b36;--hum-fg:#c9d6ee;--hum-acc:#f2a541;--hero1:#ffffff;--hero2:#e6edf6;--toy1:#fbfcfe;--toy2:#e8eef7;
+  --sans:"Inter Tight",Inter,system-ui,sans-serif;--serif:"Instrument Serif",Georgia,serif;--mono:"JetBrains Mono",ui-monospace,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+body.locked{overflow:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit}
+.page{max-width:1380px;margin:0 auto;padding:22px 28px 40px}
+.top{display:flex;justify-content:space-between;align-items:center;padding:4px 4px 22px}
+.top .mark{display:flex;gap:10px;align-items:center;font-weight:700;font-size:17px}
+.top .mark b{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:var(--ink);color:#fff;font:600 13px var(--mono)}
+.top a.gh{font-weight:650;font-size:14px;padding:10px 15px;border-radius:12px;background:var(--ink);color:#fff}
+
+/* ---------- bento cards ---------- */
+.bento{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-auto-rows:72px;gap:14px}
+.t{position:relative;background:var(--tile);border-radius:26px;overflow:hidden;border:1px solid var(--line);display:flex;flex-direction:column;
+  transition:transform .4s cubic-bezier(.2,.8,.2,1), box-shadow .4s, opacity .6s;opacity:0;transform:translateY(16px)}
+.t.in{opacity:1;transform:none}
+a.t:hover{transform:translateY(-4px);box-shadow:0 30px 60px -40px rgba(17,19,22,.55)}
+a.t:hover .fig img{transform:scale(1.025)}
+.t .pad{padding:24px 26px}
+.t small{font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.t h3{margin:8px 0 6px;font-size:23px;letter-spacing:-.02em;line-height:1.15}
+.t p{margin:0;font-size:15px;line-height:1.5;color:var(--ink2)}
+.t .fig{flex:1;min-height:0;position:relative;border-top:1px solid var(--line);background:#fff}
+.t .fig img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:12px;transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.t .arrow{position:absolute;right:20px;top:20px;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--bg);font-size:15px;transition:all .3s}
+a.t:hover .arrow{background:var(--ink);color:#fff}
+.t .hu{margin-top:10px;font-size:13.5px;font-weight:650;color:var(--human)}
+.bd{display:inline-block;font:600 10.5px var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:3px 7px;border-radius:99px;background:var(--accent-soft);color:var(--accent);vertical-align:3px;margin-left:6px}
+
+.hero{grid-column:span 6;grid-row:span 4;padding:26px 0 20px;justify-content:space-between;background:radial-gradient(120% 120% at 0% 0%,var(--hero1) 0%,var(--hero2) 100%)}
+.hero h1{font-size:clamp(32px,3.3vw,48px);line-height:1;letter-spacing:-.03em;margin:0 0 12px;padding:0 32px;font-weight:700}
+.hero h1 em{font-family:var(--serif);font-weight:400;font-style:italic;color:var(--accent);letter-spacing:-.01em}
+.hero p{font-size:15.5px;line-height:1.5;max-width:40em;padding:0 32px}
+.mq{display:flex;flex-direction:column;gap:10px}
+.marquee{overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.marquee .row{display:flex;gap:10px;width:max-content;animation:slide 46s linear infinite}
+.marquee.rev .row{animation-direction:reverse;animation-duration:52s}
+.marquee:hover .row{animation-play-state:paused}
+.chip{flex:none;padding:12px 18px;border-radius:15px;background:#fff;border:1px solid var(--line);font-size:16px;line-height:1.3;white-space:nowrap;box-shadow:0 8px 18px -14px rgba(17,19,22,.35)}
+.chip b{font-size:17px;font-weight:700;margin-right:6px}
+.chip span{color:var(--muted)}
+.chip.h{background:var(--human-soft);border-color:transparent}.chip.h b{color:var(--human)}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+.live-t{grid-row:span 4}
+.live-t .live{flex:1;min-height:0;background:#e9f0f6}
+.live-t .cap{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 22px;border-top:1px solid var(--line)}
+.live-t .cap b{font-size:17px}.live-t .cap span{display:block;font-size:14px;color:var(--muted)}
+.live-t .cap a{flex:none;font-size:13.5px;font-weight:650;padding:8px 12px;border-radius:10px;background:var(--bg)}
+.s7{grid-column:span 7}.s5{grid-column:span 5}
+.r4{grid-row:span 5}.c3{grid-column:span 3}.c4{grid-column:span 4}.c5{grid-column:span 5}
+.hum{background:var(--hum-bg);color:var(--hum-fg);border-color:var(--hum-bg);justify-content:space-between}
+.hum small{color:var(--hum-acc);opacity:.85}
+.hum blockquote{margin:14px 0 0;font-family:var(--serif);font-size:36px;line-height:1.05;letter-spacing:-.01em;color:#fff}
+.hum blockquote em{color:var(--hum-acc)}
+.hum p{color:var(--hum-fg)}
+.hum .figp{display:flex;gap:8px;margin-top:16px}
+.hum .figp i{width:34px;height:34px;border-radius:50%;border:2.5px solid var(--hum-acc);position:relative}
+.hum .figp i::before{content:"";position:absolute;left:50%;top:6px;width:9px;height:9px;margin-left:-4.5px;border-radius:50%;background:var(--hum-acc)}
+.hum .figp i::after{content:"";position:absolute;left:50%;bottom:5px;width:16px;height:8px;margin-left:-8px;border-radius:8px 8px 3px 3px;background:var(--hum-acc)}
+.hum .figp i.o{border-style:dashed;opacity:.8}
+.dark{background:#0f1217;color:#e6eaf0;border-color:#0f1217}
+.dark small{color:#8a94a2}.dark p{color:#b7c0cc}.dark .fig{background:#0f1217;border-top-color:rgba(255,255,255,.08)}.dark .arrow{background:rgba(255,255,255,.08)}
+.gal{position:absolute;inset:0}
+.gal img{opacity:0;transition:opacity 1s}.gal img.on{opacity:1}
+.gh-t{background:var(--ink);color:#fff;border-color:var(--ink);justify-content:space-between}
+.gh-t small{color:#9aa1aa}.gh-t p{color:#c9ced5}
+.gh-t .big{font-size:30px;font-weight:700;letter-spacing:-.02em;line-height:1.1;margin-top:10px}
+.gh-t .go{display:inline-flex;align-items:center;gap:8px;margin-top:18px;padding:12px 16px;border-radius:12px;background:#fff;color:var(--ink);font-weight:700;font-size:15px;width:max-content}
+.foot{display:flex;flex-wrap:wrap;gap:8px 22px;justify-content:space-between;padding:26px 6px 0;font-size:14.5px;color:var(--muted)}
+.foot a{color:var(--ink2);font-weight:600}
+
+/* ---------- periodic table: shared element look (preview and full view) ---------- */
+/* fill, border, text, glow */
+.k-tech {--f:#dcf4ea;--b:#74caa4;--t:#0e6a4d;--g:#34d399}
+.k-human{--f:#fff2c6;--b:#ecc54a;--t:#8a5a00;--g:#fbbf24}
+.k-tool {--f:#dbe6ff;--b:#88a9f2;--t:#1c46c9;--g:#5b8cff}
+.k-kit  {--f:#e3e9f4;--b:#9fb1cb;--t:#2a3d5c;--g:#8fb0ff}
+.k-loop {--f:#e7e4ff;--b:#a69cf2;--t:#4b3fc4;--g:#8b7dff}
+.k-vis  {--f:#d5f0fa;--b:#73c4de;--t:#0d6580;--g:#38c8f5}
+.k-side {--f:#e8ecf1;--b:#b7c2cf;--t:#4b5563;--g:#9fb0c8}
+.pt-stage{position:relative;perspective:2000px;perspective-origin:80% 20%}
+.pt{position:relative;transform-style:preserve-3d;transform:rotateX(var(--rx)) rotateZ(var(--rz)) rotateX(var(--px,0deg)) rotateY(var(--py,0deg));will-change:transform}
+.pt-grid{display:grid;grid-template-columns:1fr 1fr .42fr 1fr 1fr 1fr;gap:var(--gap,12px);transform-style:preserve-3d}
+.el{position:relative;aspect-ratio:1/.9;transform-style:preserve-3d;cursor:pointer;--z:0px;--th:9px}
+.el .ring{position:absolute;inset:-5px;border-radius:14px;border:2px solid var(--gc,var(--g));opacity:0;
+  box-shadow:0 0 16px var(--gc,var(--g)),inset 0 0 14px color-mix(in srgb,var(--gc,var(--g)) 60%,transparent);transition:opacity .35s, border-color .35s}
+.el .ring::before,.el .ring::after{content:"";position:absolute;border-radius:18px;border:1.5px solid var(--gc,var(--g))}
+.el .ring::before{inset:-9px;opacity:.45}
+.el .ring::after{inset:-18px;opacity:.2;border-radius:24px}
+.el .wave{position:absolute;inset:-4px;border-radius:14px;border:3px solid var(--sel);opacity:0;pointer-events:none}
+.el .slab{position:absolute;inset:0;border-radius:10px;transform-style:preserve-3d;transform:translateZ(calc(var(--th) + var(--z)));
+  background:linear-gradient(155deg,rgba(255,255,255,.65),rgba(255,255,255,0) 45%),var(--f);border:1.5px solid var(--b);
+  display:flex;flex-direction:column;justify-content:space-between;padding:8% 10%;transition:transform .5s cubic-bezier(.3,1.4,.4,1), border-color .35s, box-shadow .35s}
+.el .slab::before{content:"";position:absolute;left:-1.5px;right:-1.5px;top:calc(100% + 1.5px);height:var(--th);background:color-mix(in srgb,var(--b) 72%,#0a1424);transform-origin:top;transform:rotateX(-90deg);border-radius:0 0 8px 8px}
+.el .slab::after{content:"";position:absolute;top:-1.5px;bottom:-1.5px;left:calc(100% + 1.5px);width:var(--th);background:color-mix(in srgb,var(--b) 58%,#0a1424);transform-origin:left;transform:rotateY(90deg);border-radius:0 8px 8px 0}
+.el .no{font:600 clamp(9px,.8vw,12px) var(--mono);color:var(--t);opacity:.8}
+.el .sym{font:700 clamp(20px,2.4vw,40px)/1 var(--sans);letter-spacing:-.02em;color:var(--t)}
+.el .nm{font-size:clamp(10px,.9vw,13.5px);line-height:1.15;font-weight:650;color:var(--t)}
+.el .veil{position:absolute;inset:-2px;border-radius:10px;background:var(--veil);opacity:0;transition:opacity .35s;pointer-events:none}
+.el.building .slab{border-style:dashed}
+.pt.focus .el:not(.lo):not(.hi):not(.sel) .veil{opacity:1}
+.el.lo{--z:14px}.el.lo .ring{opacity:.5}
+.el.hi{--z:30px}.el.hi .ring{opacity:1}.el.hi .slab{border-color:var(--g);box-shadow:0 0 0 1px var(--g),0 0 22px -4px var(--g)}
+.el.sel{--z:42px;--gc:var(--sel)}.el.sel .ring{opacity:1}.el.sel .slab{border-color:var(--sel);box-shadow:0 0 0 1.5px var(--sel),0 0 30px -2px var(--sel)}
+.el.press .slab{animation:press .55s cubic-bezier(.3,1.4,.4,1)}
+.el.press .wave{animation:wave .8s ease-out}
+@keyframes press{0%{transform:translateZ(calc(var(--th) + 30px))}25%{transform:translateZ(calc(var(--th) - 3px))}100%{transform:translateZ(calc(var(--th) + var(--z)))}}
+@keyframes wave{0%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.9)}}
+@keyframes hum{50%{opacity:.55}}
+.el.hi .ring::before,.el.sel .ring::before{animation:hum 1.8s ease-in-out infinite}
+.pt-gaptxt{grid-row:1;grid-column:2/6;align-self:center;justify-self:center;text-align:center;transform:translateZ(1px)}
+
+/* ---------- row 1: the toy preview ---------- */
+.toy{grid-column:span 6;grid-row:span 4;cursor:pointer;background:radial-gradient(120% 120% at 100% 0%,var(--toy1) 0%,var(--toy2) 100%);--veil:rgba(232,238,247,.7);--sel:#f5b301}
+.toy-head{padding:22px 26px 0;z-index:3;position:relative;display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.toy-head h2{margin:0;font-size:clamp(24px,2.3vw,32px);line-height:1.08;letter-spacing:-.025em;font-weight:700}
+.toy-head h2 em{font-family:var(--serif);font-weight:400;font-style:italic;color:var(--accent);letter-spacing:-.005em}
+.toy-head p{margin:6px 0 0;font-size:16px;line-height:1.45;color:var(--ink2)}
+.toy .pt-stage{flex:1;overflow:hidden;-webkit-mask-image:linear-gradient(#000 70%,transparent);mask-image:linear-gradient(#000 70%,transparent)}
+.toy .pt{position:absolute;left:9%;top:2px;width:78%;--rx:27deg;--rz:8deg;--gap:8px;transform-origin:50% 30%}
+.toy .el .nm{display:none}
+.toy .el .sym{font-size:clamp(18px,2vw,30px)}
+.toy .el.sel{--z:30px}.toy .el.hi{--z:22px}.toy .el.lo{--z:10px}
+.play-hint{font:750 clamp(18px,1.9vw,27px)/1.1 var(--sans);letter-spacing:-.02em;color:var(--accent);display:inline-flex;align-items:center;gap:10px;white-space:nowrap}
+.play-hint i{font-style:normal;display:grid;place-items:center;width:1.5em;height:1.5em;border-radius:50%;background:var(--accent);color:#fff;font-size:.7em;box-shadow:0 0 0 0 rgba(31,79,209,.45);animation:beckon 1.8s infinite}
+@keyframes beckon{0%{box-shadow:0 0 0 0 rgba(31,79,209,.45)}70%{box-shadow:0 0 0 12px rgba(31,79,209,0)}100%{box-shadow:0 0 0 0 rgba(31,79,209,0)}}
+.toy:hover .play-hint i{animation:none;transform:scale(1.1)}
+
+/* ---------- the full table (overlay) ---------- */
+.lab{position:fixed;inset:0;z-index:50;display:none;overflow:auto;color:#e7eefb;
+  background:radial-gradient(90% 70% at 35% 45%,#16284a 0%,#0b1528 55%,#060b16 100%);--veil:rgba(8,16,32,.45);--sel:#ffd166}
+.lab.open{display:block;animation:fade .35s ease}
+@keyframes fade{from{opacity:0}}
+.lab-in{max-width:1400px;margin:0 auto;padding:28px 34px 40px;position:relative}
+.lab .x{position:absolute;right:30px;top:24px;width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;font-size:22px;cursor:pointer}
+.lab .x:hover{background:rgba(255,255,255,.18)}
+.lab h2{padding-right:60px;margin:0 0 10px;font-size:clamp(30px,3.2vw,46px);line-height:1.05;letter-spacing:-.025em;font-weight:750;color:#fff}
+.lab h2 em{font-family:var(--serif);font-weight:400;font-style:italic;color:#8fb2ff}
+.lab .guide{font-size:19px;line-height:1.45;color:#b9c7e2;margin:0}
+.lab .guide b{color:#fff}
+.lab-grid{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:34px;align-items:start;margin-top:8px}
+.lab .pt-stage{height:660px;perspective:2400px;perspective-origin:50% 20%}
+.lab .pt{position:absolute;left:6%;top:16px;width:78%;--rx:36deg;--rz:0deg;--gap:14px;transform-origin:50% 45%}
+/* Floor grid: fine blue lines lying under the table, in perspective. */
+.lab .pt::before{content:"";position:absolute;inset:-260px -420px -320px;transform:translateZ(-1px);pointer-events:none;
+  background-image:linear-gradient(rgba(110,160,255,.13) 1px,transparent 1px),linear-gradient(90deg,rgba(110,160,255,.13) 1px,transparent 1px);background-size:24px 24px;
+  -webkit-mask-image:radial-gradient(closest-side,#000 45%,transparent);mask-image:radial-gradient(closest-side,#000 45%,transparent)}
+.lab .el .slab{box-shadow:0 18px 30px -18px rgba(0,0,0,.7)}
+.blk{grid-row:1;align-self:end;padding-bottom:8px;font:700 19px var(--mono);letter-spacing:.12em;text-transform:uppercase;transform:translateZ(1px)}
+.blk.l{grid-column:1/3;color:#6ee7b7}.blk.r{grid-column:4/7;color:#9db8ff;text-align:right}
+.lab .pt-gaptxt{grid-row:2;align-self:start;font:600 18px/1.35 var(--sans);color:#c7d5f0;opacity:.9}
+.lab .side-row{display:grid;grid-template-columns:1fr 1fr .42fr 1fr 1fr 1fr;gap:var(--gap);margin-top:26px;transform-style:preserve-3d}
+.lab .side-row .lb{grid-column:1/4;align-self:center;text-align:right;padding-right:6px;font:600 14px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#7f91b3;transform:translateZ(1px)}
+.card{position:sticky;top:24px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);border-radius:22px;overflow:hidden;backdrop-filter:blur(10px);box-shadow:0 40px 80px -40px rgba(0,0,0,.8)}
+.card .hd{display:flex;gap:16px;align-items:center;padding:22px 22px 18px}
+.card .sq{flex:none;width:78px;height:72px;border-radius:12px;background:var(--f);border:2px solid var(--b);display:grid;place-items:center;font:800 32px var(--sans);color:var(--t);box-shadow:0 0 24px -6px var(--g)}
+.card small{display:block;font:600 13px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#8ea4cc;margin-bottom:4px}
+.card h3{margin:0;font-size:26px;line-height:1.1;letter-spacing:-.02em;color:#fff}
+.card .ln{padding:0 22px 18px;font-size:18.5px;line-height:1.45;color:#d3def3}
+.card .im{margin:0 22px 18px;aspect-ratio:16/9;border-radius:14px;background:#fff;position:relative;overflow:hidden}
+.card .im img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:8px}
+.card .bl{padding:0 22px 20px}
+.card .bl b{display:block;font:600 13px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#8ea4cc;margin-bottom:10px}
+.card .tags{display:flex;flex-wrap:wrap;gap:8px}
+.card .tags span{cursor:pointer;padding:8px 12px;border-radius:10px;background:color-mix(in srgb,var(--f) 18%,transparent);border:1px solid color-mix(in srgb,var(--b) 70%,transparent);color:#fff;font-size:15px;font-weight:600}
+.card .tags span:hover{background:color-mix(in srgb,var(--f) 32%,transparent)}
+.card a.go{display:inline-block;margin:0 22px 22px;padding:12px 18px;border-radius:12px;background:#fff;color:#0b1528;font-weight:700;font-size:15px}
+
+@media (max-width:1100px){.toy,.hero,.s7,.s5{grid-column:span 12}.c3,.c4,.c5{grid-column:span 6}.bento{grid-auto-rows:auto}.t{min-height:0}.toy,.hero{min-height:330px}.live-t{min-height:300px}.r4{min-height:400px}
+  .lab-grid{grid-template-columns:1fr}.card{position:relative;top:0}.lab .pt-stage{height:520px}}
+@media (max-width:680px){
+  .page{padding:14px 12px 30px}.bento{gap:10px}.c3,.c4,.c5{grid-column:span 12}.hero{padding:24px 0 18px}.hero h1,.hero p{padding:0 20px}
+  .toy .pt{width:118%;top:26px}.toy .el .no{display:none}
+  .lab-in{padding:20px 14px}.lab .pt-stage{height:380px}.lab .pt{left:0;top:70px;width:100%;--gap:6px}.lab .el .nm,.lab .el .no,.lab .pt-gaptxt{display:none}.blk{font-size:11px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.t{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="top"><div class="mark"><b>LX</b>LiX</div><a class="gh" href="https://github.com/LiX-Works">GitHub ↗</a></header>
+  <div class="bento" id="bento">
+    <section class="t toy" id="toy" role="button" tabindex="0" aria-label="Open the interactive periodic table">
+      <div class="toy-head"><div><h2>A <em>periodic table</em> of my AI toolkit</h2><p>My open-source projects and the techniques they are built from.</p></div></div>
+      <div class="pt-stage"><div class="pt" id="mini"></div></div>
+    </section>
+    <section class="t hero">
+      <div>
+        <h1>Agents do the legwork.<br><em>The researcher decides.</em></h1>
+        <p id="intro"></p>
+      </div>
+      <div class="mq">
+        <div class="marquee"><div class="row" id="mq1"></div></div>
+        <div class="marquee rev"><div class="row" id="mq2"></div></div>
+      </div>
+    </section>
+  </div>
+  <div class="foot" id="foot"></div>
+</div>
+
+<div class="lab" id="lab" aria-hidden="true">
+  <div class="lab-in" role="dialog" aria-modal="true" aria-label="A periodic table of my AI toolkit">
+    <button class="x" id="close" aria-label="Close">×</button>
+    <h2>A <em>periodic table</em> of my AI toolkit</h2>
+    <p class="guide"><b>Left: the techniques.</b> <b>Right: my projects.</b> Hover a tile to see how they connect; click it for details.</p>
+    <div class="lab-grid">
+      <div class="pt-stage" id="labStage"><div class="pt" id="full"></div></div>
+      <aside class="card" id="card"></aside>
+    </div>
+  </div>
+</div>
+
+<script src="shared/content.js"></script>
+<script src="shared/live/embed.js"></script>
+<script>
+const H = window.HUB, P = H.byId, T = H.terms, FIG = 'shared/fig/';
+document.getElementById('intro').textContent = H.intro;
+const chipOf = ([k, t]) => `<div class="chip${k === 'hitl' ? ' h' : ''}"><b>${t.name}</b><span>${t.gloss}</span></div>`;
+const terms = Object.entries(T), half = Math.ceil(terms.length / 2);
+const row1 = terms.slice(0, half).map(chipOf).join(''), row2 = terms.slice(half).map(chipOf).join('');
+document.getElementById('mq1').innerHTML = row1 + row1;
+document.getElementById('mq2').innerHTML = row2 + row2;
+
+/* ---------- the cards ---------- */
+const tile = (id, cls, extra = {}) => {
+  const p = P[id];
+  return `<a class="t ${cls}${extra.dark ? ' dark' : ''}" href="${p.repo}" data-p="${id}">
+    <div class="pad"><small>${H.groups[p.group].name}</small><h3>${p.name}${p.status ? `<span class="bd">${p.status}</span>` : ''}</h3><p>${p.line}</p>${p.human && extra.hum ? `<div class="hu">● ${p.human}</div>` : ''}</div>
+    <div class="fig">${extra.gallery ? `<div class="gal">${extra.gallery.map((g, i) => `<img src="${FIG + g}" alt="" class="${i ? '' : 'on'}">`).join('')}</div>` : `<img src="${FIG + (extra.fig || p.fig)}" alt="${p.name} figure" loading="lazy">`}</div>
+    <span class="arrow">↗</span></a>`;
+};
+document.getElementById('bento').insertAdjacentHTML('beforeend', `
+  <section class="t live-t s7" id="demos"><div class="live" data-live="proxitouch" data-chart="off" data-badge-pos="bl"></div>
+    <div class="cap"><div><b>ProxiTouch · interactive 3D lesson</b><span>One electrode senses approach, touch and press, on two channels. Part of two lessons on capacitive sensing.</span></div><a href="${P.capacitance.site}">Open the lessons ↗</a></div></section>
+  <section class="t live-t s5"><div class="live" data-live="edl" data-fx="0.08"></div>
+    <div class="cap"><div><b>EDL gating · rendered from code</b><span>A thin dielectric under high field breaks down.</span></div><a href="${P.animation.site}">Full film ↗</a></div></section>
+  ${tile('comsol', 'c5 r4', { hum: true })}
+  ${tile('scholarfetch', 'c4 r4', { hum: true })}
+  <section class="t c3 r4 hum"><div class="pad"><small>Human-in-the-Loop</small><blockquote>Agents draft.<br><em>A researcher decides.</em></blockquote><div class="figp"><i></i><i></i><i class="o"></i></div></div>
+    <div class="pad" style="padding-top:0"><p>Every tool stops at checkpoints, solid for required reviews and dashed for optional ones, where a person checks the evidence.</p></div></section>
+  ${tile('origin', 'c4 r4', { gallery: P.origin.gallery, hum: true })}
+  ${tile('autocite', 'c4 r4', { hum: true })}
+  ${tile('loop', 'c4 r4', { hum: true })}
+  ${tile('search', 'c4 r4', { dark: true, fig: 'search-booster-dark.webp' })}
+  ${tile('subagent', 'c4 r4')}
+  <a class="t c4 r4 gh-t" href="${H.github}"><div class="pad"><small>All open source</small><div class="big">Every project lives on GitHub.</div><p style="margin-top:12px">${H.githubLine}</p><span class="go">github.com/LiX-Works ↗</span></div></a>`);
+document.getElementById('foot').innerHTML = `<span>Also built: ${H.projects.filter(p => p.group === 'side').map(p => `<a href="${p.repo}">${p.name}</a>`).join(' · ')}</span><span><a href="https://github.com/LiX-Works/LiX-Works.github.io/blob/main/THIRD_PARTY_NOTICES.md">Credits</a> · © LiX</span>`;
+setInterval(() => document.querySelectorAll('.gal').forEach(g => { const im = [...g.children], i = im.findIndex(x => x.classList.contains('on')); im[i].classList.remove('on'); im[(i + 1) % im.length].classList.add('on'); }), 2600);
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -5% 0px' });
+document.querySelectorAll('.t').forEach(t => io.observe(t));
+
+/* ---------- elements: techniques on the left, projects on the right ---------- */
+const E = [
+  { s: 'Hl', t: 'hitl',    k: 'human', r: 1, c: 1 },
+  { s: 'Lp', p: 'loop',    k: 'loop',  r: 1, c: 6, cfg: ['Sa', 'Ce', 'Pe', 'Hl'] },
+  { s: 'Ag', t: 'agent',   k: 'tech',  r: 2, c: 1 },
+  { s: 'Pe', t: 'prompt',  k: 'tech',  r: 2, c: 2 },
+  { s: 'Sf', p: 'scholarfetch', k: 'tool', r: 2, c: 4, cfg: ['Ag', 'Sk', 'Cl', 'Hl'] },
+  { s: 'Za', p: 'autocite',     k: 'tool', r: 2, c: 5, cfg: ['Ag', 'Sk', 'Hl'] },
+  { s: 'Sb', p: 'search',       k: 'kit',  r: 2, c: 6, cfg: ['Ag', 'Sk', 'Mc', 'Cl'] },
+  { s: 'Ce', t: 'context', k: 'tech',  r: 3, c: 1 },
+  { s: 'Sk', t: 'skill',   k: 'tech',  r: 3, c: 2 },
+  { s: 'Cm', p: 'comsol',       k: 'tool', r: 3, c: 4, cfg: ['Ag', 'Sk', 'Cl', 'Hl'], name: 'COMSOL agent workflow' },
+  { s: 'Or', p: 'origin',       k: 'tool', r: 3, c: 5, cfg: ['Ag', 'Mc', 'Sk', 'Hl'] },
+  { s: 'Sa', p: 'subagent',     k: 'kit',  r: 3, c: 6, cfg: ['Ag', 'Sk', 'Ce'] },
+  { s: 'Mc', t: 'mcp',     k: 'tech',  r: 4, c: 1 },
+  { s: 'Cl', t: 'cli',     k: 'tech',  r: 4, c: 2 },
+  { s: 'Pt', p: 'capacitance',  k: 'vis', r: 4, c: 4, cfg: ['Ag', 'Pe', 'Ce', 'Hl'], name: 'ProxiTouch', img: 'proxitouch' },
+  { s: 'Mu', p: 'capacitance',  k: 'vis', r: 4, c: 5, cfg: ['Ag', 'Pe', 'Ce', 'Hl'], name: 'Mutual-capacitance lab', img: 'mutual' },
+  { s: 'Ed', p: 'animation',    k: 'vis', r: 4, c: 6, cfg: ['Ag', 'Pe', 'Ce', 'Hl'], name: 'EDL gating film', img: 'edl' },
+  { s: 'Ks', p: 'ksa',          k: 'side', cfg: ['Ag', 'Pe', 'Cl'] },
+  { s: 'Tr', p: 'translate',    k: 'side', cfg: ['Cl'] }
+];
+E.forEach((e, i) => { e.n = i + 1; e.kind = e.t ? 'tech' : 'proj'; });
+const bySym = Object.fromEntries(E.map(e => [e.s, e]));
+const label = e => e.t ? T[e.t].name : (e.name || P[e.p].name);
+const bonded = s => { const e = bySym[s]; return e.kind === 'tech' ? E.filter(x => (x.cfg || []).includes(s)).map(x => x.s) : (e.cfg || []); };
+const cap1 = s => s[0].toUpperCase() + s.slice(1);
+
+function elHTML(e) {
+  return `<div class="el k-${e.k}${e.p === 'loop' ? ' building' : ''}" data-s="${e.s}" style="${e.r ? `grid-row:${e.r + 1};grid-column:${e.c}` : ''}">
+    <div class="ring"></div><div class="wave"></div>
+    <div class="slab"><span class="no">${e.n}</span><span class="sym">${e.s}</span><span class="nm">${label(e)}</span><i class="veil"></i></div></div>`;
+}
+function buildTable(root, full) {
+  const main = E.filter(e => e.r), side = E.filter(e => !e.r);
+  root.innerHTML = `<div class="pt-grid">
+      ${full ? '<div class="blk l">Techniques</div><div class="blk r">My projects</div>' : ''}
+      <div class="pt-gaptxt" style="grid-row:2">${full ? 'Hover a tile<br>to see what connects' : '<span class="play-hint"><i>▶</i>Click to play</span>'}</div>
+      ${main.map(elHTML).join('')}
+    </div>
+    ${full ? `<div class="side-row"><div class="lb">Also built</div>${side.map((e, i) => elHTML(e).replace('style=""', `style="grid-column:${4 + i}"`)).join('')}</div>` : ''}`;
+  root.querySelectorAll('.el').forEach(n => n.e = bySym[n.dataset.s]);
+}
+// One state function for both tables: one tile selected (highest, yellow), its partners raised (blue), the rest veiled.
+function setState(root, sel, hover) {
+  const focusS = hover || sel, partners = new Set(focusS ? bonded(focusS) : []);
+  root.classList.toggle('focus', !!focusS);
+  root.querySelectorAll('.el').forEach(n => {
+    const s = n.dataset.s;
+    n.classList.toggle('sel', s === sel);
+    n.classList.toggle('hi', !!hover && s === hover && s !== sel);
+    n.classList.toggle('lo', partners.has(s) && s !== sel && s !== hover);
+  });
+}
+function press(n) { n.classList.remove('press'); void n.offsetWidth; n.classList.add('press'); }
+
+/* Pressing on the table: the box centre is the pivot. The pointer's offset from it is the torque
+   (further out, stronger), and a damped spring carries the table there and back. */
+const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+function pressTilt(box, table, amp) {
+  if (still) return;
+  const K = 70, C = 9;
+  let x = 0, y = 0, vx = 0, vy = 0, fx = 0, fy = 0, raf = 0, last = 0;
+  function step(t) {
+    const dt = Math.min((t - (last || t)) / 1000, .04); last = t;
+    vx += (K * (fx - x) - C * vx) * dt; vy += (K * (fy - y) - C * vy) * dt;
+    x += vx * dt; y += vy * dt;
+    table.style.setProperty('--px', (-y * amp).toFixed(2) + 'deg');
+    table.style.setProperty('--py', (x * amp).toFixed(2) + 'deg');
+    if (Math.abs(fx - x) + Math.abs(fy - y) + Math.abs(vx) + Math.abs(vy) > 1e-3) raf = requestAnimationFrame(step); else raf = last = 0;
+  }
+  const go = () => { if (!raf) raf = requestAnimationFrame(step); };
+  box.addEventListener('pointermove', e => {
+    const r = box.getBoundingClientRect();
+    fx = ((e.clientX - r.left) / r.width - .5) * 2; fy = ((e.clientY - r.top) / r.height - .5) * 2; go();
+  });
+  box.addEventListener('pointerleave', () => { fx = fy = 0; go(); });
+}
+
+/* Preview: the same table, smaller and cropped. It shows hover only (no clicks): a tile rises with its partners. */
+const mini = document.getElementById('mini'), toy = document.getElementById('toy');
+buildTable(mini, false);
+const DEMO = ['Sf', 'Sk', 'Za', 'Hl', 'Sb', 'Pe', 'Lp', 'Ag', 'Cm'];
+let di = 0, demoTimer;
+function demo() { setState(mini, null, DEMO[di++ % DEMO.length]); }
+function startDemo() { clearInterval(demoTimer); demo(); demoTimer = setInterval(demo, 2400); }
+startDemo();
+mini.querySelectorAll('.el').forEach(n => n.addEventListener('pointerenter', () => { clearInterval(demoTimer); setState(mini, null, n.dataset.s); }));
+toy.addEventListener('pointerleave', () => { if (!lab.classList.contains('open')) startDemo(); });
+pressTilt(toy, mini, 7);
+
+/* Full view */
+const lab = document.getElementById('lab'), full = document.getElementById('full'), card = document.getElementById('card'), labStage = document.getElementById('labStage');
+buildTable(full, true);
+let selected = 'Sf';
+full.querySelectorAll('.el').forEach(n => {
+  n.addEventListener('mouseenter', () => setState(full, selected, n.dataset.s));
+  n.addEventListener('mouseleave', () => setState(full, selected, null));
+  n.addEventListener('click', () => { selected = n.dataset.s; setState(full, selected, null); press(n); showCard(selected); });
+});
+const IMG = { proxitouch: 'shared/media/proxitouch-poster.jpg', mutual: FIG + 'mutual-cover.webp', edl: 'shared/media/edl-poster.jpg' };
+function showCard(s) {
+  const e = bySym[s], tags = list => list.map(x => `<span class="k-${bySym[x].k}" data-s="${x}">${label(bySym[x])}</span>`).join('');
+  if (e.kind === 'tech') {
+    card.innerHTML = `<div class="hd"><div class="sq k-${e.k}">${e.s}</div><div><small>Technique</small><h3>${label(e)}</h3></div></div>
+      <div class="ln">${cap1(T[e.t].gloss)}.</div>
+      <div class="bl"><b>Used in</b><div class="tags">${tags(bonded(s))}</div></div>`;
+  } else {
+    const p = P[e.p], src = e.img ? IMG[e.img] : (p.fig ? FIG + p.fig : null), line = e.s === 'Mu' ? 'How much capacitance is left when two plates unfold?' : p.line;
+    card.innerHTML = `<div class="hd"><div class="sq k-${e.k}">${e.s}</div><div><small>My project${e.p === 'loop' ? ' · building' : ''}</small><h3>${label(e)}</h3></div></div>
+      <div class="ln">${line}</div>
+      ${src ? `<div class="im"><img src="${src}" alt=""></div>` : ''}
+      <div class="bl"><b>Built with</b><div class="tags">${tags(e.cfg || [])}</div></div>
+      <a class="go" href="${e.k === 'vis' && p.site ? p.site : p.repo}">${e.k === 'vis' ? 'Open it ↗' : 'View code ↗'}</a>`;
+  }
+  card.querySelectorAll('.tags span').forEach(t => t.addEventListener('click', () => { const n = full.querySelector(`[data-s="${t.dataset.s}"]`); n && n.click(); }));
+}
+pressTilt(labStage, full, 4);
+
+function openLab() { lab.classList.add('open'); lab.setAttribute('aria-hidden', 'false'); document.body.classList.add('locked'); clearInterval(demoTimer); setState(full, selected, null); showCard(selected); }
+function closeLab() { lab.classList.remove('open'); lab.setAttribute('aria-hidden', 'true'); document.body.classList.remove('locked'); startDemo(); }
+toy.addEventListener('click', openLab);
+toy.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLab(); } });
+document.getElementById('close').addEventListener('click', closeLab);
+addEventListener('keydown', e => { if (e.key === 'Escape' && lab.classList.contains('open')) closeLab(); });
+if (location.hash === '#elements') openLab();
+</script>
+</body>
+</html>
