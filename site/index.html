@@ -264,14 +264,14 @@ document.getElementById('bento').insertAdjacentHTML('beforeend', `
     <div class="cap"><div><b>EDL gating · rendered from code</b><span>A thin dielectric under high field breaks down.</span></div><a class="stretched-link" href="${P.animation.site}">Full film ↗</a></div></section>
   ${tile('comsol', 'c5 r4', { hum: true })}
   ${tile('scholarfetch', 'c4 r4', { hum: true })}
-  <a class="t c3 r4 hum" href="#elements" id="humanCard" aria-label="Explore Human-in-the-Loop and its connected projects"><div class="pad"><small>Human-in-the-Loop</small><blockquote>Agents draft.<br><em>A researcher decides.</em></blockquote><div class="figp"><i></i><i></i><i class="o"></i></div></div>
-    <div class="pad" style="padding-top:0"><p>Every tool stops at checkpoints, solid for required reviews and dashed for optional ones, where a person checks the evidence.</p></div></a>
+  <section class="t c3 r4 hum"><div class="pad"><small>Human-in-the-Loop</small><blockquote>Agents draft.<br><em>A researcher decides.</em></blockquote><div class="figp"><i></i><i></i><i class="o"></i></div></div>
+    <div class="pad" style="padding-top:0"><p>Every tool stops at checkpoints, solid for required reviews and dashed for optional ones, where a person checks the evidence.</p></div></section>
   ${tile('origin', 'c4 r4', { gallery: P.origin.gallery, hum: true })}
   ${tile('autocite', 'c4 r4', { hum: true })}
   ${tile('loop', 'c4 r4', { hum: true })}
-  ${tile('search', 'c4 r4', { dark: true, fig: 'search-booster-dark.webp' })}
+  ${tile('search', 'c4 r4')}
   ${tile('subagent', 'c4 r4')}
-  <a class="t c4 r4 gh-t" href="${H.github}"><div class="pad"><small>All open source</small><div class="big">Every project lives on GitHub.</div><p style="margin-top:12px">${H.githubLine}</p><span class="go">github.com/LiX-Works ↗</span></div></a>`);
+  <a class="t c4 r4 gh-t" href="${H.github}?tab=repositories"><div class="pad"><small>All open source</small><div class="big">Every project lives on GitHub.</div><p style="margin-top:12px">${H.githubLine}</p><span class="go">View all repositories ↗</span></div></a>`);
 document.getElementById('foot').innerHTML = `<span>Also built: ${H.projects.filter(p => p.group === 'side').map(p => `<a href="${p.repo}">${p.name}</a>`).join(' · ')}</span><span><a href="https://github.com/LiX-Works/LiX-Works.github.io/blob/main/THIRD_PARTY_NOTICES.md">Credits</a> · © LiX</span>`;
 setInterval(() => document.querySelectorAll('.gal').forEach(g => { const im = [...g.children], i = im.findIndex(x => x.classList.contains('on')); im[i].classList.remove('on'); im[(i + 1) % im.length].classList.add('on'); }), 2600);
 const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -5% 0px' });
@@ -410,7 +410,6 @@ pressTilt(labStage, full, 4);
 function openLab() { lab.classList.add('open'); lab.setAttribute('aria-hidden', 'false'); document.body.classList.add('locked'); clearInterval(demoTimer); clearTimeout(hoverTimer); setState(full, selected, null); showCard(selected); }
 function closeLab() { lab.classList.remove('open'); lab.setAttribute('aria-hidden', 'true'); document.body.classList.remove('locked'); startDemo(); }
 toy.addEventListener('click', openLab);
-document.getElementById('humanCard').addEventListener('click', e => { e.preventDefault(); selected = 'Hl'; openLab(); });
 toy.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLab(); } });
 document.getElementById('close').addEventListener('click', closeLab);
 addEventListener('keydown', e => { if (e.key === 'Escape' && lab.classList.contains('open')) closeLab(); });
