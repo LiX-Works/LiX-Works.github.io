@@ -93,124 +93,30 @@ a.t:hover .arrow{background:var(--ink);color:#fff}
 .foot{display:flex;flex-wrap:wrap;gap:8px 22px;justify-content:space-between;padding:26px 6px 0;font-size:14.5px;color:var(--muted)}
 .foot a{color:var(--ink2);font-weight:600}
 
-/* ---------- periodic table: shared element look (preview and full view) ---------- */
-/* fill, border, text, glow */
-.k-tech {--f:#dcf4ea;--b:#74caa4;--t:#0e6a4d;--g:#34d399}
-.k-human{--f:#fff2c6;--b:#ecc54a;--t:#8a5a00;--g:#fbbf24}
-.k-tool {--f:#dbe6ff;--b:#88a9f2;--t:#1c46c9;--g:#5b8cff}
-.k-kit  {--f:#e3e9f4;--b:#9fb1cb;--t:#2a3d5c;--g:#8fb0ff}
-.k-loop {--f:#e7e4ff;--b:#a69cf2;--t:#4b3fc4;--g:#8b7dff}
-.k-vis  {--f:#d5f0fa;--b:#73c4de;--t:#0d6580;--g:#38c8f5}
-.k-side {--f:#e8ecf1;--b:#b7c2cf;--t:#4b5563;--g:#9fb0c8}
-.pt-stage{position:relative;perspective:2000px;perspective-origin:80% 20%}
-.pt{position:relative;transform-style:preserve-3d;transform:rotateX(var(--rx)) rotateZ(var(--rz)) rotateX(var(--px,0deg)) rotateY(var(--py,0deg));will-change:transform}
-.pt-grid{display:grid;grid-template-columns:1fr 1fr .42fr 1fr 1fr 1fr;gap:var(--gap,12px);transform-style:preserve-3d}
-.el{position:relative;aspect-ratio:1/.9;transform-style:preserve-3d;cursor:pointer;--z:0px;--th:9px}
-.el .ring{position:absolute;inset:-5px;border-radius:14px;border:2px solid var(--gc,var(--g));opacity:0;
-  box-shadow:0 0 16px var(--gc,var(--g)),inset 0 0 14px color-mix(in srgb,var(--gc,var(--g)) 60%,transparent);transition:opacity .35s, border-color .35s}
-.el .ring::before,.el .ring::after{content:"";position:absolute;border-radius:18px;border:1.5px solid var(--gc,var(--g))}
-.el .ring::before{inset:-9px;opacity:.45}
-.el .ring::after{inset:-18px;opacity:.2;border-radius:24px}
-.el .wave{position:absolute;inset:-4px;border-radius:14px;border:3px solid var(--sel);opacity:0;pointer-events:none}
-.el .slab{position:absolute;inset:0;border-radius:10px;transform-style:preserve-3d;transform:translateZ(calc(var(--th) + var(--z)));
-  background:linear-gradient(155deg,rgba(255,255,255,.65),rgba(255,255,255,0) 45%),var(--f);border:1.5px solid var(--b);
-  display:flex;flex-direction:column;justify-content:space-between;padding:8% 10%;transition:transform .5s cubic-bezier(.3,1.4,.4,1), border-color .35s, box-shadow .35s}
-.el .slab::before{content:"";position:absolute;left:-1.5px;right:-1.5px;top:calc(100% + 1.5px);height:var(--th);background:color-mix(in srgb,var(--b) 72%,#0a1424);transform-origin:top;transform:rotateX(-90deg);border-radius:0 0 8px 8px}
-.el .slab::after{content:"";position:absolute;top:-1.5px;bottom:-1.5px;left:calc(100% + 1.5px);width:var(--th);background:color-mix(in srgb,var(--b) 58%,#0a1424);transform-origin:left;transform:rotateY(90deg);border-radius:0 8px 8px 0}
-.el .no{font:600 clamp(9px,.8vw,12px) var(--mono);color:var(--t);opacity:.8}
-.el .sym{font:700 clamp(20px,2.4vw,40px)/1 var(--sans);letter-spacing:-.02em;color:var(--t)}
-.el .nm{font-size:clamp(10px,.9vw,13.5px);line-height:1.15;font-weight:650;color:var(--t)}
-.el .veil{position:absolute;inset:-2px;border-radius:10px;background:var(--veil);opacity:0;transition:opacity .35s;pointer-events:none}
-.el.building .slab{border-style:dashed}
-.pt.focus .el:not(.lo):not(.hi):not(.sel) .veil{opacity:1}
-.el.lo{--z:14px}.el.lo .ring{opacity:.5}
-.el.hi{--z:30px}.el.hi .ring{opacity:1}.el.hi .slab{border-color:var(--g);box-shadow:0 0 0 1px var(--g),0 0 22px -4px var(--g)}
-.el.sel{--z:42px;--gc:var(--sel)}.el.sel .ring{opacity:1}.el.sel .slab{border-color:var(--sel);box-shadow:0 0 0 1.5px var(--sel),0 0 30px -2px var(--sel)}
-.el.press .slab{animation:press .55s cubic-bezier(.3,1.4,.4,1)}
-.el.press .wave{animation:wave .8s ease-out}
-@keyframes press{0%{transform:translateZ(calc(var(--th) - 3px))}60%{transform:translateZ(calc(var(--th) + var(--z) + 8px))}100%{transform:translateZ(calc(var(--th) + var(--z)))}}
-@keyframes wave{0%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.9)}}
-@keyframes hum{50%{opacity:.55}}
-.el.hi .ring::before,.el.sel .ring::before{animation:hum 1.8s ease-in-out infinite}
-.pt-gaptxt{grid-row:1;grid-column:2/6;align-self:center;justify-self:center;text-align:center;transform:translateZ(1px)}
-
-/* ---------- row 1: the toy preview ---------- */
-.toy{grid-column:span 6;grid-row:span 4;cursor:pointer;background:radial-gradient(120% 120% at 100% 0%,var(--toy1) 0%,var(--toy2) 100%);--veil:rgba(232,238,247,.7);--sel:#f5b301}
-.toy-head{padding:22px 26px 0;z-index:3;position:relative;display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+/* ---------- static 31-element preview ---------- */
+.toy{grid-column:span 6;grid-row:span 4;cursor:pointer;background:radial-gradient(70% 60% at 42% 58%,#1a2f5c 0%,#0f1d3d 45%,#08112a 100%);color:#f2f6ff}
+.toy-head{padding:22px 26px 0;position:relative}
 .toy-head h2{margin:0;font-size:clamp(24px,2.3vw,32px);line-height:1.08;letter-spacing:-.025em;font-weight:700}
-.toy-head h2 em{font-family:var(--serif);font-weight:400;font-style:italic;color:var(--accent);letter-spacing:-.005em}
-.toy-head p{margin:6px 0 0;font-size:16px;line-height:1.45;color:var(--ink2)}
-.toy-motion{position:absolute;right:14px;bottom:12px;z-index:4;border:1px solid var(--line);border-radius:99px;padding:6px 10px;background:rgba(255,255,255,.92);font-size:12px;font-weight:650;cursor:pointer}
-.toy .pt-stage{flex:1;overflow:hidden;-webkit-mask-image:linear-gradient(#000 70%,transparent);mask-image:linear-gradient(#000 70%,transparent)}
-.toy .pt{position:absolute;left:9%;top:2px;width:78%;--rx:27deg;--rz:8deg;--gap:8px;transform-origin:50% 30%}
-.toy .el .nm{display:none}
-.toy .el .sym{font-size:clamp(18px,2vw,30px)}
-.toy .el.sel{--z:30px}.toy .el.hi{--z:22px}.toy .el.lo{--z:10px}
-.play-hint{font:750 clamp(18px,1.9vw,27px)/1.1 var(--sans);letter-spacing:-.02em;color:var(--accent);display:inline-flex;align-items:center;gap:10px;white-space:nowrap}
-.play-hint i{font-style:normal;display:grid;place-items:center;width:1.5em;height:1.5em;border-radius:50%;background:var(--accent);color:#fff;font-size:.7em;box-shadow:0 0 0 0 rgba(31,79,209,.45);animation:beckon 1.8s infinite}
-@keyframes beckon{0%{box-shadow:0 0 0 0 rgba(31,79,209,.45)}70%{box-shadow:0 0 0 12px rgba(31,79,209,0)}100%{box-shadow:0 0 0 0 rgba(31,79,209,0)}}
-.toy:hover .play-hint i{animation:none;transform:scale(1.1)}
+.toy-head h2 em{font-family:var(--serif);font-weight:400;font-style:italic;color:#a9c4ff}
+.toy-head p{margin:6px 0 0;font-size:16px;line-height:1.45;color:#c3cfe6}
+.preview-frame{flex:1;min-height:0;padding:6px 20px 14px;display:grid;place-items:center;perspective:2600px;perspective-origin:50% 0%}
+.preview-grid{width:min(100%,320px);display:grid;grid-template-columns:repeat(5,minmax(0,1fr)) .36fr repeat(4,minmax(0,1fr));gap:5px;transform:rotateX(17deg);transform-style:preserve-3d}
+.preview-zone{grid-row:1;font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;padding-bottom:3px;border-bottom:1px solid currentColor}
+.preview-zone.tech{grid-column:1/6;color:#79a8ff}.preview-zone.proj{grid-column:7/11;color:#ffbe4d}
+.preview-element{position:relative;aspect-ratio:1/.92;--f:rgba(96,150,255,.17);--b:rgba(140,182,255,.78);--t:#d6e5ff}
+.preview-element.p{--f:rgba(255,186,72,.16);--b:rgba(255,204,110,.80);--t:#ffe2a3}
+.preview-element .face{position:absolute;inset:0;border-radius:6px;transform:translateZ(3px);background:linear-gradient(170deg,rgba(255,255,255,.13),rgba(255,255,255,.02) 38%,rgba(0,0,0,.10)),var(--f);border:1.5px solid var(--b);box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 10px 22px -14px rgba(0,0,0,.8);display:flex;align-items:center;padding:0 9%;font:700 20px/1 var(--sans);letter-spacing:-.02em;color:var(--t)}
+.preview-element.building .face{border-style:dashed}
+.toy:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 
-/* ---------- the full table (overlay) ---------- */
-.lab{position:fixed;inset:0;z-index:50;display:none;overflow:auto;overflow-x:hidden;color:#e7eefb;
-  background:radial-gradient(90% 70% at 35% 45%,#16284a 0%,#0b1528 55%,#060b16 100%);--veil:rgba(8,16,32,.45);--sel:#ffd166}
-.lab.open{display:block;animation:fade .35s ease}
-@keyframes fade{from{opacity:0}}
-.lab-in{max-width:1400px;margin:0 auto;padding:28px 34px 40px;position:relative}
-.lab .x{position:absolute;right:30px;top:24px;width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;font-size:22px;cursor:pointer}
-.lab .x:hover{background:rgba(255,255,255,.18)}
-.lab h2{padding-right:60px;margin:0 0 10px;font-size:clamp(30px,3.2vw,46px);line-height:1.05;letter-spacing:-.025em;font-weight:750;color:#fff}
-.lab h2 em{font-family:var(--serif);font-weight:400;font-style:italic;color:#8fb2ff}
-.lab .guide{font-size:19px;line-height:1.45;color:#b9c7e2;margin:0}
-.lab .guide b{color:#fff}
-.lab-grid{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:34px;align-items:start;margin-top:8px}
-.lab .pt-stage{height:800px;perspective:2400px;perspective-origin:50% 20%}
-.lab .pt{position:absolute;left:0;right:0;margin-inline:auto;top:16px;width:min(94%,760px);--rx:36deg;--rz:0deg;--gap:14px;transform-origin:50% 45%}
-/* Floor grid: fine blue lines lying under the table, in perspective. */
-.lab .pt::before{content:"";position:absolute;inset:-260px -420px -320px;transform:translateZ(-1px);pointer-events:none;
-  background-image:linear-gradient(rgba(110,160,255,.13) 1px,transparent 1px),linear-gradient(90deg,rgba(110,160,255,.13) 1px,transparent 1px);background-size:24px 24px;
-  -webkit-mask-image:radial-gradient(closest-side,#000 45%,transparent);mask-image:radial-gradient(closest-side,#000 45%,transparent)}
-.lab .el{aspect-ratio:1/1.03;touch-action:manipulation}
-.lab .el .slab{display:grid;grid-template-rows:auto 1fr auto;gap:2px;padding:7% 8%;box-shadow:0 18px 30px -18px rgba(0,0,0,.7)}
-.lab .el .sym{align-self:center;font-size:clamp(24px,2.5vw,36px)}
-.lab .el .nm{min-width:0;min-height:2.3em;font-size:clamp(11px,.94vw,13px);line-height:1.15;overflow-wrap:break-word}
-.lab .el.down .slab{transform:translateZ(calc(var(--th) - 3px));transition:transform .09s ease}
-.lab .el.press .slab{animation:press .55s ease-out}
-.lab .el.press .wave{animation:wave .8s ease-out}
-.blk{grid-row:1;align-self:end;padding-bottom:8px;font:700 19px var(--mono);letter-spacing:.12em;text-transform:uppercase;transform:translateZ(1px)}
-.blk.l{grid-column:1/3;color:#6ee7b7}.blk.r{grid-column:4/7;color:#9db8ff;text-align:right}
-.lab .pt-gaptxt{grid-row:2;align-self:start;font:600 18px/1.35 var(--sans);color:#c7d5f0;opacity:.9}
-.lab .side-row{display:grid;grid-template-columns:1fr 1fr .42fr 1fr 1fr 1fr;gap:var(--gap);margin-top:26px;transform-style:preserve-3d}
-.lab .side-row .lb{grid-column:1/4;align-self:center;text-align:right;padding-right:6px;font:600 14px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#7f91b3;transform:translateZ(1px)}
-.card{position:sticky;top:24px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);border-radius:22px;overflow:hidden;backdrop-filter:blur(10px);box-shadow:0 40px 80px -40px rgba(0,0,0,.8)}
-.card .hd{display:flex;gap:16px;align-items:center;padding:22px 22px 18px}
-.card .hd>div:last-child{min-width:0;flex:1}
-.card .sq{flex:none;width:78px;height:72px;border-radius:12px;background:var(--f);border:2px solid var(--b);display:grid;place-items:center;font:800 32px var(--sans);color:var(--t);box-shadow:0 0 24px -6px var(--g)}
-.card small{display:block;font:600 13px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#8ea4cc;margin-bottom:4px}
-.card h3{margin:0;font-size:26px;line-height:1.1;letter-spacing:-.02em;color:#fff;overflow-wrap:anywhere}
-.card .ln{padding:0 22px 18px;font-size:18.5px;line-height:1.45;color:#d3def3}
-.card .im{margin:0 22px 18px;aspect-ratio:16/9;border-radius:14px;background:#fff;position:relative;overflow:hidden}
-.card .im img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:8px}
-.card .bl{padding:0 22px 20px}
-.card .bl b{display:block;font:600 13px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#8ea4cc;margin-bottom:10px}
-.card .tags{display:flex;flex-wrap:wrap;gap:8px}
-.card .tags span{cursor:pointer;max-width:100%;overflow-wrap:anywhere;padding:8px 12px;border-radius:10px;background:color-mix(in srgb,var(--f) 18%,transparent);border:1px solid color-mix(in srgb,var(--b) 70%,transparent);color:#fff;font-size:15px;font-weight:600}
-.card .tags span:hover{background:color-mix(in srgb,var(--f) 32%,transparent)}
-.card a.go{display:inline-block;margin:0 22px 22px;padding:12px 18px;border-radius:12px;background:#fff;color:#0b1528;font-weight:700;font-size:15px}
-
-@media (max-width:1100px){.toy,.hero,.s7,.s5{grid-column:span 12}.c3,.c4,.c5{grid-column:span 6}.bento{grid-auto-rows:auto}.t{min-height:0}.toy,.hero{min-height:330px}.live-t{min-height:300px}.r4{min-height:400px}
-  .lab-grid{grid-template-columns:1fr}.card{position:relative;top:0}.lab .pt-stage{height:clamp(620px,calc(100vw - 80px),800px)}}
+@media (max-width:1100px){.toy,.hero,.s7,.s5{grid-column:span 12}.c3,.c4,.c5{grid-column:span 6}.bento{grid-auto-rows:auto}.t{min-height:0}.toy,.hero{min-height:330px}.live-t{min-height:300px}.r4{min-height:400px}}
 @media (max-width:680px){
   .page{padding:14px 12px 30px}.bento{gap:10px}.c3,.c4,.c5{grid-column:span 12}.hero{padding:24px 0 18px}.hero h1,.hero p{padding:0 20px}
-  .toy .pt{width:118%;top:26px}.toy .el .no{display:none}
-  .lab-in{padding:20px 14px}.lab .pt-stage{height:clamp(400px,calc(100vw + 50px),730px)}.lab .pt{left:0;top:70px;width:100%;--gap:6px}.lab .el .nm,.lab .el .no,.lab .pt-gaptxt{display:none}.blk{font-size:11px}
-  .lab .el .slab{grid-template-rows:1fr;gap:0}
 }
 /* Preserve content motion and deliberate press feedback in either preference.
    Reduce decorative entrances and pulses; pointer tilt is reduced in the script. */
 @media (prefers-reduced-motion:reduce){
   .t{opacity:1;transform:none;transition:none}
-  .lab.open,.play-hint i,.el .ring::before{animation:none!important}
 }
 </style>
 </head>
@@ -218,10 +124,10 @@ a.t:hover .arrow{background:var(--ink);color:#fff}
 <div class="page">
   <header class="top"><div class="mark"><b>LX</b>LiX</div><a class="gh" href="https://github.com/LiX-Works">GitHub ↗</a></header>
   <div class="bento" id="bento">
-    <section class="t toy" id="toy" role="button" tabindex="0" aria-label="Open the interactive periodic table">
+    <a class="t toy" id="toy" href="elements.html" aria-label="Open the interactive periodic table">
       <div class="toy-head"><div><h2>A <em>periodic table</em> of my AI toolkit</h2><p>My open-source projects and the techniques they are built from.</p></div></div>
-      <div class="pt-stage"><div class="pt" id="mini"></div></div>
-    </section>
+      <div class="preview-frame" aria-hidden="true"><div class="preview-grid"><div class="preview-zone tech">Technical</div><div class="preview-zone proj">My projects</div><span class="preview-element" data-s="H" title="Human" style="grid-row:2;grid-column:1"><span class="face">H</span></span><span class="preview-element p" data-s="C" title="Capacitance demos" style="grid-row:2;grid-column:10"><span class="face">C</span></span><span class="preview-element" data-s="Ai" title="AI" style="grid-row:3;grid-column:1"><span class="face">Ai</span></span><span class="preview-element" data-s="Ag" title="Agent" style="grid-row:3;grid-column:2"><span class="face">Ag</span></span><span class="preview-element p" data-s="S" title="Scientific film" style="grid-row:3;grid-column:10"><span class="face">S</span></span><span class="preview-element" data-s="Si" title="Agent Skill" style="grid-row:4;grid-column:1"><span class="face">Si</span></span><span class="preview-element" data-s="Mc" title="MCP" style="grid-row:4;grid-column:2"><span class="face">Mc</span></span><span class="preview-element p" data-s="Fe" title="ScholarFetch" style="grid-row:4;grid-column:7"><span class="face">Fe</span></span><span class="preview-element p" data-s="Au" title="Zotero AutoCite" style="grid-row:4;grid-column:8"><span class="face">Au</span></span><span class="preview-element p" data-s="Ca" title="COMSOL Agent" style="grid-row:4;grid-column:9"><span class="face">Ca</span></span><span class="preview-element p" data-s="O" title="Origin MCP + Skill" style="grid-row:4;grid-column:10"><span class="face">O</span></span><span class="preview-element" data-s="Pr" title="Prompt Engineering" style="grid-row:5;grid-column:1"><span class="face">Pr</span></span><span class="preview-element" data-s="Ce" title="Context Engineering" style="grid-row:5;grid-column:2"><span class="face">Ce</span></span><span class="preview-element" data-s="Lu" title="Loop Engineering" style="grid-row:5;grid-column:3"><span class="face">Lu</span></span><span class="preview-element" data-s="B" title="Blender" style="grid-row:5;grid-column:4"><span class="face">B</span></span><span class="preview-element" data-s="Co" title="COMSOL" style="grid-row:5;grid-column:5"><span class="face">Co</span></span><span class="preview-element p" data-s="As" title="Search Booster" style="grid-row:5;grid-column:7"><span class="face">As</span></span><span class="preview-element p" data-s="Sm" title="Subagent Manager" style="grid-row:5;grid-column:8"><span class="face">Sm</span></span><span class="preview-element p building" data-s="Sr" title="Research Loop" style="grid-row:5;grid-column:9"><span class="face">Sr</span></span><span class="preview-element" data-s="Sb" title="Subagents" style="grid-row:6;grid-column:1"><span class="face">Sb</span></span><span class="preview-element" data-s="P" title="Python" style="grid-row:6;grid-column:2"><span class="face">P</span></span><span class="preview-element" data-s="Re" title="Remotion" style="grid-row:6;grid-column:3"><span class="face">Re</span></span><span class="preview-element" data-s="Th" title="Three.js" style="grid-row:6;grid-column:4"><span class="face">Th</span></span><span class="preview-element" data-s="N" title="Node.js" style="grid-row:6;grid-column:5"><span class="face">N</span></span><span class="preview-element p" data-s="K" title="KSA Languages" style="grid-row:6;grid-column:7"><span class="face">K</span></span><span class="preview-element p" data-s="Cd" title="Codex Translate" style="grid-row:6;grid-column:8"><span class="face">Cd</span></span><span class="preview-element" data-s="Cl" title="CLI" style="grid-row:7;grid-column:1"><span class="face">Cl</span></span><span class="preview-element" data-s="He" title="HTML / CSS" style="grid-row:7;grid-column:2"><span class="face">He</span></span><span class="preview-element" data-s="Sc" title="JavaScript" style="grid-row:7;grid-column:3"><span class="face">Sc</span></span><span class="preview-element" data-s="Ts" title="TypeScript" style="grid-row:7;grid-column:4"><span class="face">Ts</span></span><span class="preview-element" data-s="W" title="WebGL2" style="grid-row:7;grid-column:5"><span class="face">W</span></span></div></div>
+    </a>
     <section class="t hero">
       <div>
         <h1>Agents do the legwork.<br><em>The researcher decides.</em></h1>
@@ -236,17 +142,6 @@ a.t:hover .arrow{background:var(--ink);color:#fff}
   <div class="foot" id="foot"></div>
 </div>
 
-<div class="lab" id="lab" aria-hidden="true">
-  <div class="lab-in" role="dialog" aria-modal="true" aria-label="A periodic table of my AI toolkit">
-    <button class="x" id="close" aria-label="Close">×</button>
-    <h2>A <em>periodic table</em> of my AI toolkit</h2>
-    <p class="guide"><b>Left: the techniques.</b> <b>Right: my projects.</b> Hover a tile to see how they connect; click it for details.</p>
-    <div class="lab-grid">
-      <div class="pt-stage" id="labStage"><div class="pt" id="full"></div></div>
-      <aside class="card" id="card"></aside>
-    </div>
-  </div>
-</div>
 
 <script src="shared/content.js"></script>
 <script src="shared/live/embed.js?v=20261026-motion1"></script>
@@ -287,145 +182,8 @@ setInterval(() => document.querySelectorAll('.gal').forEach(g => { const im = [.
 const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -5% 0px' });
 document.querySelectorAll('.t').forEach(t => io.observe(t));
 
-/* ---------- elements: techniques on the left, projects on the right ---------- */
-const E = [
-  { s: 'Hl', t: 'hitl',    k: 'human', r: 1, c: 1 },
-  { s: 'Lp', p: 'loop',    k: 'loop',  r: 1, c: 6, cfg: ['Sa', 'Ce', 'Pe', 'Hl'], tileLabel: 'Research loop' },
-  { s: 'Ag', t: 'agent',   k: 'tech',  r: 2, c: 1 },
-  { s: 'Pe', t: 'prompt',  k: 'tech',  r: 2, c: 2 },
-  { s: 'Sf', p: 'scholarfetch', k: 'tool', r: 2, c: 4, cfg: ['Ag', 'Sk', 'Cl', 'Hl'] },
-  { s: 'Za', p: 'autocite',     k: 'tool', r: 2, c: 5, cfg: ['Ag', 'Sk', 'Hl'], tileLabel: 'Zotero AutoCite' },
-  { s: 'Sb', p: 'search',       k: 'kit',  r: 2, c: 6, cfg: ['Ag', 'Sk', 'Mc', 'Cl'] },
-  { s: 'Ce', t: 'context', k: 'tech',  r: 3, c: 1 },
-  { s: 'Sk', t: 'skill',   k: 'tech',  r: 3, c: 2 },
-  { s: 'Cm', p: 'comsol',       k: 'tool', r: 3, c: 4, cfg: ['Ag', 'Sk', 'Cl', 'Hl'], name: 'COMSOL agent workflow', tileLabel: 'COMSOL workflow' },
-  { s: 'Or', p: 'origin',       k: 'tool', r: 3, c: 5, cfg: ['Ag', 'Mc', 'Sk', 'Hl'] },
-  { s: 'Sa', p: 'subagent',     k: 'kit',  r: 3, c: 6, cfg: ['Ag', 'Sk', 'Ce'] },
-  { s: 'Mc', t: 'mcp',     k: 'tech',  r: 4, c: 1 },
-  { s: 'Cl', t: 'cli',     k: 'tech',  r: 4, c: 2 },
-  { s: 'Pt', p: 'capacitance',  k: 'vis', r: 4, c: 4, cfg: ['Ag', 'Pe', 'Ce', 'Hl'], name: 'ProxiTouch', img: 'proxitouch' },
-  { s: 'Mu', p: 'capacitance',  k: 'vis', r: 4, c: 5, cfg: ['Ag', 'Pe', 'Ce', 'Hl'], name: 'Mutual-capacitance lab', img: 'mutual', tileLabel: 'Mutual capacitance' },
-  { s: 'Ed', p: 'animation',    k: 'vis', r: 4, c: 6, cfg: ['Ag', 'Pe', 'Ce', 'Hl'], name: 'EDL gating film', img: 'edl' },
-  { s: 'Ks', p: 'ksa',          k: 'side', cfg: ['Ag', 'Pe', 'Cl'] },
-  { s: 'Tr', p: 'translate',    k: 'side', cfg: ['Cl'], tileLabel: 'Codex Translate' }
-];
-E.forEach((e, i) => { e.n = i + 1; e.kind = e.t ? 'tech' : 'proj'; });
-const bySym = Object.fromEntries(E.map(e => [e.s, e]));
-const label = e => e.t ? T[e.t].name : (e.name || P[e.p].name);
-const bonded = s => { const e = bySym[s]; return e.kind === 'tech' ? E.filter(x => (x.cfg || []).includes(s)).map(x => x.s) : (e.cfg || []); };
-const cap1 = s => s[0].toUpperCase() + s.slice(1);
-
-function elHTML(e) {
-  return `<div class="el k-${e.k}${e.p === 'loop' ? ' building' : ''}" data-s="${e.s}" style="${e.r ? `grid-row:${e.r + 1};grid-column:${e.c}` : ''}">
-    <div class="ring"></div><div class="wave"></div>
-    <div class="slab"><span class="no">${e.n}</span><span class="sym">${e.s}</span><span class="nm">${e.tileLabel || label(e)}</span><i class="veil"></i></div></div>`;
-}
-function buildTable(root, full) {
-  const main = E.filter(e => e.r), side = E.filter(e => !e.r);
-  root.innerHTML = `<div class="pt-grid">
-      ${full ? '<div class="blk l">Techniques</div><div class="blk r">My projects</div>' : ''}
-      <div class="pt-gaptxt" style="grid-row:2">${full ? 'Hover a tile<br>to see what connects' : '<span class="play-hint"><i>▶</i>Click to play</span>'}</div>
-      ${main.map(elHTML).join('')}
-    </div>
-    ${full ? `<div class="side-row"><div class="lb">Also built</div>${side.map((e, i) => elHTML(e).replace('style=""', `style="grid-column:${4 + i}"`)).join('')}</div>` : ''}`;
-  root.querySelectorAll('.el').forEach(n => n.e = bySym[n.dataset.s]);
-}
-// One state function for both tables: one tile selected (highest, yellow), its partners raised (blue), the rest veiled.
-function setState(root, sel, hover) {
-  const focusS = hover || sel, partners = new Set(focusS ? bonded(focusS) : []);
-  root.classList.toggle('focus', !!focusS);
-  root.querySelectorAll('.el').forEach(n => {
-    const s = n.dataset.s;
-    n.classList.toggle('sel', s === sel);
-    n.classList.toggle('hi', !!hover && s === hover && s !== sel);
-    n.classList.toggle('lo', partners.has(s) && s !== sel && s !== hover);
-  });
-}
-function press(n) { n.classList.remove('down', 'press'); void n.offsetWidth; n.classList.add('press'); }
-
-/* Pressing on the table: the box centre is the pivot. The pointer's offset from it is the torque
-   (further out, stronger), and a damped spring carries the table there and back. */
-const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-function pressTilt(box, table, amp) {
-  if (still) return;
-  const K = 70, C = 9;
-  let x = 0, y = 0, vx = 0, vy = 0, fx = 0, fy = 0, raf = 0, last = 0;
-  function step(t) {
-    const dt = Math.min((t - (last || t)) / 1000, .04); last = t;
-    vx += (K * (fx - x) - C * vx) * dt; vy += (K * (fy - y) - C * vy) * dt;
-    x += vx * dt; y += vy * dt;
-    table.style.setProperty('--px', (-y * amp).toFixed(2) + 'deg');
-    table.style.setProperty('--py', (x * amp).toFixed(2) + 'deg');
-    if (Math.abs(fx - x) + Math.abs(fy - y) + Math.abs(vx) + Math.abs(vy) > 1e-3) raf = requestAnimationFrame(step); else raf = last = 0;
-  }
-  const go = () => { if (!raf) raf = requestAnimationFrame(step); };
-  box.addEventListener('pointermove', e => {
-    const r = box.getBoundingClientRect();
-    fx = ((e.clientX - r.left) / r.width - .5) * 2; fy = ((e.clientY - r.top) / r.height - .5) * 2; go();
-  });
-  box.addEventListener('pointerleave', () => { fx = fy = 0; go(); });
-}
-
-/* Preview: the same table, smaller and cropped. It shows hover only (no clicks): a tile rises with its partners. */
-const mini = document.getElementById('mini'), toy = document.getElementById('toy');
-buildTable(mini, false);
-const DEMO = ['Sf', 'Sk', 'Za', 'Hl', 'Sb', 'Pe', 'Lp', 'Ag', 'Cm'];
-let di = 0, demoTimer, hoverTimer, demoPaused = false;
-function demo() { setState(mini, null, DEMO[di++ % DEMO.length]); }
-function startDemo() { clearInterval(demoTimer); clearTimeout(hoverTimer); if (demoPaused || document.hidden || document.body.classList.contains('locked')) return; demo(); demoTimer = setInterval(demo, 2400); }
-startDemo();
-const motionButton = document.createElement('button');
-motionButton.type = 'button'; motionButton.className = 'toy-motion'; motionButton.textContent = 'Pause preview'; motionButton.setAttribute('aria-label', 'Pause table preview');
-toy.appendChild(motionButton);
-motionButton.addEventListener('click', e => { e.stopPropagation(); demoPaused = !demoPaused; clearInterval(demoTimer); clearTimeout(hoverTimer); motionButton.textContent = demoPaused ? 'Play preview' : 'Pause preview'; motionButton.setAttribute('aria-label', demoPaused ? 'Play table preview' : 'Pause table preview'); if (!demoPaused) startDemo(); });
-motionButton.addEventListener('keydown', e => e.stopPropagation());
-mini.addEventListener('pointermove', e => {
-  const n = e.target.closest('.el'); if (!n) return;
-  clearInterval(demoTimer); clearTimeout(hoverTimer); setState(mini, null, n.dataset.s);
-  // Resting the pointer on the table must not freeze the demo indefinitely.
-  if (!demoPaused) hoverTimer = setTimeout(startDemo, 1400);
-});
-toy.addEventListener('pointerleave', () => { if (!lab.classList.contains('open')) startDemo(); });
-document.addEventListener('visibilitychange', () => { if (document.hidden) { clearInterval(demoTimer); clearTimeout(hoverTimer); } else startDemo(); });
-pressTilt(toy, mini, 7);
-
-/* Full view */
-const lab = document.getElementById('lab'), full = document.getElementById('full'), card = document.getElementById('card'), labStage = document.getElementById('labStage');
-buildTable(full, true);
-let selected = 'Sf';
-full.querySelectorAll('.el').forEach(n => {
-  n.addEventListener('pointerdown', e => { if (e.button === 0) { n.classList.remove('press'); n.classList.add('down'); } });
-  ['pointerup', 'pointercancel', 'pointerleave'].forEach(event => n.addEventListener(event, () => n.classList.remove('down')));
-  n.addEventListener('mouseenter', () => setState(full, selected, n.dataset.s));
-  n.addEventListener('mouseleave', () => setState(full, selected, null));
-  n.addEventListener('click', () => { selected = n.dataset.s; setState(full, selected, null); press(n); showCard(selected); });
-});
-const IMG = { proxitouch: 'shared/media/proxitouch-poster.jpg', mutual: FIG + 'mutual-cover.webp', edl: 'shared/media/edl-poster.jpg' };
-function showCard(s) {
-  const e = bySym[s], tags = list => list.map(x => `<span class="k-${bySym[x].k}" data-s="${x}">${label(bySym[x])}</span>`).join('');
-  if (e.kind === 'tech') {
-    card.innerHTML = `<div class="hd"><div class="sq k-${e.k}">${e.s}</div><div><small>Technique</small><h3>${label(e)}</h3></div></div>
-      <div class="ln">${cap1(T[e.t].gloss)}.</div>
-      <div class="bl"><b>Used in</b><div class="tags">${tags(bonded(s))}</div></div>`;
-  } else {
-    const p = P[e.p], src = e.img ? IMG[e.img] : (p.fig ? FIG + p.fig : null), line = e.s === 'Mu' ? 'How much capacitance is left when two plates unfold?' : p.line;
-    card.innerHTML = `<div class="hd"><div class="sq k-${e.k}">${e.s}</div><div><small>My project${e.p === 'loop' ? ' · building' : ''}</small><h3>${label(e)}</h3></div></div>
-      <div class="ln">${line}</div>
-      ${src ? `<div class="im"><img src="${src}" alt=""></div>` : ''}
-      <div class="bl"><b>Built with</b><div class="tags">${tags(e.cfg || [])}</div></div>
-      <a class="go" href="${e.k === 'vis' && p.site ? p.site : p.repo}">${e.k === 'vis' ? 'Open it ↗' : 'View code ↗'}</a>`;
-  }
-  card.querySelectorAll('.tags span').forEach(t => t.addEventListener('click', () => { const n = full.querySelector(`[data-s="${t.dataset.s}"]`); n && n.click(); }));
-}
-pressTilt(labStage, full, 4);
-
-function openLab() { lab.classList.add('open'); lab.setAttribute('aria-hidden', 'false'); document.body.classList.add('locked'); clearInterval(demoTimer); clearTimeout(hoverTimer); setState(full, selected, null); showCard(selected); }
-function closeLab() { lab.classList.remove('open'); lab.setAttribute('aria-hidden', 'true'); document.body.classList.remove('locked'); startDemo(); }
-toy.addEventListener('click', openLab);
-toy.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLab(); } });
-document.getElementById('close').addEventListener('click', closeLab);
-addEventListener('keydown', e => { if (e.key === 'Escape' && lab.classList.contains('open')) closeLab(); });
-if (location.hash === '#elements') openLab();
+// Keep existing links to the table working after the move to its own page.
+if (location.hash === '#elements') location.replace('elements.html');
 </script>
 </body>
 </html>

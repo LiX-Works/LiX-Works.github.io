@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A periodic table of my AI toolkit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--sans:"Inter Tight",Inter,system-ui,sans-serif;--serif:"Instrument Serif",Georgia,serif;--mono:"JetBrains Mono",ui-monospace,monospace;
+  --ink:#f2f6ff;--ink2:#c3cfe6;--muted:#8e9dbb;
+  /* technique blue / project gold: fill, border, symbol, glow. Kept bright enough to read at rest. */
+  --tf:rgba(96,150,255,.17);--tb:rgba(140,182,255,.78);--tt:#d6e5ff;--tg:#79a8ff;
+  --pf:rgba(255,186,72,.16);--pb:rgba(255,204,110,.80);--pt:#ffe2a3;--pg:#ffbe4d;
+  --gap:12px;--th:3px}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  background:radial-gradient(70% 60% at 42% 58%,#1a2f5c 0%,#0f1d3d 45%,#08112a 100%)}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1460px;margin:0 auto;padding:30px 40px 40px}
+header{display:flex;justify-content:space-between;align-items:flex-end;gap:20px}
+h1{margin:0 0 8px;font-size:clamp(32px,3.3vw,48px);line-height:1.04;letter-spacing:-.028em;font-weight:750}
+h1 em{font-family:var(--serif);font-weight:400;font-style:italic;color:#a9c4ff}
+.sub{margin:0;font-size:17.5px;color:var(--ink2)}
+.gh{font-weight:650;font-size:14.5px;padding:10px 15px;border-radius:10px;border:1px solid rgba(190,210,255,.35);background:rgba(255,255,255,.07)}
+.main{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:34px;align-items:start;margin-top:14px}
+
+/* ---------- stage ---------- */
+.stage{position:relative;perspective:2600px;perspective-origin:50% 0%;padding:26px 0 40px}
+.pt{position:relative;transform-style:preserve-3d;transform-origin:50% 45%;transform:rotateX(17deg) rotateX(var(--px,0deg)) rotateY(var(--py,0deg))}
+/* Measuring plate under the table: fine grid plus a soft light from below, fading at the edges. */
+.pt::before{content:"";position:absolute;inset:-70px -120px -90px;pointer-events:none;transform:translateZ(-1px);
+  background:
+    radial-gradient(60% 55% at 50% 55%,rgba(110,160,255,.16),transparent 70%),
+    linear-gradient(rgba(150,190,255,.09) 1px,transparent 1px) 0 0/14px 14px,
+    linear-gradient(90deg,rgba(150,190,255,.09) 1px,transparent 1px) 0 0/14px 14px;
+  -webkit-mask-image:radial-gradient(closest-side,#000 60%,transparent);mask-image:radial-gradient(closest-side,#000 60%,transparent)}
+.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr)) .36fr repeat(4,minmax(0,1fr));gap:var(--gap);transform-style:preserve-3d}
+.zone{grid-row:1;font:650 15px var(--mono);letter-spacing:.14em;text-transform:uppercase;padding-bottom:6px;margin-bottom:4px;border-bottom:1.5px solid currentColor}
+.zone.t{grid-column:1/6;color:var(--tg)}.zone.p{grid-column:7/11;color:var(--pg)}
+
+/* ---------- elements ---------- */
+.el{position:relative;aspect-ratio:1/.92;transform-style:preserve-3d;cursor:pointer;--z:0px;--f:var(--tf);--b:var(--tb);--t:var(--tt);--g:var(--tg)}
+.el.p{--f:var(--pf);--b:var(--pb);--t:var(--pt);--g:var(--pg)}
+.el .lift{position:absolute;inset:0;transform-style:preserve-3d;transform:translateZ(var(--z));transition:transform .45s cubic-bezier(.2,1.3,.35,1)}
+.el .slab{position:absolute;inset:0;border-radius:6px;transform:translateZ(var(--th));
+  background:linear-gradient(170deg,rgba(255,255,255,.13),rgba(255,255,255,.02) 38%,rgba(0,0,0,.10)),var(--f);
+  border:1.5px solid var(--b);box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 10px 22px -14px rgba(0,0,0,.8);
+  display:flex;flex-direction:column;justify-content:flex-end;padding:0 9% 9%;transition:border-color .3s,box-shadow .3s,opacity .3s,filter .3s}
+.el .sym{font:700 clamp(22px,2.5vw,40px)/1 var(--sans);letter-spacing:-.02em;color:var(--t)}
+.el .nm{margin-top:7%;min-height:2.3em;font-size:clamp(10.5px,.88vw,13.5px);line-height:1.17;font-weight:560;color:#e4ebf8}
+.el.building .slab{border-style:dashed}
+
+/* hover: quiet. the tile rises a little; what it connects to gets a brighter frame */
+.el.hov{--z:12px}
+.el.hov .slab{border-color:var(--g);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 0 0 1px var(--g),0 0 24px -6px var(--g)}
+.el.lnk .slab{border-color:var(--g);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 0 18px -8px var(--g)}
+.pt.focus .el:not(.hov):not(.lnk):not(.sel):not(.exc) .slab{opacity:.55}
+/* selected and excited (hit by a beam): lit until the next click */
+.el.sel{--z:14px}
+.el.sel .slab{border-color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 0 1.5px var(--g),0 0 30px -4px var(--g),inset 0 0 22px -10px var(--g)}
+.el.exc .slab{border-color:var(--g);box-shadow:inset 0 1px 0 rgba(255,255,255,.42),0 0 0 1px var(--g),0 0 22px -8px var(--g);
+  background:linear-gradient(170deg,rgba(255,255,255,.18),rgba(255,255,255,.03) 40%),color-mix(in srgb,var(--g) 24%,transparent)}
+
+/* The source is the event: it gathers charge (sinks, brightens), stays lit while it emits,
+   and pulses once per particle that leaves it. */
+.el.emit .slab{border-color:#fff;background:linear-gradient(170deg,rgba(255,255,255,.26),rgba(255,255,255,.05) 45%),color-mix(in srgb,var(--g) 34%,transparent);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 0 0 1.5px var(--g),0 0 40px -2px var(--g),inset 0 0 30px -6px var(--g)}
+.el.charge .slab{animation:charge .26s cubic-bezier(.4,0,.2,1)}
+@keyframes charge{0%{transform:translateZ(var(--th));filter:none}75%{transform:translateZ(calc(var(--th) - 10px));filter:brightness(1.5)}100%{transform:translateZ(var(--th));filter:brightness(1.15)}}
+.el.shot .slab{animation:shot .2s ease-out}
+@keyframes shot{30%{filter:brightness(1.5)}}
+/* The target absorbs: a short rise and a brightening, no bounce. The light running round its frame is drawn on the canvas. */
+.el.hit .slab{animation:hit .7s cubic-bezier(.2,.8,.3,1)}
+@keyframes hit{0%{transform:translateZ(var(--th));filter:none}18%{transform:translateZ(calc(var(--th) + 8px)) scale(1.035);filter:brightness(1.75)}100%{transform:translateZ(var(--th));filter:none}}
+
+/* ---------- beams overlay ---------- */
+#fx{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:5}
+
+/* ---------- card ---------- */
+.card{position:sticky;top:24px;background:rgba(255,255,255,.07);border:1px solid rgba(190,210,255,.25);border-radius:16px;padding:24px;backdrop-filter:blur(12px);box-shadow:0 40px 80px -40px rgba(0,0,0,.8)}
+.card .hd{display:flex;gap:16px;align-items:center}
+.card .big{flex:none;width:84px;height:78px;border-radius:8px;border:1.5px solid var(--b);background:var(--f);display:grid;place-items:center;font:700 36px var(--sans);color:var(--t);box-shadow:0 0 26px -8px var(--g)}
+.card h3{margin:0;font-size:24px;line-height:1.12;letter-spacing:-.02em}
+.card .st{display:inline-block;margin-top:6px;font:600 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--pg)}
+.card .ln{margin:16px 0 0;font-size:17px;line-height:1.5;color:var(--ink2)}
+.card .bl{margin-top:18px;padding-top:16px;border-top:1px solid rgba(190,210,255,.2)}
+.card .bl > b{display:block;font:600 12.5px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{cursor:pointer;display:inline-flex;align-items:center;gap:8px;padding:5px 11px 5px 5px;border-radius:7px;border:1px solid var(--b);background:rgba(255,255,255,.05);font-size:14px;font-weight:600;color:#eef3ff}
+.chip b{font:700 12.5px var(--sans);min-width:26px;height:24px;padding:0 4px;display:grid;place-items:center;border-radius:4px;background:var(--f);color:var(--t)}
+.chip:hover{border-color:#fff}
+.go{display:inline-block;margin-top:20px;padding:11px 17px;border-radius:10px;background:#f2f6ff;color:#0b1530;font-weight:700;font-size:15px}
+.pc{--f:var(--pf);--b:var(--pb);--t:var(--pt);--g:var(--pg)}.tc{--f:var(--tf);--b:var(--tb);--t:var(--tt);--g:var(--tg)}
+
+
+@media (max-width:1150px){.main{grid-template-columns:1fr}.card{position:relative;top:0}}
+@media (max-width:700px){.wrap{padding:18px 12px}:root{--gap:6px}.el .nm{display:none}.zone{font-size:11px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* Integration: navigation and keyboard access; the design rules above are retained. */
+.pt{transform-origin:50% var(--pivot-y,50%)}
+.pressure-pivot{position:absolute;left:50%;top:var(--pivot-y,50%);width:0;height:0;pointer-events:none}
+header nav{display:flex;flex:none;gap:8px}
+.el:focus-visible{outline:2px solid #fff;outline-offset:5px;border-radius:6px}
+.chip:focus-visible,.gh:focus-visible,.go:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.chip{font-family:inherit;text-align:left}
+/* Keep long labels inside their tiles without changing tile proportions or type sizes. */
+.el .slab{padding:0 6% 6%}
+.el .nm{overflow-wrap:anywhere}
+.card .hd>div:last-child{min-width:0}
+.card h3,.chip{overflow-wrap:anywhere}
+.chip{max-width:100%;white-space:normal}
+@media(max-width:700px){header{flex-direction:column;align-items:flex-start}header nav{align-self:flex-end}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>A <em>periodic table</em> of my AI toolkit</h1>
+      <p class="sub">My open-source projects and the techniques behind them. Click a tile to see how they connect.</p>
+    </div>
+    <nav aria-label="Page navigation"><a class="gh" href="index.html">Home</a><a class="gh" href="https://github.com/LiX-Works">GitHub ↗</a></nav>
+  </header>
+  <div class="main">
+    <div class="stage" id="stage"><div class="pt" id="pt"><div class="grid" id="grid"></div></div></div>
+    <aside class="card" id="card"></aside>
+  </div>
+</div>
+<canvas id="fx"></canvas>
+<script src="shared/periodic-data.js"></script>
+<script>
+/* r, c = row and column (c 1–5 techniques, 7–10 projects; 6 is the gap). u = documented project-to-technique relations. */
+const E = window.PERIODIC_ELEMENTS.map(e => ({ ...e, u: e.u && [...e.u] }));
+E.forEach(e => e.proj = !!e.u);
+const by = Object.fromEntries(E.map(e => [e.s, e]));
+const links = s => by[s].proj ? by[s].u : E.filter(x => x.proj && x.u.includes(s)).map(x => x.s);
+
+/* ---------- build ---------- */
+const grid = document.getElementById('grid'), pt = document.getElementById('pt');
+grid.innerHTML = '<div class="zone t">Technical</div><div class="zone p">My projects</div>' +
+  E.map(e => `<div class="el${e.proj ? ' p' : ''}${e.building ? ' building' : ''}" data-s="${e.s}" role="button" tabindex="0" aria-label="${e.n}" aria-pressed="false" style="grid-row:${e.r + 1};grid-column:${e.c}">
+    <div class="lift"><div class="slab"><span class="sym">${e.s}</span><span class="nm">${e.n}</span></div></div></div>`).join('');
+const els = [...grid.querySelectorAll('.el')], node = s => grid.querySelector(`.el[data-s="${s}"]`);
+const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const retrigger = (n, cls) => { n.classList.remove(cls); void n.offsetWidth; n.classList.add(cls); };
+
+/* ---------- states ---------- */
+let selected = null;
+function paint(hover) {
+  const f = hover || selected, ln = new Set(f ? links(f) : []);
+  pt.classList.toggle('focus', !!f);
+  els.forEach(n => { const s = n.dataset.s;
+    n.classList.toggle('sel', s === selected); n.setAttribute('aria-pressed', String(s === selected));
+    n.classList.toggle('hov', s === hover && s !== selected);
+    n.classList.toggle('lnk', ln.has(s) && s !== selected && s !== hover); });
+}
+
+/* ---------- beams (canvas, screen space, additive light) ---------- */
+const cv = document.getElementById('fx'), cx = cv.getContext('2d');
+let W, H, DPR;
+function size() { DPR = Math.min(devicePixelRatio || 1, 2); W = innerWidth; H = innerHeight; cv.width = W * DPR; cv.height = H * DPR; cx.setTransform(DPR, 0, 0, DPR, 0, 0); }
+size(); addEventListener('resize', size);
+const beams = [], fx = [];
+let emitTimer, arrivalTimer;
+const rgb = s => by[s].proj ? '255,196,92' : '126,172,255';
+const rectOf = n => n.querySelector('.slab').getBoundingClientRect();
+const ctr = r => [r.left + r.width / 2, r.top + r.height / 2];
+// where a ray from the rectangle's centre along (dx, dy) leaves the rectangle
+const edge = (r, dx, dy, out = 0) => { const t = Math.min(r.width / 2 / Math.abs(dx || 1e-6), r.height / 2 / Math.abs(dy || 1e-6)); const [x, y] = ctr(r); return [x + dx * (t + out), y + dy * (t + out)]; };
+
+/* Timing. The source is the event; the particle is quick but readable; the track is what stays. */
+const CHARGE = 240, STAGGER = 70, SPEED = 2.3, TAIL = 70, HOLD = 1100;   // ms, ms, px/ms, px, ms
+
+function fire(src) {
+  const s = src.dataset.s, now = performance.now();
+  clearTimeout(emitTimer); beams.length = 0; fx.length = 0;
+  els.forEach(n => n.classList.remove('exc', 'emit', 'charge', 'shot', 'hit'));
+  cx.clearRect(0, 0, W, H);
+  const targets = links(s).map(node);
+  if (still) { targets.forEach(n => n.classList.add('exc')); return; }
+  // nearest first, so the volley reads as a sequence
+  const c0 = ctr(rectOf(src));
+  targets.sort((p, q) => Math.hypot(...ctr(rectOf(p)).map((v, i) => v - c0[i])) - Math.hypot(...ctr(rectOf(q)).map((v, i) => v - c0[i])));
+  retrigger(src, 'charge'); src.classList.add('emit');
+  fx.push({ kind: 'gather', node: src, col: rgb(s), t0: now, life: CHARGE });
+  targets.forEach((dst, i) => beams.push({ src, dst, col: rgb(s), tcol: rgb(dst.dataset.s), start: now + CHARGE + i * STAGGER, launched: false, done: false }));
+  emitTimer = setTimeout(() => src.classList.remove('emit'), CHARGE + targets.length * STAGGER + 350);
+  loop();
+}
+
+// Geometry is re-measured every frame, so beams stay attached while the plate tilts.
+function geo(bm) {
+  const ra = rectOf(bm.src), rb = rectOf(bm.dst), ca = ctr(ra), cb = ctr(rb);
+  let ux = cb[0] - ca[0], uy = cb[1] - ca[1]; const L = Math.hypot(ux, uy) || 1; ux /= L; uy /= L;
+  const a = edge(ra, ux, uy, 2), b = edge(rb, -ux, -uy, 1);
+  return { a, b, ux, uy, d: Math.hypot(b[0] - a[0], b[1] - a[1]), rb };
+}
+
+function drawBeam(bm, now) {
+  if (now < bm.start) return true;
+  const g = geo(bm);
+  if (!bm.launched) { bm.launched = true; retrigger(bm.src, 'shot'); fx.push({ kind: 'flare', node: bm.src, ux: g.ux, uy: g.uy, col: bm.col, t0: now, life: 300 }); }
+  const run = (now - bm.start) * SPEED;
+  if (!bm.done && run >= g.d) { bm.done = true; bm.end = now; impact(bm, g); }
+  if (bm.done && now - bm.end > HOLD) return false;
+  const head = Math.min(run, g.d), at = s => [g.a[0] + g.ux * s, g.a[1] + g.uy * s], p = at(head);
+  // the track: source colour fading into the target colour; it holds, then fades slowly
+  const k = bm.done ? (now - bm.end) / HOLD : 0, tk = 1 - k * k * (3 - 2 * k);
+  const tg = cx.createLinearGradient(...g.a, ...g.b);
+  tg.addColorStop(0, `rgba(${bm.col},${.95 * tk})`); tg.addColorStop(1, `rgba(${bm.tcol},${.95 * tk})`);
+  const tglow = cx.createLinearGradient(...g.a, ...g.b);
+  tglow.addColorStop(0, `rgba(${bm.col},${.22 * tk})`); tglow.addColorStop(1, `rgba(${bm.tcol},${.22 * tk})`);
+  cx.lineCap = 'round';
+  cx.strokeStyle = tglow; cx.lineWidth = 7; cx.beginPath(); cx.moveTo(...g.a); cx.lineTo(...p); cx.stroke();
+  cx.strokeStyle = tg; cx.lineWidth = 1.8; cx.beginPath(); cx.moveTo(...g.a); cx.lineTo(...p); cx.stroke();
+  // the particle: small, a short bright streak, not a ball
+  if (!bm.done) {
+    const q = at(Math.max(0, head - TAIL)), sg = cx.createLinearGradient(...q, ...p);
+    sg.addColorStop(0, `rgba(${bm.col},0)`); sg.addColorStop(1, 'rgba(255,255,255,.95)');
+    cx.strokeStyle = sg; cx.lineWidth = 2.6; cx.beginPath(); cx.moveTo(...q); cx.lineTo(...p); cx.stroke();
+    glow(...p, 7, bm.col, .85);
+  }
+  return true;
+}
+
+function impact(bm, g) {
+  retrigger(bm.dst, 'hit'); bm.dst.classList.add('exc');
+  fx.push({ kind: 'wrap', node: bm.dst, ux: g.ux, uy: g.uy, col: bm.tcol, t0: performance.now(), life: 900 });
+}
+
+// a point on the rectangle's outline at arc length u, clockwise from the top-left corner
+function onRect(r, u) {
+  const w = r.width, h = r.height, P = 2 * (w + h); u = ((u % P) + P) % P;
+  if (u < w) return [r.left + u, r.top]; u -= w;
+  if (u < h) return [r.right, r.top + u]; u -= h;
+  if (u < w) return [r.right - u, r.bottom]; u -= w;
+  return [r.left, r.bottom - u];
+}
+function arcLen(r, [x, y]) {   // inverse of onRect for a point on the outline
+  const w = r.width, h = r.height, d = [Math.abs(y - r.top), Math.abs(x - r.right), Math.abs(y - r.bottom), Math.abs(x - r.left)], s = d.indexOf(Math.min(...d));
+  return [x - r.left, w + (y - r.top), w + h + (r.right - x), 2 * w + h + (r.bottom - y)][s];
+}
+
+function drawFx(f, now) {
+  const k = (now - f.t0) / f.life;
+  if (k >= 1) return false;
+  const r = rectOf(f.node);
+  if (f.kind === 'gather') {
+    // two frames close in on the tile: charge being drawn in
+    [0, .35].forEach(o => { const kk = Math.min(1, k + o), m = (1 - kk) * 26, a = kk * (1 - kk) * 3.2;
+      cx.strokeStyle = `rgba(${f.col},${a})`; cx.lineWidth = 1.4; cx.beginPath();
+      cx.roundRect ? cx.roundRect(r.left - m, r.top - m, r.width + 2 * m, r.height + 2 * m, 8 + m / 3) : cx.rect(r.left - m, r.top - m, r.width + 2 * m, r.height + 2 * m); cx.stroke(); });
+  } else if (f.kind === 'flare') {
+    // muzzle light at the exit point
+    const p = edge(r, f.ux, f.uy, 2);
+    glow(...p, 18 * (1 - k) + 6, f.col, (1 - k) * .9);
+  } else if (f.kind === 'wrap') {
+    // light enters at the impact point and runs round the frame both ways, then fades
+    const P = 2 * (r.width + r.height), u0 = arcLen(r, edge(r, -f.ux, -f.uy)), run = Math.min(1, k / .3) * P / 2, fade = k < .3 ? 1 : 1 - (k - .3) / .7;
+    [1, -1].forEach(dir => {
+      const pts = []; for (let i = 0; i <= 24; i++) pts.push(onRect(r, u0 + dir * run * i / 24));
+      [[6, `rgba(${f.col},${.25 * fade})`], [1.6, `rgba(255,255,255,${.85 * fade})`]].forEach(([w, c]) => {
+        cx.strokeStyle = c; cx.lineWidth = w; cx.lineJoin = 'round'; cx.beginPath(); pts.forEach((q, i) => i ? cx.lineTo(...q) : cx.moveTo(...q)); cx.stroke(); });
+      if (k < .3) glow(...pts[pts.length - 1], 6, f.col, .9);
+    });
+    if (k < .25) glow(...edge(r, -f.ux, -f.uy), 14 * (1 - k * 4) + 4, f.col, 1 - k * 4);
+  }
+  return true;
+}
+
+function glow(x, y, r, col, a) {
+  const g = cx.createRadialGradient(x, y, 0, x, y, r);
+  g.addColorStop(0, `rgba(255,255,255,${a})`); g.addColorStop(.3, `rgba(${col},${a * .8})`); g.addColorStop(1, `rgba(${col},0)`);
+  cx.fillStyle = g; cx.beginPath(); cx.arc(x, y, r, 0, 7); cx.fill();
+}
+let running = false;
+function loop() {
+  if (running) return; running = true;
+  (function frame(now) {
+    cx.clearRect(0, 0, W, H); cx.globalCompositeOperation = 'lighter';
+    for (let i = beams.length - 1; i >= 0; i--) if (!drawBeam(beams[i], now)) beams.splice(i, 1);
+    for (let i = fx.length - 1; i >= 0; i--) if (!drawFx(fx[i], now)) fx.splice(i, 1);
+    if (beams.length || fx.length) requestAnimationFrame(frame); else { cx.clearRect(0, 0, W, H); running = false; }
+  })(performance.now());
+}
+
+/* Constant pointer pressure: torque is proportional to distance from the pivot.
+   The pivot is the gap between element rows 3 and 4; the zone heading is excluded. */
+function pressTilt(box, table, amp) {
+  const grid = table.querySelector('.grid');
+  const pivot = document.createElement('span');
+  pivot.className = 'pressure-pivot'; pivot.setAttribute('aria-hidden', 'true'); table.append(pivot);
+  let radius = 1;
+  function measure() {
+    // Resolved grid tracks are untransformed and retain subpixel precision.
+    // Track 0 is the heading; tracks 1–6 are the six element rows.
+    const css = getComputedStyle(grid), rows = css.gridTemplateRows.split(/\s+/).map(Number.parseFloat);
+    if (rows.length !== 7 || rows.some(n => !Number.isFinite(n))) return;
+    const gap = Number.parseFloat(css.rowGap) || 0;
+    const y = grid.offsetTop + rows.slice(0, 4).reduce((a, b) => a + b, 0) + gap * 3.5;
+    table.style.setProperty('--pivot-y', y + 'px');
+    const height = rows.slice(1).reduce((a, b) => a + b, 0) + gap * 5;
+    radius = Math.max(grid.clientWidth, height) / 2 || 1;
+  }
+  measure(); new ResizeObserver(measure).observe(grid);
+  if (still) return;
+
+  const DURATION = 280;
+  const ease = t => { t = Math.max(0, Math.min(1, t)); return t * t * t * (t * (t * 6 - 15) + 10); };
+  const pending = [];
+  let settledX = 0, settledY = 0, targetX = 0, targetY = 0, raf = 0;
+  function step(now) {
+    while (pending.length && now - pending[0].time >= DURATION) {
+      const p = pending.shift(); settledX += p.dx; settledY += p.dy;
+    }
+    let x = settledX, y = settledY;
+    for (const p of pending) {
+      const k = ease((now - p.time) / DURATION); x += p.dx * k; y += p.dy * k;
+    }
+    table.style.setProperty('--px', (-y).toFixed(5) + 'deg'); table.style.setProperty('--py', x.toFixed(5) + 'deg');
+    raf = pending.length ? requestAnimationFrame(step) : 0;
+  }
+  function aim(x, y) {
+    if (Math.abs(x - targetX) + Math.abs(y - targetY) < 1e-6) return;
+    // Blend recent target changes with the same finite ease curve. This is a
+    // positive-weight average of recent targets: no spring and no overshoot.
+    // A new pointer event does not restart an already moving ease at zero speed.
+    pending.push({time: performance.now(), dx: x - targetX, dy: y - targetY});
+    targetX = x; targetY = y;
+    if (!raf) raf = requestAnimationFrame(step);
+  }
+  box.addEventListener('pointermove', e => {
+    // This zero-sized point is invariant under rotation about itself; measuring
+    // tilted tile bounds instead would feed the output back into the input.
+    const p = pivot.getBoundingClientRect(), clamp = n => Math.max(-amp, Math.min(amp, n));
+    aim(clamp((e.clientX - p.left) * amp / radius), clamp((e.clientY - p.top) * amp / radius));
+  });
+  box.addEventListener('pointerleave', () => aim(0, 0));
+  box.addEventListener('pointercancel', () => aim(0, 0));
+}
+pressTilt(document.getElementById('stage'), pt, 3);
+
+/* ---------- card ---------- */
+const card = document.getElementById('card');
+const chip = s => `<button type="button" class="chip ${by[s].proj ? 'pc' : 'tc'}" data-s="${s}"><b>${s}</b>${by[s].n}</button>`;
+function show(s) {
+  const e = by[s], ln = links(s);
+  card.innerHTML = `<div class="hd ${e.proj ? 'pc' : 'tc'}"><div class="big">${s}</div><div><h3>${e.full || e.n}</h3>${e.building ? '<span class="st">Building</span>' : ''}</div></div>
+    <p class="ln">${e.proj ? e.line : e.g}</p>
+    ${ln.length ? `<div class="bl"><b>${e.proj ? 'Built with' : 'Used in'}</b><div class="chips">${ln.map(chip).join('')}</div></div>` : ''}
+    ${e.proj ? `<a class="go" href="${e.site || e.repo}" target="_blank" rel="noopener">${e.site ? 'Open it ↗' : 'View code ↗'}</a>` : ''}`;
+  card.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () => { const s = c.dataset.s; select(s); node(s).focus({preventScroll:true}); }));
+}
+function select(s) { clearTimeout(arrivalTimer); selected = s; paint(null); show(s); fire(node(s)); }
+
+els.forEach(n => {
+  n.addEventListener('pointerenter', () => paint(n.dataset.s));
+  n.addEventListener('pointerleave', () => paint(null));
+  n.addEventListener('click', () => select(n.dataset.s));
+  n.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(n.dataset.s); } });
+});
+selected = 'Ca'; paint(null); show('Ca');
+arrivalTimer = setTimeout(() => fire(node('Ca')), 900); // one shot on arrival
+</script>
+</body>
+</html>
