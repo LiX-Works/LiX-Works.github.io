@@ -14,7 +14,6 @@ window.PERIODIC_ELEMENTS = [
     "full": "Capacitance Demos",
     "line": "Two interactive 3D lessons on capacitive sensing, right in the browser. Move, touch and press, and watch the signal respond.",
     "repo": "https://github.com/LiX-Works/Capacitance-Demos",
-    "site": "https://lix-works.github.io/Capacitance-Demos/",
     "u": [
       "H",
       "Ai",
@@ -48,7 +47,6 @@ window.PERIODIC_ELEMENTS = [
     "full": "Scientific Animation Workflow",
     "line": "Science films rendered entirely from code: 3D scenes, captions and sound.",
     "repo": "https://github.com/LiX-Works/Scientific-Animation-Workflow",
-    "site": "https://lix-works.github.io/Scientific-Animation-Workflow/gallery/index.html#film",
     "u": [
       "H",
       "Ai",
