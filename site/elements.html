@@ -97,7 +97,6 @@ h1 em{font-family:var(--serif);font-weight:400;font-style:italic;color:#a9c4ff}
 
 @media (max-width:1150px){.main{grid-template-columns:1fr}.card{position:relative;top:0}}
 @media (max-width:700px){.wrap{padding:18px 12px}:root{--gap:6px}.el .nm{display:none}.zone{font-size:11px}}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 /* Integration: navigation and keyboard access; the design rules above are retained. */
 .pt{transform-origin:50% var(--pivot-y,50%)}
 .pressure-pivot{position:absolute;left:50%;top:var(--pivot-y,50%);width:0;height:0;pointer-events:none}
@@ -177,7 +176,6 @@ grid.innerHTML = '<div class="zone t">Technical</div><div class="zone p">My proj
   E.map(e => `<div class="el${e.proj ? ' p' : ''}${e.building ? ' building' : ''}" data-s="${e.s}" role="button" tabindex="0" aria-label="${e.n}" aria-pressed="false" style="grid-row:${e.r + 1};grid-column:${e.c}">
     <div class="lift"><div class="slab"><span class="sym">${e.s}</span><span class="nm">${e.n}</span></div></div></div>`).join('');
 const els = [...grid.querySelectorAll('.el')], node = s => grid.querySelector(`.el[data-s="${s}"]`);
-const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const retrigger = (n, cls) => { n.classList.remove(cls); void n.offsetWidth; n.classList.add(cls); };
 
 /* ---------- states ---------- */
@@ -213,7 +211,6 @@ function fire(src) {
   els.forEach(n => n.classList.remove('exc', 'emit', 'charge', 'shot', 'hit'));
   cx.clearRect(0, 0, W, H);
   const targets = links(s).map(node);
-  if (still) { targets.forEach(n => n.classList.add('exc')); return; }
   // nearest first, so the volley reads as a sequence
   const c0 = ctr(rectOf(src));
   targets.sort((p, q) => Math.hypot(...ctr(rectOf(p)).map((v, i) => v - c0[i])) - Math.hypot(...ctr(rectOf(q)).map((v, i) => v - c0[i])));
@@ -339,7 +336,6 @@ function pressTilt(box, table, amp) {
     radius = Math.max(grid.clientWidth, height) / 2 || 1;
   }
   measure(); new ResizeObserver(measure).observe(grid);
-  if (still) return;
 
   const DURATION = 280;
   const ease = t => { t = Math.max(0, Math.min(1, t)); return t * t * t * (t * (t * 6 - 15) + 10); };
