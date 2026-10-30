@@ -87,9 +87,9 @@ h1 em{font-family:var(--serif);font-weight:400;font-style:italic;color:#a9c4ff}
 .card .ln{margin:16px 0 0;font-size:17px;line-height:1.5;color:var(--ink2)}
 .card .bl{margin-top:18px;padding-top:16px;border-top:1px solid rgba(190,210,255,.2)}
 .card .bl > b{display:block;font:600 12.5px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
-.chips{display:flex;flex-wrap:wrap;gap:7px}
-.chip{cursor:pointer;display:inline-flex;align-items:center;gap:8px;padding:5px 11px 5px 5px;border-radius:7px;border:1px solid var(--b);background:rgba(255,255,255,.05);font-size:14px;font-weight:600;color:#eef3ff}
-.chip b{font:700 12.5px var(--sans);min-width:26px;height:24px;padding:0 4px;display:grid;place-items:center;border-radius:4px;background:var(--f);color:var(--t)}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chip{cursor:pointer;display:inline-flex;align-items:center;gap:5px;padding:3px 7px 3px 4px;border-radius:5px;border:1px solid color-mix(in srgb,var(--b) 55%,transparent);background:transparent;font-size:12.5px;font-weight:500;color:var(--ink2)}
+.chip b{font:600 11.5px var(--sans);min-width:20px;height:18px;padding:0 2px;display:grid;place-items:center;border-radius:3px;background:transparent;color:var(--t)}
 .chip:hover{border-color:#fff}
 .go{display:inline-block;margin-top:20px;padding:11px 17px;border-radius:10px;background:#f2f6ff;color:#0b1530;font-weight:700;font-size:15px}
 .pc{--f:var(--pf);--b:var(--pb);--t:var(--pt);--g:var(--pg)}.tc{--f:var(--tf);--b:var(--tb);--t:var(--tt);--g:var(--tg)}
@@ -113,6 +113,40 @@ header nav{display:flex;flex:none;gap:8px}
 .chip{max-width:100%;white-space:normal}
 @media(max-width:700px){header{flex-direction:column;align-items:flex-start}header nav{align-self:flex-end}}
 </style>
+<style id="d2-background">
+/* ===== D2 background pass. Brightness order: field < grid < idle tile < hover < lit. ===== */
+/* 1. Dark field: no bright centre behind the table; a slight vignette at the edges only. */
+body{background:radial-gradient(75% 65% at 40% 55%,#142650 0%,#0e1c3e 50%,#08112a 100%)}
+/* 2. Tiles get a solid body, so nothing shows through them; the colour tint sits on an opaque base. */
+:root{--base:#0f1c3b}
+.el .slab{background:linear-gradient(170deg,rgba(255,255,255,.11),rgba(255,255,255,.02) 38%,rgba(0,0,0,.14)),linear-gradient(var(--f),var(--f)),var(--base)}
+.el.exc .slab{background:linear-gradient(170deg,rgba(255,255,255,.18),rgba(255,255,255,.03) 40%),linear-gradient(color-mix(in srgb,var(--g) 24%,transparent),color-mix(in srgb,var(--g) 24%,transparent)),var(--base)}
+.el.emit .slab{background:linear-gradient(170deg,rgba(255,255,255,.26),rgba(255,255,255,.05) 45%),linear-gradient(color-mix(in srgb,var(--g) 34%,transparent),color-mix(in srgb,var(--g) 34%,transparent)),var(--base)}
+/* 3. Unrelated tiles recede by dimming, not by turning see-through. */
+.pt.focus .el:not(.hov):not(.lnk):not(.sel):not(.exc) .slab{opacity:1;filter:brightness(.74) saturate(.75)}
+/* 4. The plate: no light from below. Its pattern is faint under the table and shows in the gaps and around it. */
+.pt::before{inset:-90px -160px -110px;
+  -webkit-mask-image:radial-gradient(closest-side,rgba(0,0,0,.62) 35%,#000 72%,transparent 100%);
+          mask-image:radial-gradient(closest-side,rgba(0,0,0,.62) 35%,#000 72%,transparent 100%)}
+.pt::before{background:radial-gradient(circle,rgba(160,195,255,.30) 1px,transparent 1.6px) 0 0/24px 24px}
+/* Solid tiles show every brightness change in full, so the launch and hit pulses are toned down,
+   and they start from the tile's current state instead of jumping to full brightness first. */
+@keyframes charge{75%{transform:translateZ(calc(var(--th) - 10px));filter:brightness(1.16)}100%{transform:translateZ(var(--th));filter:brightness(1.06)}}
+@keyframes shot{35%{filter:brightness(1.08)}}
+@keyframes hit{20%{transform:translateZ(calc(var(--th) + 8px)) scale(1.03);filter:brightness(1.22)}}
+.el .slab{transition:border-color .35s,box-shadow .35s,opacity .3s,filter .45s}
+/* Element type: a plain neo-grotesque (Helvetica family) at normal width, as on printed periodic tables. */
+.el .sym{font-family:"Inter","Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:700;letter-spacing:0}
+/* Printed-table layout: symbol and name centred in the tile, symbol a little larger. */
+.el .slab{justify-content:center;align-items:center;text-align:center;padding:4% 6% 6%}
+.el .sym{font-size:clamp(24px,2.75vw,44px)}
+.el .nm{min-height:0;margin-top:9%}
+
+/* Keep complete words within the centred label area at narrower desktop widths. */
+.el .nm{max-width:100%;overflow-wrap:normal;word-break:normal}
+
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="wrap">

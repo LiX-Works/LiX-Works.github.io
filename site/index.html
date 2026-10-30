@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#edf1f6;--tile:#fff;--line:rgba(17,19,22,.08);--ink:#0d1626;--ink2:#3c4757;--muted:#7a8698;--accent:#1f4fd1;--accent-soft:#dfe8fb;
   --human:#b45309;--human-soft:#fff1de;--hum-bg:#0e1b36;--hum-fg:#c9d6ee;--hum-acc:#f2a541;--hero1:#ffffff;--hero2:#e6edf6;--toy1:#fbfcfe;--toy2:#e8eef7;
@@ -50,20 +51,10 @@ a.t:hover .arrow{background:var(--ink);color:#fff}
 .t .hu{margin-top:10px;font-size:13.5px;font-weight:650;color:var(--human)}
 .bd{display:inline-block;font:600 10.5px var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:3px 7px;border-radius:99px;background:var(--accent-soft);color:var(--accent);vertical-align:3px;margin-left:6px}
 
-.hero{grid-column:span 6;grid-row:span 4;padding:26px 0 20px;justify-content:space-between;background:radial-gradient(120% 120% at 0% 0%,var(--hero1) 0%,var(--hero2) 100%)}
-.hero h1{font-size:clamp(32px,3.3vw,48px);line-height:1;letter-spacing:-.03em;margin:0 0 12px;padding:0 32px;font-weight:700}
-.hero h1 em{font-family:var(--serif);font-weight:400;font-style:italic;color:var(--accent);letter-spacing:-.01em}
-.hero p{font-size:15.5px;line-height:1.5;max-width:40em;padding:0 32px}
-.mq{display:flex;flex-direction:column;gap:10px}
-.marquee{overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
-.marquee .row{display:flex;gap:10px;width:max-content;animation:slide 46s linear infinite}
-.marquee.rev .row{animation-direction:reverse;animation-duration:52s}
-.marquee:hover .row{animation-play-state:paused}
-.chip{flex:none;padding:12px 18px;border-radius:15px;background:#fff;border:1px solid var(--line);font-size:16px;line-height:1.3;white-space:nowrap;box-shadow:0 8px 18px -14px rgba(17,19,22,.35)}
-.chip b{font-size:17px;font-weight:700;margin-right:6px}
-.chip span{color:var(--muted)}
-.chip.h{background:var(--human-soft);border-color:transparent}.chip.h b{color:var(--human)}
-@keyframes slide{to{transform:translateX(-50%)}}
+.showcase{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);grid-auto-rows:350px;gap:14px;margin-bottom:14px}
+.hero{padding:28px;justify-content:center;background:radial-gradient(120% 120% at 0% 0%,var(--hero1) 0%,var(--hero2) 100%)}
+.hero h1{font-size:clamp(34px,3.4vw,48px);line-height:1.03;letter-spacing:-.03em;margin:0;font-weight:700}
+.hero h1 em{display:block;margin-top:6px;font-family:var(--serif);font-weight:400;font-style:italic;color:var(--accent);letter-spacing:-.01em}
 
 .live-t{grid-row:span 4}
 .live-t .live{flex:1;min-height:0;background:#e9f0f6}
@@ -94,51 +85,81 @@ a.t:hover .arrow{background:var(--ink);color:#fff}
 .foot a{color:var(--ink2);font-weight:600}
 
 /* ---------- static 31-element preview ---------- */
-.toy{grid-column:span 6;grid-row:span 4;cursor:pointer;background:radial-gradient(70% 60% at 42% 58%,#1a2f5c 0%,#0f1d3d 45%,#08112a 100%);color:#f2f6ff}
-.toy-head{padding:22px 26px 0;position:relative}
-.toy-head h2{margin:0;font-size:clamp(24px,2.3vw,32px);line-height:1.08;letter-spacing:-.025em;font-weight:700}
+.toy{cursor:pointer;background:radial-gradient(70% 60% at 42% 58%,#1a2f5c 0%,#0f1d3d 45%,#08112a 100%);color:#f2f6ff;isolation:isolate}
+.toy-head{position:absolute;left:24%;right:22%;top:36px;z-index:2;pointer-events:none}
+.toy-head h2{margin:0;font-size:clamp(27px,2.45vw,35px);line-height:1.02;letter-spacing:-.025em;font-weight:700;text-wrap:balance}
 .toy-head h2 em{font-family:var(--serif);font-weight:400;font-style:italic;color:#a9c4ff}
-.toy-head p{margin:6px 0 0;font-size:16px;line-height:1.45;color:#c3cfe6}
-.preview-frame{flex:1;min-height:0;padding:6px 20px 14px;display:grid;place-items:center;perspective:2600px;perspective-origin:50% 0%}
-.preview-grid{width:min(100%,320px);display:grid;grid-template-columns:repeat(5,minmax(0,1fr)) .36fr repeat(4,minmax(0,1fr));gap:5px;transform:rotateX(17deg);transform-style:preserve-3d}
+.preview-frame{position:absolute;inset:0;perspective:2000px;perspective-origin:50% 0%;pointer-events:none;-webkit-mask-image:linear-gradient(#000 78%,transparent 103%);mask-image:linear-gradient(#000 78%,transparent 103%)}
+.preview-grid{position:absolute;left:8%;top:48px;width:84%;display:grid;grid-template-columns:repeat(5,minmax(0,1fr)) .36fr repeat(4,minmax(0,1fr));gap:8px;transform:rotateX(38deg) rotateZ(7deg);transform-origin:50% 0%;transform-style:preserve-3d}
 .preview-zone{grid-row:1;font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;padding-bottom:3px;border-bottom:1px solid currentColor}
-.preview-zone.tech{grid-column:1/6;color:#79a8ff}.preview-zone.proj{grid-column:7/11;color:#ffbe4d}
+.preview-zone.tech{grid-column:1/3;color:#79a8ff}.preview-zone.proj{grid-column:7/11;color:#ffbe4d}
 .preview-element{position:relative;aspect-ratio:1/.92;--f:rgba(96,150,255,.17);--b:rgba(140,182,255,.78);--t:#d6e5ff}
 .preview-element.p{--f:rgba(255,186,72,.16);--b:rgba(255,204,110,.80);--t:#ffe2a3}
-.preview-element .face{position:absolute;inset:0;border-radius:6px;transform:translateZ(3px);background:linear-gradient(170deg,rgba(255,255,255,.13),rgba(255,255,255,.02) 38%,rgba(0,0,0,.10)),var(--f);border:1.5px solid var(--b);box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 10px 22px -14px rgba(0,0,0,.8);display:flex;align-items:center;padding:0 9%;font:700 20px/1 var(--sans);letter-spacing:-.02em;color:var(--t)}
+.preview-element .face{position:absolute;inset:0;border-radius:6px;transform:translateZ(3px);background:linear-gradient(170deg,rgba(255,255,255,.13),rgba(255,255,255,.02) 38%,rgba(0,0,0,.10)),var(--f);border:1.5px solid var(--b);box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 10px 22px -14px rgba(0,0,0,.8);display:flex;align-items:center;padding:0 9%;font:700 30px/1 var(--sans);letter-spacing:-.02em;color:var(--t)}
 .preview-element.building .face{border-style:dashed}
+.preview-cta{position:absolute;right:22px;bottom:20px;z-index:3;display:inline-flex;align-items:center;gap:10px;padding:9px 13px;border-radius:99px;border:1px solid rgba(140,182,255,.5);background:rgba(8,17,42,.9);color:#d6e5ff;font-size:15px;font-weight:600;box-shadow:0 0 22px -12px #79a8ff}
+.preview-cta i{font-style:normal;color:#ffce75;font-size:18px}
+.toy:hover .preview-cta{border-color:#a9c4ff;background:rgba(34,62,115,.8)}
 .toy:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 
-@media (max-width:1100px){.toy,.hero,.s7,.s5{grid-column:span 12}.c3,.c4,.c5{grid-column:span 6}.bento{grid-auto-rows:auto}.t{min-height:0}.toy,.hero{min-height:330px}.live-t{min-height:300px}.r4{min-height:400px}}
+@media (max-width:1100px){.showcase{grid-template-columns:minmax(0,1.8fr) minmax(0,1fr)}.hero{padding:22px}.hero h1{font-size:38px}.toy-head{top:38px;left:25%;right:13%}.toy-head h2{font-size:28px}.s7,.s5{grid-column:span 12}.c3,.c4,.c5{grid-column:span 6}.bento{grid-auto-rows:auto}.t{min-height:0}.live-t{min-height:300px}.r4{min-height:400px}}
+@media (max-width:800px){.showcase{grid-template-columns:1fr;grid-template-rows:350px auto;grid-auto-rows:auto}.hero{padding:24px 28px}.hero h1{font-size:38px}.hero h1 .break{display:none}.hero h1 em{display:block;margin-top:4px}}
 @media (max-width:680px){
-  .page{padding:14px 12px 30px}.bento{gap:10px}.c3,.c4,.c5{grid-column:span 12}.hero{padding:24px 0 18px}.hero h1,.hero p{padding:0 20px}
+  .page{padding:14px 12px 30px}.bento{gap:10px}.c3,.c4,.c5{grid-column:span 12}.showcase{grid-template-rows:320px auto;gap:10px;margin-bottom:10px}.hero{padding:22px 24px}.hero h1{font-size:34px}.toy-head{left:25%;right:10%;top:28px}.toy-head h2{font-size:26px}.preview-grid{width:102%;left:1%;top:64px;gap:6px}.preview-zone{visibility:hidden}.preview-element .face{font-size:27px}.preview-cta{right:16px;bottom:16px;font-size:14px}
 }
 /* Preserve content motion and deliberate press feedback in either preference.
    Reduce decorative entrances and pulses; pointer tilt is reduced in the script. */
 @media (prefers-reduced-motion:reduce){
   .t{opacity:1;transform:none;transition:none}
 }
+
+/* ---------- preview, second pass: title left, the whole table on the right, the call to action in the table's top gap ---------- */
+.showcase{grid-template-columns:minmax(0,2.75fr) minmax(0,1fr);grid-auto-rows:400px}
+.hero{padding:24px 26px}
+.hero h1{font-size:clamp(28px,2.45vw,38px)}
+.toy{background:radial-gradient(75% 70% at 62% 55%,#142650 0%,#0e1c3e 50%,#08112a 100%)}
+.toy::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(circle,rgba(160,195,255,.24) 1px,transparent 1.6px) 0 0/24px 24px;
+  -webkit-mask-image:radial-gradient(70% 80% at 64% 52%,#000 30%,transparent 100%);mask-image:radial-gradient(70% 80% at 64% 52%,#000 30%,transparent 100%)}
+.toy-head{left:34px;right:auto;top:50%;width:36%;transform:translateY(-50%)}
+.toy-head h2{font-size:clamp(30px,2.95vw,44px);line-height:1.04}
+.preview-frame{-webkit-mask-image:none;mask-image:none;perspective:1800px;perspective-origin:70% 10%}
+.preview-grid{left:41%;top:34px;width:55%;gap:8px;transform:rotateX(24deg) rotateZ(4deg);transform-origin:50% 0}
+.preview-zone.tech{grid-column:1/6}
+.preview-element .face{justify-content:center;padding:0;font:700 clamp(16px,1.65vw,25px)/1 "Inter","Helvetica Neue",Helvetica,Arial,sans-serif;letter-spacing:0;
+  background:linear-gradient(170deg,rgba(255,255,255,.11),rgba(255,255,255,.02) 38%,rgba(0,0,0,.14)),linear-gradient(var(--f),var(--f)),#0f1c3b}
+.preview-cta{display:none}
+.preview-gap{grid-row:2/4;grid-column:3/10;display:flex;align-items:center;justify-content:center;transform:translateZ(2px)}
+.preview-gap span{display:inline-flex;align-items:center;gap:8px;padding:8px 15px;border-radius:99px;border:1px solid rgba(140,182,255,.6);background:rgba(8,17,42,.82);
+  color:#e4ecff;font-size:clamp(13px,1.05vw,15px);font-weight:600;white-space:nowrap;box-shadow:0 0 24px -10px #79a8ff}
+.preview-gap i{font-style:normal;color:#ffce75}
+.toy:hover .preview-gap span{border-color:#cfe0ff;background:rgba(34,62,115,.88)}
+@media (max-width:1100px){.showcase{grid-template-columns:minmax(0,2.2fr) minmax(0,1fr)}
+  .toy-head{left:26px;width:34%}.toy-head h2{font-size:30px}.preview-grid{left:38%;width:58%}}
+/* stacked: title on top, the table below it */
+@media (max-width:800px){.showcase{grid-template-rows:400px auto}
+  .toy-head{left:24px;right:24px;width:auto;top:22px;transform:none}.toy-head h2{font-size:30px}.toy-head h2 br{display:none}
+  .preview-grid{left:21%;width:58%;top:96px}}
+@media (max-width:680px){.showcase{grid-template-rows:330px auto}
+  .toy-head{top:18px}.toy-head h2{font-size:24px}
+  .preview-grid{left:3%;width:94%;top:92px;gap:5px}.preview-element .face{font-size:14px;border-radius:4px}
+  .preview-gap span{padding:5px 10px;font-size:12px}}
 </style>
 </head>
 <body>
 <div class="page">
   <header class="top"><div class="mark"><b>LX</b>LiX</div><a class="gh" href="https://github.com/LiX-Works">GitHub ↗</a></header>
-  <div class="bento" id="bento">
+  <div class="showcase">
     <a class="t toy" id="toy" href="elements.html" aria-label="Open the interactive periodic table">
-      <div class="toy-head"><div><h2>A <em>periodic table</em> of my AI toolkit</h2><p>My open-source projects and the techniques they are built from.</p></div></div>
-      <div class="preview-frame" aria-hidden="true"><div class="preview-grid"><div class="preview-zone tech">Technical</div><div class="preview-zone proj">My projects</div><span class="preview-element" data-s="H" title="Human" style="grid-row:2;grid-column:1"><span class="face">H</span></span><span class="preview-element p" data-s="C" title="Capacitance demos" style="grid-row:2;grid-column:10"><span class="face">C</span></span><span class="preview-element" data-s="Ai" title="AI" style="grid-row:3;grid-column:1"><span class="face">Ai</span></span><span class="preview-element" data-s="Ag" title="Agent" style="grid-row:3;grid-column:2"><span class="face">Ag</span></span><span class="preview-element p" data-s="S" title="Scientific film" style="grid-row:3;grid-column:10"><span class="face">S</span></span><span class="preview-element" data-s="Si" title="Agent Skill" style="grid-row:4;grid-column:1"><span class="face">Si</span></span><span class="preview-element" data-s="Mc" title="MCP" style="grid-row:4;grid-column:2"><span class="face">Mc</span></span><span class="preview-element p" data-s="Fe" title="ScholarFetch" style="grid-row:4;grid-column:7"><span class="face">Fe</span></span><span class="preview-element p" data-s="Au" title="Zotero AutoCite" style="grid-row:4;grid-column:8"><span class="face">Au</span></span><span class="preview-element p" data-s="Ca" title="COMSOL Agent" style="grid-row:4;grid-column:9"><span class="face">Ca</span></span><span class="preview-element p" data-s="O" title="Origin MCP + Skill" style="grid-row:4;grid-column:10"><span class="face">O</span></span><span class="preview-element" data-s="Pr" title="Prompt Engineering" style="grid-row:5;grid-column:1"><span class="face">Pr</span></span><span class="preview-element" data-s="Ce" title="Context Engineering" style="grid-row:5;grid-column:2"><span class="face">Ce</span></span><span class="preview-element" data-s="Lu" title="Loop Engineering" style="grid-row:5;grid-column:3"><span class="face">Lu</span></span><span class="preview-element" data-s="B" title="Blender" style="grid-row:5;grid-column:4"><span class="face">B</span></span><span class="preview-element" data-s="Co" title="COMSOL" style="grid-row:5;grid-column:5"><span class="face">Co</span></span><span class="preview-element p" data-s="As" title="Search Booster" style="grid-row:5;grid-column:7"><span class="face">As</span></span><span class="preview-element p" data-s="Sm" title="Subagent Manager" style="grid-row:5;grid-column:8"><span class="face">Sm</span></span><span class="preview-element p building" data-s="Sr" title="Research Loop" style="grid-row:5;grid-column:9"><span class="face">Sr</span></span><span class="preview-element" data-s="Sb" title="Subagents" style="grid-row:6;grid-column:1"><span class="face">Sb</span></span><span class="preview-element" data-s="P" title="Python" style="grid-row:6;grid-column:2"><span class="face">P</span></span><span class="preview-element" data-s="Re" title="Remotion" style="grid-row:6;grid-column:3"><span class="face">Re</span></span><span class="preview-element" data-s="Th" title="Three.js" style="grid-row:6;grid-column:4"><span class="face">Th</span></span><span class="preview-element" data-s="N" title="Node.js" style="grid-row:6;grid-column:5"><span class="face">N</span></span><span class="preview-element p" data-s="K" title="KSA Languages" style="grid-row:6;grid-column:7"><span class="face">K</span></span><span class="preview-element p" data-s="Cd" title="Codex Translate" style="grid-row:6;grid-column:8"><span class="face">Cd</span></span><span class="preview-element" data-s="Cl" title="CLI" style="grid-row:7;grid-column:1"><span class="face">Cl</span></span><span class="preview-element" data-s="He" title="HTML / CSS" style="grid-row:7;grid-column:2"><span class="face">He</span></span><span class="preview-element" data-s="Sc" title="JavaScript" style="grid-row:7;grid-column:3"><span class="face">Sc</span></span><span class="preview-element" data-s="Ts" title="TypeScript" style="grid-row:7;grid-column:4"><span class="face">Ts</span></span><span class="preview-element" data-s="W" title="WebGL2" style="grid-row:7;grid-column:5"><span class="face">W</span></span></div></div>
+      <div class="toy-head"><h2>A <em>periodic table</em><br>of my AI toolkit</h2></div>
+      <div class="preview-frame" aria-hidden="true"><div class="preview-grid"><div class="preview-zone tech">Technical</div><div class="preview-zone proj">My projects</div><div class="preview-gap"><span><i>&#8599;</i>Click to explore</span></div><span class="preview-element" data-s="H" title="Human" style="grid-row:2;grid-column:1"><span class="face">H</span></span><span class="preview-element p" data-s="C" title="Capacitance demos" style="grid-row:2;grid-column:10"><span class="face">C</span></span><span class="preview-element" data-s="Ai" title="AI" style="grid-row:3;grid-column:1"><span class="face">Ai</span></span><span class="preview-element" data-s="Ag" title="Agent" style="grid-row:3;grid-column:2"><span class="face">Ag</span></span><span class="preview-element p" data-s="S" title="Scientific film" style="grid-row:3;grid-column:10"><span class="face">S</span></span><span class="preview-element" data-s="Si" title="Agent Skill" style="grid-row:4;grid-column:1"><span class="face">Si</span></span><span class="preview-element" data-s="Mc" title="MCP" style="grid-row:4;grid-column:2"><span class="face">Mc</span></span><span class="preview-element p" data-s="Fe" title="ScholarFetch" style="grid-row:4;grid-column:7"><span class="face">Fe</span></span><span class="preview-element p" data-s="Au" title="Zotero AutoCite" style="grid-row:4;grid-column:8"><span class="face">Au</span></span><span class="preview-element p" data-s="Ca" title="COMSOL Agent" style="grid-row:4;grid-column:9"><span class="face">Ca</span></span><span class="preview-element p" data-s="O" title="Origin MCP + Skill" style="grid-row:4;grid-column:10"><span class="face">O</span></span><span class="preview-element" data-s="Pr" title="Prompt Engineering" style="grid-row:5;grid-column:1"><span class="face">Pr</span></span><span class="preview-element" data-s="Ce" title="Context Engineering" style="grid-row:5;grid-column:2"><span class="face">Ce</span></span><span class="preview-element" data-s="Lu" title="Loop Engineering" style="grid-row:5;grid-column:3"><span class="face">Lu</span></span><span class="preview-element" data-s="B" title="Blender" style="grid-row:5;grid-column:4"><span class="face">B</span></span><span class="preview-element" data-s="Co" title="COMSOL" style="grid-row:5;grid-column:5"><span class="face">Co</span></span><span class="preview-element p" data-s="As" title="Search Booster" style="grid-row:5;grid-column:7"><span class="face">As</span></span><span class="preview-element p" data-s="Sm" title="Subagent Manager" style="grid-row:5;grid-column:8"><span class="face">Sm</span></span><span class="preview-element p building" data-s="Sr" title="Research Loop" style="grid-row:5;grid-column:9"><span class="face">Sr</span></span><span class="preview-element" data-s="Sb" title="Subagents" style="grid-row:6;grid-column:1"><span class="face">Sb</span></span><span class="preview-element" data-s="P" title="Python" style="grid-row:6;grid-column:2"><span class="face">P</span></span><span class="preview-element" data-s="Re" title="Remotion" style="grid-row:6;grid-column:3"><span class="face">Re</span></span><span class="preview-element" data-s="Th" title="Three.js" style="grid-row:6;grid-column:4"><span class="face">Th</span></span><span class="preview-element" data-s="N" title="Node.js" style="grid-row:6;grid-column:5"><span class="face">N</span></span><span class="preview-element p" data-s="K" title="KSA Languages" style="grid-row:6;grid-column:7"><span class="face">K</span></span><span class="preview-element p" data-s="Cd" title="Codex Translate" style="grid-row:6;grid-column:8"><span class="face">Cd</span></span><span class="preview-element" data-s="Cl" title="CLI" style="grid-row:7;grid-column:1"><span class="face">Cl</span></span><span class="preview-element" data-s="He" title="HTML / CSS" style="grid-row:7;grid-column:2"><span class="face">He</span></span><span class="preview-element" data-s="Sc" title="JavaScript" style="grid-row:7;grid-column:3"><span class="face">Sc</span></span><span class="preview-element" data-s="Ts" title="TypeScript" style="grid-row:7;grid-column:4"><span class="face">Ts</span></span><span class="preview-element" data-s="W" title="WebGL2" style="grid-row:7;grid-column:5"><span class="face">W</span></span></div></div>
+      <span class="preview-cta"><i aria-hidden="true">↗</i>Click to explore</span>
     </a>
     <section class="t hero">
-      <div>
-        <h1>Agents do the legwork.<br><em>The researcher decides.</em></h1>
-        <p id="intro"></p>
-      </div>
-      <div class="mq">
-        <div class="marquee"><div class="row" id="mq1"></div></div>
-        <div class="marquee rev"><div class="row" id="mq2"></div></div>
-      </div>
+      <h1>Agents do<span class="break"><br></span> the legwork.<em>The researcher<span class="break"><br></span> decides.</em></h1>
     </section>
   </div>
+  <div class="bento" id="bento"></div>
   <div class="foot" id="foot"></div>
 </div>
 
@@ -146,13 +167,7 @@ a.t:hover .arrow{background:var(--ink);color:#fff}
 <script src="shared/content.js"></script>
 <script src="shared/live/embed.js?v=20261026-motion1"></script>
 <script>
-const H = window.HUB, P = H.byId, T = H.terms, FIG = 'shared/fig/';
-document.getElementById('intro').textContent = H.intro;
-const chipOf = ([k, t]) => `<div class="chip${k === 'hitl' ? ' h' : ''}"><b>${t.name}</b><span>${t.gloss}</span></div>`;
-const terms = Object.entries(T), half = Math.ceil(terms.length / 2);
-const row1 = terms.slice(0, half).map(chipOf).join(''), row2 = terms.slice(half).map(chipOf).join('');
-document.getElementById('mq1').innerHTML = row1 + row1;
-document.getElementById('mq2').innerHTML = row2 + row2;
+const H = window.HUB, P = H.byId, FIG = 'shared/fig/';
 
 /* ---------- the cards ---------- */
 const tile = (id, cls, extra = {}) => {
