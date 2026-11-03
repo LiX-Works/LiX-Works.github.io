@@ -60,7 +60,7 @@ a.t:hover .arrow{background:var(--ink);color:#fff}
 .live-t .live{flex:1;min-height:0;background:#e9f0f6}
 .live-t .cap{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 22px;border-top:1px solid var(--line)}
 .live-t .cap b{font-size:17px}.live-t .cap span{display:block;font-size:14px;color:var(--muted)}
-.live-t .cap a{flex:none;font-size:13.5px;font-weight:650;padding:8px 12px;border-radius:10px;background:var(--bg)}
+.live-t .cap a{flex:none}
 .s7{grid-column:span 7}.s5{grid-column:span 5}
 .r4{grid-row:span 5}.c3{grid-column:span 3}.c4{grid-column:span 4}.c5{grid-column:span 5}
 .hum{background:var(--hum-bg);color:var(--hum-fg);border-color:var(--hum-bg);justify-content:space-between}
@@ -173,7 +173,7 @@ a.t:hover .arrow{background:var(--ink);color:#fff}
 
 
 <script src="shared/content.js"></script>
-<script src="shared/live/embed.js?v=20261026-motion1"></script>
+<script src="shared/live/embed.js?v=20261103-load1"></script>
 <script>
 const H = window.HUB, P = H.byId, FIG = 'shared/fig/';
 
@@ -187,9 +187,9 @@ const tile = (id, cls, extra = {}) => {
 };
 document.getElementById('bento').insertAdjacentHTML('beforeend', `
   <section class="t live-t s7" id="demos"><div class="live" data-live="proxitouch" data-chart="off" data-badge-pos="bl"></div>
-    <div class="cap"><div><b>ProxiTouch · interactive 3D lesson</b><span>One electrode senses approach, touch and press, on two channels. Part of two lessons on capacitive sensing.</span></div><a class="stretched-link" href="${P.capacitance.site}">Open the lessons ↗</a></div></section>
+    <div class="cap"><div><b>ProxiTouch · interactive 3D lesson</b><span>One electrode senses approach, touch and press, on two channels. Part of two lessons on capacitive sensing.</span></div><a class="stretched-link" href="${P.capacitance.site}" aria-label="Open the lessons"></a></div></section>
   <section class="t live-t s5"><div class="live" data-live="edl" data-mode="video" data-fx="0.08"></div>
-    <div class="cap"><div><b>EDL gating · rendered from code</b><span>A thin dielectric under high field breaks down.</span></div><a class="stretched-link" href="${P.animation.site}">Full film ↗</a></div></section>
+    <div class="cap"><div><b>EDL gating · rendered from code</b><span>A thin dielectric under high field breaks down.</span></div><a class="stretched-link" href="${P.animation.site}" aria-label="Watch the full film"></a></div></section>
   ${tile('comsol', 'c5 r4', { hum: true })}
   ${tile('scholarfetch', 'c4 r4', { hum: true })}
   <section class="t c3 r4 hum"><div class="pad"><small>Human-in-the-Loop</small><blockquote>Agents draft.<br><em>A researcher decides.</em></blockquote><div class="figp"><i></i><i></i><i class="o"></i></div></div>

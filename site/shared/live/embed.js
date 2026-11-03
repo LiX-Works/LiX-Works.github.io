@@ -1,21 +1,22 @@
 /* Live embeds for the hub drafts.
    <div class="live" data-live="proxitouch|edl" [data-chart="off"] [data-fit="cover"] [data-badge="off"]></div>
-   Embeds load near the viewport. ProxiTouch uses the live page; the EDL homepage
-   preview uses data-mode="video" to avoid another continuous 3-D render workload.
-   Video fallback has visible playback controls. */
+   Posters show first; the live page or video starts after the rest of the page has
+   loaded. ProxiTouch uses the live page; the EDL homepage preview uses
+   data-mode="video" to avoid another continuous 3-D render workload.
+   Videos loop silently and pause off screen. */
 (function () {
   const ROOT = document.currentScript.src.replace(/shared\/live\/embed\.js.*$/, '');
   const MEDIA = ROOT + 'shared/media/';
   const SPEC = {
     proxitouch: {
       src: o => new URL('/Capacitance-Demos/proxitouch/?scene=S19', ROOT).href,
-      poster: o => MEDIA + (o.chart === 'off' ? 'proxitouch-device-poster.jpg' : 'proxitouch-poster.jpg'),
+      poster: o => MEDIA + (o.chart === 'off' ? 'proxitouch-device-poster.webp' : 'proxitouch-poster.jpg'),
       video:  o => MEDIA + (o.chart === 'off' ? 'proxitouch-device.mp4' : 'proxitouch-loop.mp4'),
       badge: 'Live · click to interact'
     },
     edl: {
       src: o => ROOT + 'shared/live/edl/index.html?fit=' + (o.fit || 'cover') + (o.nocap === 'on' ? '&nocap' : '') + (o.fy ? '&fy=' + o.fy : '') + (o.fx ? '&fx=' + o.fx : ''),
-      poster: o => MEDIA + 'edl-poster.jpg',
+      poster: o => MEDIA + 'edl-poster.webp',
       video:  o => MEDIA + 'edl-breakdown.mp4',
       badge: 'Live · rendered from code'
     }
@@ -47,16 +48,14 @@
     Object.assign(v, { muted: true, defaultMuted: true, loop: true, autoplay: true, playsInline: true, preload: 'auto', src: spec.video(opts) });
     v.className = 'live-frame'; v.setAttribute('muted', ''); v.setAttribute('playsinline', '');
     v.setAttribute('aria-label', opts.live === 'edl' ? 'Looping EDL film preview' : 'Looping ProxiTouch preview');
-    const b = document.createElement('button'); b.type = 'button'; b.className = 'live-badge video-control';
-    const label = () => { b.textContent = v.paused ? '▶ Play preview' : 'Ⅱ Pause preview'; b.setAttribute('aria-label', v.paused ? 'Play video preview' : 'Pause video preview'); };
-    const play = () => { if (box._visible === false || document.hidden || box._userPaused) return; v.play().then(label).catch(label); };
-    b.addEventListener('click', () => { if (v.paused) { box._userPaused = false; play(); } else { box._userPaused = true; v.pause(); } });
-    v.addEventListener('playing', () => { box.classList.add('is-ready'); label(); });
-    v.addEventListener('pause', label);
-    v.addEventListener('loadeddata', () => { box.classList.add('is-ready'); if (box._visible === false || document.hidden || box._userPaused) v.pause(); else play(); });
-    v.addEventListener('error', () => { b.textContent = 'Retry preview'; b.setAttribute('aria-label', 'Retry video preview'); b.onclick = () => { v.load(); play(); }; });
-    box.append(v, b); box._video = v; box._play = play; box.dataset.playback = 'video'; label(); play();
+    const play = () => { if (box._visible === false || document.hidden) return; v.play().catch(() => {}); };
+    v.addEventListener('playing', () => box.classList.add('is-ready'));
+    v.addEventListener('loadeddata', () => { box.classList.add('is-ready'); if (box._visible === false || document.hidden) v.pause(); else play(); });
+    box.append(v); box._video = v; box._play = play; box.dataset.playback = 'video'; play();
   }
+
+  // The heavy part waits for the page's own images, so posters and figures arrive first.
+  const afterLoad = fn => document.readyState === 'complete' ? setTimeout(fn, 0) : addEventListener('load', () => setTimeout(fn, 0), { once: true });
 
   function mount(box) {
     if (box.dataset.mounted) return; box.dataset.mounted = '1';
@@ -64,8 +63,12 @@
     // Narrow boxes show the device alone; the two signal plots need room.
     if (kind === 'proxitouch' && !opts.chart && box.clientWidth < 560) opts.chart = 'off';
     box.classList.add('live-box');
-    const poster = new Image(); poster.className = 'live-poster'; poster.alt = ''; poster.src = spec.poster(opts);
+    const poster = new Image(); poster.className = 'live-poster'; poster.alt = ''; poster.decoding = 'async'; poster.fetchPriority = 'high'; poster.src = spec.poster(opts);
     box.appendChild(poster);
+    afterLoad(() => mountHeavy(box, kind, spec, opts));
+  }
+
+  function mountHeavy(box, kind, spec, opts) {
     if (!hasGL2 || box.dataset.mode === 'video') {
       mountVideo(box, spec, opts);
       return;
@@ -81,7 +84,12 @@
     if (box.dataset.badge !== 'off') {
       const b = document.createElement('button');
       b.type = 'button'; b.className = 'live-badge' + (box.dataset.badgePos === 'bl' ? ' bl' : ''); b.innerHTML = '<i></i>' + spec.badge;
-      b.addEventListener('click', () => { box.classList.add('is-active'); f.tabIndex = 0; f.focus(); });
+      b.addEventListener('click', () => {
+        box.classList.add('is-active'); f.tabIndex = 0; f.focus();
+        // The live page only takes drag and wheel in its explore mode, normally entered with its E key.
+        try { const w = f.contentWindow; w.dispatchEvent(new w.KeyboardEvent('keydown', { key: 'e' })); } catch (e) {}
+        b.disabled = true; b.innerHTML = '<i></i>Drag to rotate · scroll to zoom';
+      });
       box.appendChild(b);
     }
   }
@@ -112,11 +120,14 @@
   .live-box .live-frame{opacity:0;transition:opacity .9s ease;pointer-events:none}
   .live-box.is-ready .live-frame{opacity:1}
   .live-box.is-active .live-frame{pointer-events:auto}
+  .live-box[data-live="edl"] .live-poster,.live-box[data-live="edl"] .live-frame{object-position:0 0}
+  /* Wide boxes: render the live page larger than its box and crop, so the device sits closer at full resolution. */
+  @media (min-width:681px){.live-box[data-live="proxitouch"] .live-frame{inset:auto;left:-10%;top:-12%;width:120%;height:120%}}
   .live-badge{position:absolute;right:14px;top:14px;z-index:3;display:inline-flex;align-items:center;gap:8px;font:600 12px/1 Inter,system-ui,sans-serif;letter-spacing:.02em;
     color:#16212d;background:rgba(255,255,255,.86);backdrop-filter:blur(8px);border:1px solid rgba(20,40,60,.12);border-radius:99px;padding:8px 12px;cursor:pointer}
   .live-badge i{width:7px;height:7px;border-radius:50%;background:#e5484d;box-shadow:0 0 0 0 rgba(229,72,77,.5);animation:livepulse 1.8s infinite}
   .live-badge.bl{right:auto;top:auto;left:14px;bottom:14px}
-  .live-box.is-active .live-badge{display:none}
+  .live-box.is-active .live-badge{pointer-events:none;cursor:default}
   @keyframes livepulse{0%{box-shadow:0 0 0 0 rgba(229,72,77,.45)}70%{box-shadow:0 0 0 8px rgba(229,72,77,0)}100%{box-shadow:0 0 0 0 rgba(229,72,77,0)}}`;
   document.head.appendChild(css);
 })();
