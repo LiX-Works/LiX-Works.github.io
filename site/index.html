@@ -121,8 +121,11 @@ a.t:hover .arrow{background:var(--ink);color:#fff}
 .toy::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
   background:radial-gradient(circle,rgba(160,195,255,.24) 1px,transparent 1.6px) 0 0/24px 24px;
   -webkit-mask-image:radial-gradient(70% 80% at 64% 52%,#000 30%,transparent 100%);mask-image:radial-gradient(70% 80% at 64% 52%,#000 30%,transparent 100%)}
-.toy-head{left:34px;right:auto;top:50%;width:36%;transform:translateY(-50%)}
+.toy-head{left:24px;right:auto;top:50%;width:36%;transform:translateY(-50%)}
 .toy-head h2{font-size:clamp(30px,2.95vw,44px);line-height:1.04}
+.toy-title-lead{display:block;white-space:nowrap}
+.toy-title-a{font-size:1.08em}
+.toy-head h2 em{font-size:1.35em}
 /* the table runs off the bottom edge and fades out around the fourth row */
 .preview-frame{-webkit-mask-image:linear-gradient(#000 62%,transparent 98%);mask-image:linear-gradient(#000 62%,transparent 98%);perspective:1800px;perspective-origin:70% 10%}
 .preview-grid{left:40%;top:30px;width:58%;gap:8px;transform:rotateX(30deg) rotateZ(5deg);transform-origin:50% 0}
@@ -136,15 +139,19 @@ a.t:hover .arrow{background:var(--ink);color:#fff}
 .preview-gap i{font-style:normal;color:#ffce75}
 .toy:hover .preview-gap span{border-color:#cfe0ff;background:rgba(34,62,115,.88)}
 @media (max-width:1100px){.showcase{grid-template-columns:minmax(0,2.2fr) minmax(0,1fr)}
-  .toy-head{left:26px;width:34%}.toy-head h2{font-size:30px}.preview-grid{left:38%;width:58%}}
+  .toy-head{left:18px;width:34%}.toy-head h2{font-size:clamp(24px,2.8vw,30px)}.toy-head h2 em{font-size:1.28em}.preview-grid{left:40%;width:56%}}
 /* stacked: title on top, the table below it */
-@media (max-width:800px){.showcase{grid-template-rows:350px auto}
+@media (max-width:960px){.showcase{grid-template-columns:1fr;grid-template-rows:350px auto}
   .toy-head{left:24px;right:24px;width:auto;top:22px;transform:none}.toy-head h2{font-size:30px}.toy-head h2 br{display:none}
-  .preview-grid{left:21%;width:58%;top:96px}}
+  .preview-grid{left:21%;width:58%;top:112px}.hero h1 .break{display:none}}
 @media (max-width:680px){.showcase{grid-template-rows:330px auto}
   .toy-head{top:18px}.toy-head h2{font-size:24px}
   .preview-grid{left:3%;width:94%;top:92px;gap:5px}.preview-element .face{font-size:14px;border-radius:4px}
   .preview-gap span{padding:5px 10px;font-size:12px}}
+/* Size the statement from its own panel, including browser zoom and stacked layouts. */
+.hero{container-type:inline-size}
+.hero h1{font-size:clamp(30px,15.8cqw,55px);line-height:1.02}
+.hero h1 em{font-size:1.18em;margin-top:10px}
 </style>
 </head>
 <body>
@@ -152,7 +159,7 @@ a.t:hover .arrow{background:var(--ink);color:#fff}
   <header class="top"><div class="mark"><b>LX</b>LiX</div><a class="gh" href="https://github.com/LiX-Works">GitHub ↗</a></header>
   <div class="showcase">
     <a class="t toy" id="toy" href="elements.html" aria-label="Open the interactive periodic table">
-      <div class="toy-head"><h2>A <em>periodic table</em><br>of my AI toolkit</h2></div>
+      <div class="toy-head"><h2><span class="toy-title-lead"><span class="toy-title-a">A</span> <em>periodic table</em></span>of my AI toolkit</h2></div>
       <div class="preview-frame" aria-hidden="true"><div class="preview-grid"><div class="preview-zone tech">Technical</div><div class="preview-zone proj">My projects</div><div class="preview-gap"><span><i>&#8599;</i>Click to explore</span></div><span class="preview-element" data-s="H" title="Human" style="grid-row:2;grid-column:1"><span class="face">H</span></span><span class="preview-element p" data-s="C" title="Capacitance demos" style="grid-row:2;grid-column:10"><span class="face">C</span></span><span class="preview-element" data-s="Ai" title="AI" style="grid-row:3;grid-column:1"><span class="face">Ai</span></span><span class="preview-element" data-s="Ag" title="Agent" style="grid-row:3;grid-column:2"><span class="face">Ag</span></span><span class="preview-element p" data-s="S" title="Scientific film" style="grid-row:3;grid-column:10"><span class="face">S</span></span><span class="preview-element" data-s="Si" title="Agent Skill" style="grid-row:4;grid-column:1"><span class="face">Si</span></span><span class="preview-element" data-s="Mc" title="MCP" style="grid-row:4;grid-column:2"><span class="face">Mc</span></span><span class="preview-element p" data-s="Fe" title="ScholarFetch" style="grid-row:4;grid-column:7"><span class="face">Fe</span></span><span class="preview-element p" data-s="Au" title="Zotero AutoCite" style="grid-row:4;grid-column:8"><span class="face">Au</span></span><span class="preview-element p" data-s="Ca" title="COMSOL Agent" style="grid-row:4;grid-column:9"><span class="face">Ca</span></span><span class="preview-element p" data-s="O" title="Origin MCP + Skill" style="grid-row:4;grid-column:10"><span class="face">O</span></span><span class="preview-element" data-s="Pr" title="Prompt Engineering" style="grid-row:5;grid-column:1"><span class="face">Pr</span></span><span class="preview-element" data-s="Ce" title="Context Engineering" style="grid-row:5;grid-column:2"><span class="face">Ce</span></span><span class="preview-element" data-s="Lu" title="Loop Engineering" style="grid-row:5;grid-column:3"><span class="face">Lu</span></span><span class="preview-element" data-s="B" title="Blender" style="grid-row:5;grid-column:4"><span class="face">B</span></span><span class="preview-element" data-s="Co" title="COMSOL" style="grid-row:5;grid-column:5"><span class="face">Co</span></span><span class="preview-element p" data-s="As" title="Search Booster" style="grid-row:5;grid-column:7"><span class="face">As</span></span><span class="preview-element p" data-s="Sm" title="Subagent Manager" style="grid-row:5;grid-column:8"><span class="face">Sm</span></span><span class="preview-element p building" data-s="Sr" title="Research Loop" style="grid-row:5;grid-column:9"><span class="face">Sr</span></span><span class="preview-element" data-s="Sb" title="Subagents" style="grid-row:6;grid-column:1"><span class="face">Sb</span></span><span class="preview-element" data-s="P" title="Python" style="grid-row:6;grid-column:2"><span class="face">P</span></span><span class="preview-element" data-s="Re" title="Remotion" style="grid-row:6;grid-column:3"><span class="face">Re</span></span><span class="preview-element" data-s="Th" title="Three.js" style="grid-row:6;grid-column:4"><span class="face">Th</span></span><span class="preview-element" data-s="N" title="Node.js" style="grid-row:6;grid-column:5"><span class="face">N</span></span><span class="preview-element p" data-s="K" title="KSA Languages" style="grid-row:6;grid-column:7"><span class="face">K</span></span><span class="preview-element p" data-s="Cd" title="Codex Translate" style="grid-row:6;grid-column:8"><span class="face">Cd</span></span><span class="preview-element" data-s="Cl" title="CLI" style="grid-row:7;grid-column:1"><span class="face">Cl</span></span><span class="preview-element" data-s="He" title="HTML / CSS" style="grid-row:7;grid-column:2"><span class="face">He</span></span><span class="preview-element" data-s="Sc" title="JavaScript" style="grid-row:7;grid-column:3"><span class="face">Sc</span></span><span class="preview-element" data-s="Ts" title="TypeScript" style="grid-row:7;grid-column:4"><span class="face">Ts</span></span><span class="preview-element" data-s="W" title="WebGL2" style="grid-row:7;grid-column:5"><span class="face">W</span></span></div></div>
       <span class="preview-cta"><i aria-hidden="true">↗</i>Click to explore</span>
     </a>
